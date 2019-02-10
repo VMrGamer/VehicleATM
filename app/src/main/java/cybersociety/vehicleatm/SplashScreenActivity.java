@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class FullscreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity {
     private static final boolean AUTO_HIDE = true;
 
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
@@ -66,11 +66,9 @@ public class FullscreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_fullscreen);
+        setContentView(R.layout.activity_splash_screen);
 
         mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +76,6 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override
