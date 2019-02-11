@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +29,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +47,8 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class RegistrationActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    private static final String TAG = "RegistrationActivity";
+
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -49,11 +59,20 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private TextView mStatusTextView;
+    private TextView mDetailTextView;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration2);
+        mAuth = FirebaseAuth.getInstance();
+
+        mStatusTextView = findViewById(R.id.status);
+        mDetailTextView = findViewById(R.id.detail);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -171,7 +190,34 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            //TODO: Registration Here
+            Log.d(TAG, "createAccount:" + email);
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                updateUI(user);
+                            } else {
+                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(RegistrationActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                                updateUI(null);
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
+                    user.getEmail(), user.isEmailVerified()));
+            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+        } else {
+            mStatusTextView.setText(R.string.signed_out);
+            mDetailTextView.setText(null);
         }
     }
 
