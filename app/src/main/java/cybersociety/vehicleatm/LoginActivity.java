@@ -3,6 +3,7 @@ package cybersociety.vehicleatm;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
@@ -33,6 +34,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -66,6 +68,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
 
         mStatusTextView = findViewById(R.id.status);
@@ -160,6 +163,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      */
     private void attemptLogin() {
         //TODO: Check already logged in
+        if (mAuth.getCurrentUser() != null) {
+            //handle the already login user
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -323,8 +330,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     }
 
 
-    private interface ProfileQuery {
-        String[] PROJECTION = {
+    private interface ProfileQuery {        String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
                 ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
         };

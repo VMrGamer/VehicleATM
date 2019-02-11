@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "58406095416",
+    "firebase_url": "https://vehicleatm-70d10.firebaseio.com",
+    "project_id": "vehicleatm-70d10",
+    "storage_bucket": "vehicleatm-70d10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58406095416:android:3533da835f49e12a",
+        "android_client_info": {
+          "package_name": "cybersociety.vehicleatm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58406095416-p0t1vsmg5u25tah94mpkhoo73a2pg5vj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cybersociety.vehicleatm",
+            "certificate_hash": "c3b3996cb761987803d98b6ad007bf52084ca5f9"
+          }
+        },
+        {
+          "client_id": "58406095416-0k3e4mdd4d7f4gr42imfb4kr7ncqgrn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5JI_3OYGSmqf4li7n6RbhsxMB5V7HVi0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58406095416-0k3e4mdd4d7f4gr42imfb4kr7ncqgrn9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
