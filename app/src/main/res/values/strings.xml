@@ -33,4 +33,6 @@
         completions."
     </string>
     <string name="msg1">DO NOT APPLY ANY LAYOUT TO THIS SCREEN, IN FUTURE THIS SCREEN WILL REPLACE MAIN-ACTIVITY</string>
+    <string name="title_activity_registration">Registration</string>
+    <string name="action_sign_in_short">Sign in</string>
 </resources>
