@@ -13,7 +13,6 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -42,9 +41,6 @@ import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-/**
- * A login screen that offers login via email/password.
- */
 public class RegistrationActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     private static final String TAG = "RegistrationActivity";
@@ -67,7 +63,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration2);
+        setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
 
         mStatusTextView = findViewById(R.id.status);
@@ -89,7 +85,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_register_button2);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
