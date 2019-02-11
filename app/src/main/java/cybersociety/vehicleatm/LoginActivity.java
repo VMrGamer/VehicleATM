@@ -103,6 +103,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             @Override
             public void onClick(View v) {
                 //TODO: create function attemptRegister
+                Toast.makeText(getApplicationContext(), "Redirecting..", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(LoginActivity.this,  RegistrationActivity.class));
             }
         });
 
