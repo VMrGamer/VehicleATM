@@ -10,6 +10,7 @@ import android.app.FragmentManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -24,11 +25,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -44,12 +47,15 @@ public class MainActivity extends Activity {
     TextView vd1,kd1;
     ViewPager viewPager;
     PagerViewAdepeter pagerViewAdepeter;
-
+    Button button2;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
+        button2=findViewById(R.id.button1);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create channel to show notifications.
             String channelId  = getString(R.string.default_notification_channel_id);
@@ -65,6 +71,14 @@ public class MainActivity extends Activity {
                 Log.d(TAG, "Key: " + key + " Value: " + value);
             }
         }
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent I = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(I);
+            }
+        });
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
@@ -107,14 +121,14 @@ public class MainActivity extends Activity {
             }
         });
 
+
+
     }
     private void onChangetab(int position) {
         if(position == 0)
         {
             vd1.setTextSize(35);
             kd1.setTextSize(15);
-
-
 
         }
         if (position == 1)

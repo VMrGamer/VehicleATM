@@ -3,6 +3,7 @@ package cybersociety.vehicleatm;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -261,7 +262,9 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                                 Log.w(TAG, "Error writing document", e);
                                             }
                                         });
+                                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                                 updateUI(user);
+
                             } else {
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(RegistrationActivity.this, "Authentication failed.",
