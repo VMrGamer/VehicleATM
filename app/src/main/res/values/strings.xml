@@ -58,4 +58,5 @@
     <string name="input_error_email_invalid">enter a valid email</string>
     <string name="flat">FLAT NO</string>
     <string name="vehicle_no">VEHICLE NO</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 </resources>
