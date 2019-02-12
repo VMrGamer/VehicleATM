@@ -14,7 +14,6 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -102,9 +101,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mEmailRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: create function attemptRegister
-                Toast.makeText(getApplicationContext(), "Redirecting..", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(LoginActivity.this,  RegistrationActivity.class));
+                Intent register = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(register);
+                finish();
             }
         });
 
