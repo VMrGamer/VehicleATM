@@ -147,7 +147,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         if (!mayRequestContacts()) {
             return;
         }
-
         getLoaderManager().initLoader(0, null, this);
     }
 
