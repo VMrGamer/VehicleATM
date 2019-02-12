@@ -23,21 +23,31 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -57,17 +67,33 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     private View mLoginFormView;
     private TextView mStatusTextView;
     private TextView mDetailTextView;
+    private TextView mFirstNameView;
+    private TextView mLastNameView;
+    private EditText mFlatNoView;
+    private EditText mVehiclesView;
+    private EditText mMobileView;
+    private Spinner spinnerUserType;
+
+    private String userTypeString;
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
-
+        db = FirebaseFirestore.getInstance();
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
+        mFirstNameView = findViewById(R.id.f_name);
+        mLastNameView = findViewById(R.id.l_name);
+        mFlatNoView = findViewById(R.id.flat_no);
+        mVehiclesView = findViewById(R.id.vehicles);
+        mMobileView = findViewById(R.id.mobile_no);
+        spinnerUserType = findViewById(R.id.user_type_spinner);
+
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -95,6 +121,26 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        List<String> itemsList = new ArrayList<String>();
+        itemsList.add("Normal");
+        itemsList.add("POC");
+        itemsList.add("Guard");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemsList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerUserType.setAdapter(adapter);
+        spinnerUserType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                userTypeString = parent.getItemAtPosition(position).toString().toLowerCase();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                parent.setSelection(1);
+            }
+        });
+
     }
 
     private void populateAutoComplete() {
@@ -193,6 +239,29 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                Map<String, Object> doc_user = new HashMap<>();
+                                doc_user.put("email", user.getEmail());
+                                doc_user.put("flat_no", mFlatNoView.getText().toString());
+                                doc_user.put("mobile_no", Arrays.asList(mMobileView.getText().toString(),"null"));
+                                doc_user.put("name", Arrays.asList(mFirstNameView.getText().toString(),mLastNameView.getText().toString()));
+                                doc_user.put("uid", user.getUid());
+                                doc_user.put("user_type", userTypeString);
+                                doc_user.put("vehicles", Arrays.asList(mVehiclesView.getText().toString(),"null"));
+                                db.collection("users")
+                                        .document(user.getUid())
+                                        .set(doc_user)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error writing document", e);
+                                            }
+                                        });
                                 updateUI(user);
                             } else {
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());

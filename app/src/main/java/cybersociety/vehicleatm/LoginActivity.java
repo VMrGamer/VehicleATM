@@ -101,7 +101,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mEmailRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: create function attemptRegister
+                Intent register = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(register);
+                finish();
             }
         });
 
