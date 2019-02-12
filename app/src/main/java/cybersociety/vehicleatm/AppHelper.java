@@ -1,13 +1,18 @@
 package cybersociety.vehicleatm;
 
-public class AppHelper {
-    public static final String TAG = "Apphelper";
+import java.util.ArrayList;
 
-    public static String uid;
-    public static String firstName;
-    public static String lastName;
-    public static String email;
-    public static String userType;
-    public static String flat_no;
-    
+public class AppHelper {
+    private static final String TAG = "Apphelper";
+
+    private static String uid;
+    private static String firstName;
+    private static String lastName;
+    private static String email;
+    private static String userType;
+    private static String flat_no;
+    private static ArrayList<String> mobile_no;
+    private static ArrayList<String> vehicle_no;
+
+
 }
