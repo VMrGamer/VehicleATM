@@ -34,6 +34,9 @@ public class MainActivity extends Activity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    TextView vd1,kd1;
+    ViewPager viewPager;
+    PagerViewAdepeter pagerViewAdepeter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,45 @@ public class MainActivity extends Activity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        //tab activity
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                onChangetab(position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+    }
+
+    private void onChangetab(int position) {
+        if(position == 0)
+        {
+            vd1.setTextSize(35);
+            kd1.setTextSize(15);
+
+
+
+        }
+        if (position == 1)
+        {
+            kd1.setTextSize(35);
+            vd1.setTextSize(15);
+
+        }
+
+    }
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);

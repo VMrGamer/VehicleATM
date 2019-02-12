@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+
+    >
+
+
+    <TextView
+        android:id="@+id/vedd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="ALL"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/kul"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Regis"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/res"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Resident"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+
+
+
+</LinearLayout>
