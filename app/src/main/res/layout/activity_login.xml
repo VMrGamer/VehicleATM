@@ -20,6 +20,18 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Signed Out" />
+
+    <TextView
+        android:id="@+id/detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Firebase UID" />
+
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
@@ -61,6 +73,14 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/email_register_button"
+                style="@android:style/TextAppearance.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_register" />
+
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>
