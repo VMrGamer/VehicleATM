@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="52dp"
         android:layout_marginRight="52dp"
-        android:src="@drawable/demologo"
+        android:src="@drawable/demo_logooo"
         app:civ_border_color="#f0f1f1"
         app:civ_border_width="10dp"
         app:civ_shadow="true"
