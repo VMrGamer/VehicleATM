@@ -60,15 +60,16 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private TextView mStatusTextView;
     private TextView mDetailTextView;
 
+    //Firebase Variables
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         FirebaseApp.initializeApp(this);
-        mAuth = FirebaseAuth.getInstance();
+        AppHelper.init(getApplicationContext());
+        mAuth = AppHelper.getFirebaseAuth();
 
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
@@ -114,7 +115,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = AppHelper.getFirebaseCurrentUser();
 
     }
 
@@ -164,7 +165,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      */
     private void attemptLogin() {
         //TODO: Check already logged in
-        if (mAuth.getCurrentUser() != null) {
+        if (AppHelper.getFirebaseCurrentUser() != null) {
             //handle the already login user
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
@@ -216,6 +217,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
                                 updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.
