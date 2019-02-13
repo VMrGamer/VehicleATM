@@ -1,52 +1,96 @@
 package cybersociety.vehicleatm;
 
-
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends Activity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v13.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+public class MainActivity extends FragmentActivity {
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
-    TextView vd1,kd1;
-    ViewPager viewPager;
-    PagerViewAdepeter pagerViewAdepeter;
+    private static final String TAG = "MainActivity";
+
+    //private TabItem tabItemAll, tabItemRegister, tabItemHistory;
+    private FloatingActionButton signOutButton;
+    private FirebaseAuth mAuth;
+
+    private MyFragmentPagerAdapter myFragmentPagerAdapter;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-        //tab activity
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+            }
+        }
+        initApp();
+    }
 
+    private void initApp() {
+        mAuth = FirebaseAuth.getInstance();
+
+        //Sign out Button
+        signOutButton = findViewById(R.id.sign_out_button_main);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent I = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(I);
+            }
+        });
+
+        /*
+        tabItemAll = findViewById(R.id.all_text);
+        tabItemAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(0);
+            }
+        });
+
+        tabItemRegister = findViewById(R.id.register_text);
+        tabItemRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(1);
+            }
+        });
+
+        tabItemHistory = findViewById(R.id.history_text);
+        tabItemHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(2);
+            }
+        });
+        */
+
+        viewPager = findViewById(R.id.view_pager);
+        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(myFragmentPagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -56,7 +100,6 @@ public class MainActivity extends Activity {
             @Override
             public void onPageSelected(int position) {
                 onChangetab(position);
-
             }
 
             @Override
@@ -64,32 +107,23 @@ public class MainActivity extends Activity {
 
             }
         });
-
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void onChangetab(int position) {
-        if(position == 0)
-        {
-            vd1.setTextSize(35);
-            kd1.setTextSize(15);
-
-
-
-        }
-        if (position == 1)
-        {
-            kd1.setTextSize(35);
-            vd1.setTextSize(15);
+        //TODO: Implement Something fishy here
+        if(position == 0) {
 
         }
 
-    }
+        if (position == 1) {
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        }
 
+        if (position == 2) {
 
+        }
     }
 
 
