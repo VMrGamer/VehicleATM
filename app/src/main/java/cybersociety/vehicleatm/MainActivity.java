@@ -1,21 +1,13 @@
 package cybersociety.vehicleatm;
 
-
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,51 +19,41 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.RemoteMessage;
 
-import static android.support.constraint.Constraints.TAG;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private static final String TAG = "MainActivity";
 
-    private ViewPager mViewPager;
-    TextView vd1,kd1;
-    ViewPager viewPager;
-    PagerViewAdepeter pagerViewAdepeter;
-    Button button2;
-    FirebaseAuth mAuth;
+    //private TabItem tabItemAll, tabItemRegister, tabItemHistory;
+    private FloatingActionButton signOutButton;
+    private FirebaseAuth mAuth;
+
+    private MyFragmentPagerAdapter myFragmentPagerAdapter;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAuth = FirebaseAuth.getInstance();
-        button2=findViewById(R.id.button1);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create channel to show notifications.
-            String channelId  = getString(R.string.default_notification_channel_id);
-            String channelName = getString(R.string.default_notification_channel_name);
-            NotificationManager notificationManager =
-                    getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
-                    channelName, NotificationManager.IMPORTANCE_LOW));
-        }
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 Object value = getIntent().getExtras().get(key);
                 Log.d(TAG, "Key: " + key + " Value: " + value);
             }
         }
-        button2.setOnClickListener(new View.OnClickListener() {
+        initApp();
+    }
+
+    private void initApp() {
+        mAuth = FirebaseAuth.getInstance();
+
+        //Sign out Button
+        signOutButton = findViewById(R.id.sign_out_button_main);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
@@ -79,30 +61,36 @@ public class MainActivity extends Activity {
                 startActivity(I);
             }
         });
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "getInstanceId failed", task.getException());
-                            return;
-                        }
 
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
+        /*
+        tabItemAll = findViewById(R.id.all_text);
+        tabItemAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(0);
+            }
+        });
 
-                        // Log and toast
-                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d("Main: ", msg);
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-        //tab activity
-        viewPager = (ViewPager)findViewById(R.id.frag_m);
+        tabItemRegister = findViewById(R.id.register_text);
+        tabItemRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(1);
+            }
+        });
+
+        tabItemHistory = findViewById(R.id.history_text);
+        tabItemHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(2);
+            }
+        });
+        */
+
+        viewPager = findViewById(R.id.view_pager);
+        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(myFragmentPagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -112,7 +100,6 @@ public class MainActivity extends Activity {
             @Override
             public void onPageSelected(int position) {
                 onChangetab(position);
-
             }
 
             @Override
@@ -120,24 +107,23 @@ public class MainActivity extends Activity {
 
             }
         });
-
-
-
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
+
     private void onChangetab(int position) {
-        if(position == 0)
-        {
-            vd1.setTextSize(35);
-            kd1.setTextSize(15);
-
-        }
-        if (position == 1)
-        {
-            kd1.setTextSize(35);
-            vd1.setTextSize(15);
+        //TODO: Implement Something fishy here
+        if(position == 0) {
 
         }
 
+        if (position == 1) {
+
+        }
+
+        if (position == 2) {
+
+        }
     }
 
 
