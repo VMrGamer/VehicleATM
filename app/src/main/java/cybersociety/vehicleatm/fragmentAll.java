@@ -12,6 +12,6 @@ public class fragmentAll extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_register,null);
+        return inflater.inflate(R.layout.fragment_all,null);
     }
 }
