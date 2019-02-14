@@ -256,6 +256,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -268,6 +269,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                 updateUI(user);
 
                             } else {
+
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(RegistrationActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
