@@ -49,17 +49,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
             }
         };
-        /*
-        handler=new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent=new Intent(SplashScreenActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        },2000);
-        */
     }
 
     @Override

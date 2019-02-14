@@ -22,13 +22,13 @@ class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment =null;
         switch (position){
             case 0:
-                fragment = fragmentAll.newInstance(0, "All");
+                fragment = FragmentAll.newInstance(0, "All");
                 break;
             case 1:
-                fragment=new fragmentRegister();
+                fragment = FragmentRegister.newInstance(0, "Register");
                 break;
             case 2:
-                fragment=new fragmentHistory();
+                fragment = FragmentHistory.newInstance(0, "History");
         }
         return  fragment;
     }

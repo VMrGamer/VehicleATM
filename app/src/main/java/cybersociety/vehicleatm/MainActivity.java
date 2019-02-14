@@ -46,7 +46,9 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                exit();
+                Intent login = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(login);
+                finish();
             }
         });
 
@@ -86,11 +88,5 @@ public class MainActivity extends FragmentActivity {
         if (position == 2) {
 
         }
-    }
-
-    private void exit () {
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
     }
 }

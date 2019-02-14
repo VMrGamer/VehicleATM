@@ -7,9 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-public class fragmentAll extends Fragment {
+public class FragmentHistory extends Fragment {
 
     private String title;
     private int page;
@@ -17,17 +16,16 @@ public class fragmentAll extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_history,null);
     }
 
-    public static fragmentAll newInstance(int page, String title) {
-        fragmentAll fragmentall = new fragmentAll();
+    public static FragmentHistory newInstance(int page, String title) {
+        FragmentHistory fragmentHistory = new FragmentHistory();
         Bundle args = new Bundle();
         args.putInt("someInt", page);
         args.putString("someTitle", title);
-        fragmentall.setArguments(args);
-        return fragmentall;
+        fragmentHistory.setArguments(args);
+        return fragmentHistory;
     }
 
     @Override
