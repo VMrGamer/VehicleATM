@@ -1,5 +1,6 @@
 package cybersociety.vehicleatm;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -27,6 +28,7 @@ import java.util.Map;
 public class AppHelper {
     private static final String TAG = "AppHelper";
 
+    //Data for more accessibility
     private static String uid;
     private static String token;
     private static String firstName;
@@ -36,8 +38,11 @@ public class AppHelper {
     private static String flat_no;
     private static List<String> mobile_no;
     private static List<String> vehicle_no;
+
+    //Master Variable Map
     private static Map<String,Object> currUserAttributes;
 
+    //Firebase Inits
     private static FirebaseAuth mAuth;
     private static FirebaseApp mApp;
     private static FirebaseUser mUser;
@@ -48,7 +53,7 @@ public class AppHelper {
 
     private static AppHelper appHelper;
 
-    public static void init() {
+    public static void init(Context context) {
         if (appHelper == null)
             appHelper = new AppHelper();
         else {
@@ -105,6 +110,13 @@ public class AppHelper {
             mMessaginig = FirebaseMessaging.getInstance();
         }
         mMessaginig.setAutoInitEnabled(true);
+        if(mApp == null){
+            mApp = FirebaseApp.initializeApp(context);
+        }
+        else {
+            mApp = null;
+            mApp = FirebaseApp.initializeApp(context);
+        }
     }
 
     public static Map<String, Object> getCurrUserAttributes(){
@@ -144,6 +156,7 @@ public class AppHelper {
 
     }
 
+    //Setting up more accessible fields to use in the App
     private static void setUserData() {
         uid = currUserAttributes.get("uid").toString();
         token = currUserAttributes.get("token").toString();
@@ -154,8 +167,9 @@ public class AppHelper {
         flat_no = currUserAttributes.get("flat_no").toString();
         mobile_no = (List<String>)currUserAttributes.get("mobile_no");
         vehicle_no = (List<String>)currUserAttributes.get("vehicles");
-    }
+    }//You can reference the assignments for use of the currUserAttributes Map, or any other Document Snapshot
 
+    //A General function to add or update firestore documents on an already existing collection
     public static void updateFirestore(String collectionPath, String document, Map<String, Object> doc){
         mFirestore.collection(collectionPath)
             .document(document)
@@ -174,6 +188,7 @@ public class AppHelper {
             });
     }
 
+    //to set token on new token generation
     public static void setToken(String t){
         if(t == null || t == ""){
             Log.d(TAG, "setToken: Invalid Operation");
@@ -206,5 +221,61 @@ public class AppHelper {
 
     public static FirebaseFirestore getFirestore(){
         return mFirestore;
+    }
+
+    public static String getFirstName() {
+        return firstName;
+    }
+
+    public static void setFirstName(String firstName) {
+        AppHelper.firstName = firstName;
+    }
+
+    public static String getLastName() {
+        return lastName;
+    }
+
+    public static void setLastName(String lastName) {
+        AppHelper.lastName = lastName;
+    }
+
+    public static String getEmail() {
+        return email;
+    }
+
+    public static void setEmail(String email) {
+        AppHelper.email = email;
+    }
+
+    public static String getUserType() {
+        return userType;
+    }
+
+    public static void setUserType(String userType) {
+        AppHelper.userType = userType;
+    }
+
+    public static String getFlat_no() {
+        return flat_no;
+    }
+
+    public static void setFlat_no(String flat_no) {
+        AppHelper.flat_no = flat_no;
+    }
+
+    public static List<String> getMobile_no() {
+        return mobile_no;
+    }
+
+    public static void setMobile_no(List<String> mobile_no) {
+        AppHelper.mobile_no = mobile_no;
+    }
+
+    public static List<String> getVehicle_no() {
+        return vehicle_no;
+    }
+
+    public static void setVehicle_no(List<String> vehicle_no) {
+        AppHelper.vehicle_no = vehicle_no;
     }
 }
