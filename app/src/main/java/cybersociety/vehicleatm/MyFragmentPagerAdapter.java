@@ -12,13 +12,13 @@ class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment =null;
         switch (position){
             case 0:
-                fragment=new fragmentRegister();
+                fragment=new fragmentAll();
                 break;
             case 1:
-                fragment=new fragmentHistory();
+                fragment=new fragmentRegister();
                 break;
             case 2:
-                fragment=new fragmentAll();
+                fragment=new fragmentHistory();
         }
         return  fragment;
     }

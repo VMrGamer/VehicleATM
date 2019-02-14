@@ -68,7 +68,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
-        AppHelper.init(getApplicationContext());
+        AppHelper.init();
         mAuth = AppHelper.getFirebaseAuth();
 
         mStatusTextView = findViewById(R.id.status);

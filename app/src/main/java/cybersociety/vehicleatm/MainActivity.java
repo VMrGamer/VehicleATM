@@ -16,14 +16,13 @@ public class MainActivity extends FragmentActivity {
 
     private static final String TAG = "MainActivity";
 
-    //private TabItem tabItemAll, tabItemRegister, tabItemHistory;
     private FloatingActionButton signOutButton;
-    private FirebaseAuth mAuth;
 
     private MyFragmentPagerAdapter myFragmentPagerAdapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initApp() {
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = AppHelper.getFirebaseAuth();
 
         //Sign out Button
         signOutButton = findViewById(R.id.sign_out_button_main);

@@ -84,8 +84,10 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
         mFirstNameView = findViewById(R.id.f_name);

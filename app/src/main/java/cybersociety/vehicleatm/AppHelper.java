@@ -40,7 +40,7 @@ public class AppHelper {
 
     private static AppHelper appHelper;
 
-    public static void init(Context context) {
+    public static void init() {
         if (appHelper == null)
             appHelper = new AppHelper();
         if(mAuth == null) {
