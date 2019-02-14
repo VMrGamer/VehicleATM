@@ -244,7 +244,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                 doc_user.put("uid", user.getUid());
                                 doc_user.put("user_type", userTypeString);
                                 doc_user.put("vehicles", Arrays.asList(mVehiclesView.getText().toString(),"null"));
-                                db.collection("users")
+                                AppHelper.getFirestore().collection("users")
                                         .document(user.getUid())
                                         .set(doc_user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {

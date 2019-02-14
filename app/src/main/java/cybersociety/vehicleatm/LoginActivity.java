@@ -215,9 +215,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                                 showProgress(false);
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
+                                updateUI(user);
+
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
-                                updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
