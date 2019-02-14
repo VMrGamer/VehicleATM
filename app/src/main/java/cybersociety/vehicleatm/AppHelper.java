@@ -1,10 +1,11 @@
 package cybersociety.vehicleatm;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +20,8 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class AppHelper {
@@ -31,8 +34,8 @@ public class AppHelper {
     private static String email;
     private static String userType;
     private static String flat_no;
-    private static ArrayList<String> mobile_no;
-    private static ArrayList<String> vehicle_no;
+    private static List<String> mobile_no;
+    private static List<String> vehicle_no;
     private static Map<String,Object> currUserAttributes;
 
     private static FirebaseAuth mAuth;
@@ -111,13 +114,27 @@ public class AppHelper {
     public static void loginFieldGet(){
         DocumentReference docRef = mFirestore.collection("users").document(mUser.getUid());
         Source source = Source.SERVER;
-        boolean updateValue = false;
         docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     currUserAttributes = document.getData();
+                    boolean updateValue = false;
+                    if (currUserAttributes.containsKey("token")){
+                        if(currUserAttributes.get("token") != token){
+                            currUserAttributes.put("token", token);
+                            updateValue = true;
+                        }
+                    }
+                    else{
+                        currUserAttributes.put("token",token);
+                        updateValue = true;
+                    }
+                    setUserData();
+                    if(updateValue){
+                        updateFirestore("users", uid, currUserAttributes);
+                    }
                     Log.d(TAG, "Cached document data: " + document.getData());
                 } else {
                     Log.d(TAG, "Cached get failed: ", task.getException());
@@ -125,24 +142,36 @@ public class AppHelper {
             }
         });
 
-        if (currUserAttributes.containsKey("token")){
-            if(currUserAttributes.get("token") != token){
-                currUserAttributes.put("token", token);
-                updateValue = true;
-            }
-        }
-        else{
-            currUserAttributes.put("token",token);
-            updateValue = true;
-        }
-
-        if(updateValue){
-
-        }
     }
 
-    public static void updateFirestore(String collection, String document){
+    private static void setUserData() {
+        uid = currUserAttributes.get("uid").toString();
+        token = currUserAttributes.get("token").toString();
+        firstName = ((List<String>)currUserAttributes.get("name")).get(0);
+        lastName = ((List<String>)currUserAttributes.get("name")).get(0);
+        email = currUserAttributes.get("email").toString();
+        userType = currUserAttributes.get("user_type").toString();
+        flat_no = currUserAttributes.get("flat_no").toString();
+        mobile_no = (List<String>)currUserAttributes.get("mobile_no");
+        vehicle_no = (List<String>)currUserAttributes.get("vehicles");
+    }
 
+    public static void updateFirestore(String collectionPath, String document, Map<String, Object> doc){
+        mFirestore.collection(collectionPath)
+            .document(document)
+            .set(doc)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "onSuccess: DocumentSnapshot successfully written!");
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "onFailure: Error writing document", e);
+                }
+            });
     }
 
     public static void setToken(String t){
@@ -157,6 +186,10 @@ public class AppHelper {
         else if (token != t){
             token = t;
         }
+        else Log.d(TAG, "setToken: Token Equal");
+
+        currUserAttributes.put("token", token);
+        updateFirestore("users", uid, currUserAttributes);
     }
 
     public static String getToken(){
