@@ -1,7 +1,5 @@
 package cybersociety.vehicleatm;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +18,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,6 +46,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -86,8 +87,8 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        mStatusTextView = findViewById(R.id.status);
-        mDetailTextView = findViewById(R.id.detail);
+        //mStatusTextView = findViewById(R.id.status);
+        //mDetailTextView = findViewById(R.id.detail);
         mFirstNameView = findViewById(R.id.f_name);
         mLastNameView = findViewById(R.id.l_name);
         mFlatNoView = findViewById(R.id.flat_no);
@@ -122,7 +123,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-
+        //populating the spinner
         List<String> itemsList = new ArrayList<String>();
         itemsList.add("Normal");
         itemsList.add("POC");
@@ -130,6 +131,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemsList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerUserType.setAdapter(adapter);
+
         spinnerUserType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -196,8 +198,8 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String email = mEmailView.getText().toString().trim();
+        String password = mPasswordView.getText().toString().trim();
 
         boolean cancel = false;
         View focusView = null;
@@ -219,7 +221,18 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             focusView = mEmailView;
             cancel = true;
         }
-
+        /*
+        // Check for a valid vehicle No.
+        if (TextUtils.isEmpty(mVehiclesView.getText().toString().trim())) {
+            mVehiclesView.setError(getString(R.string.error_field_required));
+            focusView = mVehiclesView;
+            cancel = true;
+        } else if (!isValidVehicleNo(mVehiclesView.getText().toString().trim())) {
+            mVehiclesView.setError(getString(R.string.error_invalid_email));
+            focusView = mVehiclesView;
+            cancel = true;
+        }
+*/
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -251,7 +264,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 Log.d(TAG, "DocumentSnapshot successfully written!");
-                                                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                                                startActivity(new Intent(RegistrationActivity.this, ProfileActivity.class));
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -288,12 +301,29 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmailView.setError(getString(R.string.input_error_email_invalid));
+            mEmailView.requestFocus();
+            return false;
+        }
+        else
+            return true;
 
+    }
+    /*
+    // validating vehicle No
+    private boolean isValidVehicleNo(String no) {
+        String NO_PATTERN = "^[A-Z][A-Z]+[0-9][0-9]"
+                + "[A-Z][A-Z]+[0-9][0-9][0-9][0-9]$";
+
+        Pattern pattern = Pattern.compile(NO_PATTERN);
+        Matcher matcher = pattern.matcher(no);
+        return matcher.matches();
+    }
+        */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 6;
     }
 
     /**

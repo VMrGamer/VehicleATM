@@ -70,11 +70,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
-        AppHelper.init();
+        AppHelper.init(getApplicationContext());
         mAuth = AppHelper.getFirebaseAuth();
 
-        mStatusTextView = findViewById(R.id.status);
-        mDetailTextView = findViewById(R.id.detail);
+        //mStatusTextView = findViewById(R.id.status);
+        //mDetailTextView = findViewById(R.id.detail);
 
         // Set up the login form.
         mEmailView = findViewById(R.id.email);
@@ -166,7 +166,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         //TODO: Check already logged in
         if (AppHelper.getFirebaseCurrentUser() != null) {
             //handle the already login user
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
         }
 
         // Reset errors.
@@ -215,16 +215,16 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                                 showProgress(false);
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                updateUI(user);
+                                //updateUI(user);
 
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
 
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                                updateUI(null);
+                                //updateUI(null);
                             }
                             if (!task.isSuccessful()) {
                                 mStatusTextView.setText(R.string.auth_failed);
@@ -233,6 +233,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     });
         }
     }
+    /*
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
@@ -243,7 +244,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mDetailTextView.setText(null);
         }
     }
-
+     */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");

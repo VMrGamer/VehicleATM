@@ -9,7 +9,7 @@
     <string name="emailpassword_status_fmt">Email User: %1$s (verified: %2$b)</string>
     <string name="firebase_status_fmt">Firebase User: %s</string>
 
-    <string name="signed_out">Signed Out</string>
+
     <string name="auth_failed">Authentication failed</string>
 
     <string name="title_activity_splash">SplashActivity</string>
@@ -59,4 +59,12 @@
     <string name="flat">FLAT NO</string>
     <string name="vehicle_no">VEHICLE NO</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="firebase_uid">Firebase UID</string>
 </resources>
