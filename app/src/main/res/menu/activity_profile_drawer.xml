@@ -5,33 +5,46 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="PROFILE" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_notifications"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="NOTIFICATIONS" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_report_an_issue"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="REPORT AN ISSUE" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_faq"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="FAQ" />
+        <item
+            android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="LOGOUT" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="EXTRAS">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="SETTINGS" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_additional_info"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="ADDITIONAL INFO" />
+
+            <item
+                android:id="@+id/nav_about_us"
+                android:icon="@drawable/ic_menu_send"
+                android:title="ABOUT US" />
+            <item
+            android:id="@+id/nav_about_app"
+            android:icon="@drawable/ic_menu_send"
+            android:title="ABOUT APP" />
         </menu>
     </item>
 

@@ -67,4 +67,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="signed_out">Signed Out</string>
     <string name="firebase_uid">Firebase UID</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_profile_fragment">USER_PROFILE_FRAGMENT</string>
 </resources>
