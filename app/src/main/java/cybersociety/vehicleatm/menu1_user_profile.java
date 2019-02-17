@@ -9,9 +9,6 @@ import android.view.ViewGroup;
 
 import java.util.Objects;
 
-/**
- * Created by Belal on 18/09/16.
- */
 
 
 public class menu1_user_profile extends Fragment {
