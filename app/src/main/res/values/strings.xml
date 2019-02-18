@@ -71,4 +71,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user_profile_fragment">USER_PROFILE_FRAGMENT</string>
+    <string name="title_activity_main2">RecyclerViewActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

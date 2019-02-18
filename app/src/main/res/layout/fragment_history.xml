@@ -11,27 +11,10 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:background="@drawable/bg_fg"
-
         tools:layout_editor_absoluteX="10dp"
         tools:layout_editor_absoluteY="65dp">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="89dp"
-            android:layout_marginBottom="155dp"
-            android:text="Back to Main Page" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="111dp"
-            android:text="Hello All Resident" />
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
