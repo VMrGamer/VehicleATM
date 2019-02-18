@@ -105,7 +105,38 @@ public class ProfileActivity extends AppCompatActivity
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.nav_profile:
-                fragment = new menu1_user_profile();
+                fragment = new user_profile();
+                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.nav_notifications:
+                fragment = new user_profile();
+                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.nav_report_an_issue:
+                fragment = new user_profile();
+                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.nav_logout:
+
+                break;
+            case R.id.nav_faq:
+                fragment = new user_profile();
+                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.nav_settings:
+                fragment = new user_profile();
+                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.nav_additional_info:
+                fragment = new user_profile();
+                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.nav_about_us:
+                fragment = new user_profile();
+                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.nav_about_app:
+                fragment = new user_profile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             default:

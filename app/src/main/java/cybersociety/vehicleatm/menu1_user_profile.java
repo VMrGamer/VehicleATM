@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import java.util.Objects;
 
 
-
 public class menu1_user_profile extends Fragment {
 
     @Nullable
@@ -19,8 +18,8 @@ public class menu1_user_profile extends Fragment {
         //returning our layout file
         //change R.layout.your layout filename for each of your fragments
         return inflater.inflate(R.layout.fragment_user_profile, container, false);
-    }
 
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
