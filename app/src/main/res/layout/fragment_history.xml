@@ -7,14 +7,12 @@
     android:background="@drawable/bg">
 
     <RelativeLayout
+        android:id="@+id/fragment_history_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:background="@drawable/bg_fg"
         tools:layout_editor_absoluteX="10dp"
         tools:layout_editor_absoluteY="65dp">
-
-
-
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package cybersociety.vehicleatm;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
@@ -12,7 +13,7 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements RecyclerViewFragment.OnFragmentInteractionListener {
 
     private static final String TAG = "MainActivity";
 
@@ -91,5 +92,10 @@ public class MainActivity extends FragmentActivity {
         if (position == 2) {
 
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
