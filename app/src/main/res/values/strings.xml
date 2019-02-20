@@ -57,7 +57,7 @@
     <string name="registration_success">Registered Successfully</string>
     <string name="input_error_email_invalid">enter a valid email</string>
     <string name="flat">FLAT NO</string>
-    <string name="vehicle_no">VEHICLE NO</string>
+
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -67,11 +67,15 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="signed_out">Signed Out</string>
     <string name="firebase_uid">Firebase UID</string>
-
+    <string name="vehicle_no">VEHICLE NO</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user_profile_fragment">USER_PROFILE_FRAGMENT</string>
     <string name="title_activity_main2">RecyclerViewActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="register_vehicle">REGISTER VEHICLE</string>
+    <string name="register2">REGISTER</string>
+    <string name="enter_the_number">ENTER THE NUMBER</string>
+    <string name="model">MODEL</string>
 </resources>

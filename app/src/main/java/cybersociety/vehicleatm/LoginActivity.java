@@ -226,9 +226,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                                         Toast.LENGTH_SHORT).show();
                                 //updateUI(null);
                             }
+                            /*
                             if (!task.isSuccessful()) {
                                 mStatusTextView.setText(R.string.auth_failed);
-                            }
+                            }*/
                         }
                     });
         }

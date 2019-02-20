@@ -114,6 +114,10 @@ public class ProfileActivity extends AppCompatActivity
                 fragment = new user_profile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
+            case R.id.nav_registration:
+                fragment = new Register_vehicle();
+                Toast.makeText(getApplicationContext(), "REGISTRATION FRAGMENT", Toast.LENGTH_LONG).show();
+                break;
             case R.id.nav_report_an_issue:
                 fragment = new user_profile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
