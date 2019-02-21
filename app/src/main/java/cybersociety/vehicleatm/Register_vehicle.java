@@ -71,6 +71,7 @@ public class Register_vehicle extends Fragment {
                     doc_vehicle.put("vehicle model", model_no);
                     doc_vehicle.put("timestamp", currentTime);
                     doc_vehicle.put("owner",user.getUid());
+                    doc_vehicle.put("rid",user.getUid()+currentTime);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                     //writing data
                     db.collection("registration")
