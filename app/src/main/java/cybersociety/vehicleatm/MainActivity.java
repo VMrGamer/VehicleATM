@@ -29,7 +29,6 @@ public class MainActivity extends FragmentActivity implements RecyclerViewFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppHelper.init(getApplicationContext());
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 Object value = getIntent().getExtras().get(key);
