@@ -51,19 +51,18 @@ public class Register_vehicle extends Fragment {
         //initialize
         veh_no = view.findViewById(R.id.editText);
         model = view.findViewById(R.id.editText4);
-        mAuth = AppHelper.getFirebaseAuth();
+        mAuth = FirebaseAuth.getInstance();
         b1 = view.findViewById(R.id.button2);
         // Store values at the time of the registration attempt.
 
         //registering the vehicle
-
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //final FirebaseUser user = mAuth.getCurrentUser();
+                final FirebaseUser user = mAuth.getCurrentUser();
                 final String vehicle_no = veh_no.getText().toString();
                 final String model_no = model.getText().toString();
-                //if(user!=null){
+                if(user!=null){
                     Toast.makeText(getContext(), "PROCEEDING REG...", Toast.LENGTH_LONG).show();
                     Map<String, Object> doc_vehicle = new HashMap<>();
                     doc_vehicle.put("vehicle no", vehicle_no);
@@ -71,7 +70,7 @@ public class Register_vehicle extends Fragment {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                     //writing data
                     db.collection("registration")
-                            .document("FIRST REG")
+                            .document(user.getUid())
                             .set(doc_vehicle)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -87,11 +86,11 @@ public class Register_vehicle extends Fragment {
                                     Toast.makeText(getContext(), "WRITE UNSUCCESSFUL..", Toast.LENGTH_LONG).show();
                                 }
                             });
-                //}
-                //else
-                //{
-                //    Toast.makeText(getContext(), "NULL USER", Toast.LENGTH_LONG).show();
-                //}
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "NULL USER", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
