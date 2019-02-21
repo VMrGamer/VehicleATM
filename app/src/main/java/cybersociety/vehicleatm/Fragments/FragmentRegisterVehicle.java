@@ -68,9 +68,8 @@ public class FragmentRegisterVehicle extends Fragment {
                     doc_vehicle.put("timestamp", currentTime);
                     doc_vehicle.put("owner", user.getUid());
                     doc_vehicle.put("rid", "null");
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
                     //writing data
-                    db.collection("registration")
+                    AppHelper.getFirestore().collection("registration")
                             .document(user.getUid()+currentTime)
                             .set(doc_vehicle)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
