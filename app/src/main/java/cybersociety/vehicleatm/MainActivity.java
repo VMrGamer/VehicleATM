@@ -79,6 +79,13 @@ public class MainActivity extends FragmentActivity implements RecyclerViewFragme
         AppHelper.loginFieldGet();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent profA = new Intent(MainActivity.this, ProfileActivity.class);
+        startActivity(profA);
+        finish();
+    }
+
     private void onChangeTab(int position) {
         //TODO: Implement Something fishy here
         if(position == 0) {

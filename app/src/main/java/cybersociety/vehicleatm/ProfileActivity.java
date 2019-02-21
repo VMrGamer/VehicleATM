@@ -124,6 +124,10 @@ public class ProfileActivity extends AppCompatActivity
                 fragment = new FragmentRegisterVehicle();
                 Toast.makeText(getApplicationContext(), "REGISTRATION FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
+            case R.id.nav_main:
+                Intent mainA = new Intent(ProfileActivity.this, MainActivity.class);
+                startActivity(mainA);
+                finish();
             case R.id.nav_report_an_issue:
                 fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();

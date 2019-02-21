@@ -69,7 +69,7 @@ public class FragmentHistory extends Fragment{
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
-
+/*
         Source source = Source.SERVER;
         AppHelper.getFirestore().collection("entry-exit-buffer").whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(new Date()))
                 .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -112,6 +112,7 @@ public class FragmentHistory extends Fragment{
                 }
             }
         });
+        */
     }
 
 }
