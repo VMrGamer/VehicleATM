@@ -69,11 +69,12 @@ public class Register_vehicle extends Fragment {
                     Date currentTime = Calendar.getInstance().getTime();
                     doc_vehicle.put("vehicle no", vehicle_no);
                     doc_vehicle.put("vehicle model", model_no);
-                    doc_vehicle.put("time", currentTime);
+                    doc_vehicle.put("timestamp", currentTime);
+                    doc_vehicle.put("owner",user.getUid());
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                     //writing data
                     db.collection("registration")
-                            .document(user.getUid())
+                            .document(user.getUid()+currentTime)
                             .set(doc_vehicle)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
