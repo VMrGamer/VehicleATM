@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
@@ -69,7 +68,7 @@ public class FragmentHistory extends Fragment{
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
-/*
+
         Source source = Source.SERVER;
         AppHelper.getFirestore().collection("entry-exit-buffer").whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(new Date()))
                 .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -92,7 +91,7 @@ public class FragmentHistory extends Fragment{
                 if(task.isSuccessful()){
                     QuerySnapshot querySnapshot = task.getResult();
                     logAck = querySnapshot.getDocuments();
-                    Log.d(TAG, "onComplete: EEB Cached Number - " + logAck.size());
+                    Log.d(TAG, "onComplete: logAck Cached Number - " + logAck.size());
                 }else{
                     Log.d(TAG, "onComplete: Cached get failed - ", task.getException());
                 }
@@ -106,13 +105,12 @@ public class FragmentHistory extends Fragment{
                 if(task.isSuccessful()){
                     QuerySnapshot querySnapshot = task.getResult();
                     logUnack = querySnapshot.getDocuments();
-                    Log.d(TAG, "onComplete: EEB Cached Number - " + logUnack.size());
+                    Log.d(TAG, "onComplete: logUnack Cached Number - " + logUnack.size());
                 }else{
                     Log.d(TAG, "onComplete: Cached get failed - ", task.getException());
                 }
             }
         });
-        */
     }
 
 }

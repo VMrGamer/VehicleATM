@@ -14,8 +14,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -63,29 +65,24 @@ public class FragmentRegisterVehicle extends Fragment {
                 if(user!=null){
                     Toast.makeText(getContext(), "PROCEEDING REG...", Toast.LENGTH_LONG).show();
                     Map<String, Object> doc_vehicle = new HashMap<>();
-                    Date currentTime = Calendar.getInstance().getTime();
-                    doc_vehicle.put("vehicle no", veh_no.getText().toString());
-                    doc_vehicle.put("timestamp", currentTime);
+                    doc_vehicle.put("vehicle_no", veh_no.getText().toString());
+                    doc_vehicle.put("timestamp", new Timestamp(new Date()));
                     doc_vehicle.put("owner", user.getUid());
                     doc_vehicle.put("rid", "null");
                     //writing data
-                    AppHelper.getFirestore().collection("registration")
-                            .document(user.getUid()+currentTime)
-                            .set(doc_vehicle)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "DocumentSnapshot successfully written!");
-                                    Toast.makeText(getContext(), "WRITE SUCCESSFUL..", Toast.LENGTH_LONG).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error writing document", e);
-                                    Toast.makeText(getContext(), "WRITE UNSUCCESSFUL..", Toast.LENGTH_LONG).show();
-                                }
-                            });
+                    AppHelper.getFirestore().collection("registration").add(doc_vehicle).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                            Toast.makeText(getContext(), "WRITE SUCCESSFUL..", Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error writing document", e);
+                            Toast.makeText(getContext(), "WRITE UNSUCCESSFUL..", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
                 else
                 {
