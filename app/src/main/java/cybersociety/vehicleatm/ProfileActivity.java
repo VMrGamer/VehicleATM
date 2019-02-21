@@ -1,8 +1,6 @@
 package cybersociety.vehicleatm;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -19,9 +17,8 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
+import cybersociety.vehicleatm.Fragments.FragmentRegisterVehicle;
+import cybersociety.vehicleatm.Fragments.FragmentUserProfile;
 
 public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,22 +36,8 @@ public class ProfileActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                    finish();
-                    Snackbar.make(view, "Logged out...", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    Toast.makeText(getApplicationContext(), "LOGGED OUT", Toast.LENGTH_LONG).show();
-
-                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                    // signed out
-                } catch(Exception e){
-                    // an error
-                    Snackbar.make(view, "Error occurred...", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
 
@@ -78,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -112,7 +95,7 @@ public class ProfileActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
        
-        //calling the method display selected screen and passing the id of selected menu
+        //calling the method displayselectedscreen and passing the id of selected menu
         displaySelectedScreen(item.getItemId());
         return true;
     }
@@ -124,42 +107,42 @@ public class ProfileActivity extends AppCompatActivity
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.nav_profile:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_notifications:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_registration:
-                fragment = new Register_vehicle();
+                fragment = new FragmentRegisterVehicle();
                 Toast.makeText(getApplicationContext(), "REGISTRATION FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_report_an_issue:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_logout:
 
                 break;
             case R.id.nav_faq:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_settings:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_additional_info:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_about_us:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_about_app:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             default:

@@ -5,6 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import cybersociety.vehicleatm.Fragments.FragmentAll;
+import cybersociety.vehicleatm.Fragments.FragmentHistory;
+import cybersociety.vehicleatm.Fragments.FragmentRegister;
+
 class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     private String[] tabTitles = new String[]{"All", "Register", "History"};
 

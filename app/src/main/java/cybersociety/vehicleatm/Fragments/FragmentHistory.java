@@ -1,4 +1,4 @@
-package cybersociety.vehicleatm;
+package cybersociety.vehicleatm.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,10 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.Timestamp;
+
+import java.util.Date;
+import java.util.Map;
+
+import cybersociety.vehicleatm.AppHelper;
+import cybersociety.vehicleatm.R;
+import cybersociety.vehicleatm.RecyclerViewFragment;
+
 public class FragmentHistory extends Fragment{
 
     private String title;
     private int page;
+    private Map<String, Object> dataEEBuffer;
+    private Map<String,Object> dataLogUnack;
+    private Map<String, Object> dataLogAck;
     private RecyclerViewFragment recyclerViewFragment;
 
     @Nullable
@@ -45,6 +57,8 @@ public class FragmentHistory extends Fragment{
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
+        AppHelper.getFirestore().collection("entry-exit-buffer").whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(new Date()));
+
     }
 
 }

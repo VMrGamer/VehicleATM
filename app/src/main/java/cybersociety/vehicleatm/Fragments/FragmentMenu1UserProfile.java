@@ -1,4 +1,4 @@
-package cybersociety.vehicleatm;
+package cybersociety.vehicleatm.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 
 import java.util.Objects;
 
+import cybersociety.vehicleatm.R;
 
-public class menu1_user_profile extends Fragment {
+
+public class FragmentMenu1UserProfile extends Fragment {
 
     @Nullable
     @Override

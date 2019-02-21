@@ -1,4 +1,4 @@
-package cybersociety.vehicleatm;
+package cybersociety.vehicleatm.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,9 +24,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import cybersociety.vehicleatm.AppHelper;
+import cybersociety.vehicleatm.R;
+
 import static android.support.constraint.Constraints.TAG;
 
-public class Register_vehicle extends Fragment {
+public class FragmentRegisterVehicle extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +41,6 @@ public class Register_vehicle extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register_vehicle, container, false);
-
     }
 
     @Override
@@ -46,13 +48,10 @@ public class Register_vehicle extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
         Objects.requireNonNull(getActivity()).setTitle("VEHICLE REGISTRATION");
-        final EditText veh_no, model;
+        final EditText veh_no;
         Button b1;
-        final FirebaseAuth mAuth;
         //initialize
         veh_no = view.findViewById(R.id.editText);
-        model = view.findViewById(R.id.editText4);
-        mAuth = FirebaseAuth.getInstance();
         b1 = view.findViewById(R.id.button2);
         // Store values at the time of the registration attempt.
 
@@ -60,18 +59,15 @@ public class Register_vehicle extends Fragment {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final FirebaseUser user = mAuth.getCurrentUser();
-                final String vehicle_no = veh_no.getText().toString();
-                final String model_no = model.getText().toString();
+                FirebaseUser user = AppHelper.getFirebaseCurrentUser();
                 if(user!=null){
                     Toast.makeText(getContext(), "PROCEEDING REG...", Toast.LENGTH_LONG).show();
                     Map<String, Object> doc_vehicle = new HashMap<>();
                     Date currentTime = Calendar.getInstance().getTime();
-                    doc_vehicle.put("vehicle no", vehicle_no);
-                    doc_vehicle.put("vehicle model", model_no);
+                    doc_vehicle.put("vehicle no", veh_no.getText().toString());
                     doc_vehicle.put("timestamp", currentTime);
-                    doc_vehicle.put("owner",user.getUid());
-                    doc_vehicle.put("rid",user.getUid()+currentTime);
+                    doc_vehicle.put("owner", user.getUid());
+                    doc_vehicle.put("rid", "null");
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                     //writing data
                     db.collection("registration")
