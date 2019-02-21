@@ -1,6 +1,5 @@
 package cybersociety.vehicleatm;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -65,8 +66,10 @@ public class Register_vehicle extends Fragment {
                 if(user!=null){
                     Toast.makeText(getContext(), "PROCEEDING REG...", Toast.LENGTH_LONG).show();
                     Map<String, Object> doc_vehicle = new HashMap<>();
+                    Date currentTime = Calendar.getInstance().getTime();
                     doc_vehicle.put("vehicle no", vehicle_no);
                     doc_vehicle.put("vehicle model", model_no);
+                    doc_vehicle.put("time", currentTime);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                     //writing data
                     db.collection("registration")
