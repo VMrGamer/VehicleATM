@@ -1,11 +1,9 @@
 package cybersociety.vehicleatm;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,9 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import cybersociety.vehicleatm.Fragments.FragmentRegisterVehicle;
+import cybersociety.vehicleatm.Fragments.FragmentUserProfile;
 
 public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -107,42 +107,42 @@ public class ProfileActivity extends AppCompatActivity
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.nav_profile:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_notifications:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_registration:
-                fragment = new Register_vehicle();
+                fragment = new FragmentRegisterVehicle();
                 Toast.makeText(getApplicationContext(), "REGISTRATION FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_report_an_issue:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_logout:
 
                 break;
             case R.id.nav_faq:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_settings:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_additional_info:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_about_us:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_about_app:
-                fragment = new user_profile();
+                fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             default:
