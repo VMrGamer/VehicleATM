@@ -2,10 +2,10 @@ package cybersociety.vehicleatm;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,9 +16,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,8 +39,22 @@ public class ProfileActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                try {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                    finish();
+                    Snackbar.make(view, "Logged out...", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    Toast.makeText(getApplicationContext(), "LOGGED OUT", Toast.LENGTH_LONG).show();
+
+                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                    // signed out
+                } catch(Exception e){
+                    // an error
+                    Snackbar.make(view, "Error occurred...", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+
             }
         });
 
@@ -61,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -95,7 +112,7 @@ public class ProfileActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
        
-        //calling the method displayselectedscreen and passing the id of selected menu
+        //calling the method display selected screen and passing the id of selected menu
         displaySelectedScreen(item.getItemId());
         return true;
     }
