@@ -1,5 +1,7 @@
 package cybersociety.vehicleatm.Fragments;
 
+import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,9 +17,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 
+import org.w3c.dom.Document;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +56,11 @@ public class FragmentHistory extends Fragment{
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction =  fragmentManager.beginTransaction();
         fragmentManager.beginTransaction();
-        recyclerViewFragment = RecyclerViewFragment.newInstance();
+        ArrayList<String> assHole = new ArrayList<>();
+        assHole.add("entry-exit-buffer");
+        assHole.add("log-acknowledged");
+        assHole.add("log-unacknowledged");
+        recyclerViewFragment = RecyclerViewFragment.newInstance(assHole, "null", "null");
         Bundle args = new Bundle();
         recyclerViewFragment.setArguments(args);
         fragmentTransaction.add(R.id.fragment_history_container, recyclerViewFragment);
@@ -68,49 +82,6 @@ public class FragmentHistory extends Fragment{
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
-
-        Source source = Source.SERVER;
-        AppHelper.getFirestore().collection("entry-exit-buffer").whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(new Date()))
-                .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    QuerySnapshot querySnapshot = task.getResult();
-                    EEBuffer = querySnapshot.getDocuments();
-                    Log.d(TAG, "onComplete: EEB Cached Number - " + EEBuffer.size());
-                }else{
-                    Log.d(TAG, "onComplete: Cached get failed - ", task.getException());
-                }
-            }
-        });
-
-        AppHelper.getFirestore().collection("log-acknowledged").whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(new Date()))
-                .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    QuerySnapshot querySnapshot = task.getResult();
-                    logAck = querySnapshot.getDocuments();
-                    Log.d(TAG, "onComplete: logAck Cached Number - " + logAck.size());
-                }else{
-                    Log.d(TAG, "onComplete: Cached get failed - ", task.getException());
-                }
-            }
-        });
-
-        AppHelper.getFirestore().collection("log-unacknowledged").whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(new Date()))
-                .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    QuerySnapshot querySnapshot = task.getResult();
-                    logUnack = querySnapshot.getDocuments();
-                    Log.d(TAG, "onComplete: logUnack Cached Number - " + logUnack.size());
-                }else{
-                    Log.d(TAG, "onComplete: Cached get failed - ", task.getException());
-                }
-            }
-        });
     }
 
 }

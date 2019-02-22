@@ -5,9 +5,13 @@ import android.net.Uri;
 
 import android.os.Bundle;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,6 +19,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 
@@ -24,6 +32,13 @@ import android.os.Handler;
 
 import android.view.ViewGroup;
 import android.view.MenuInflater;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,15 +51,18 @@ import android.view.MenuInflater;
 
 
 public class RecyclerViewFragment extends Fragment {
-
+    private static final String TAG = "RecyclerViewFragment";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "listArrayList1";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ArrayList<String> collectionStrings;
+    private List<DocumentSnapshot> documentSnapshotList;
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,11 +85,12 @@ public class RecyclerViewFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static RecyclerViewFragment newInstance(String param1, String param2) {
+    public static RecyclerViewFragment newInstance(ArrayList<String> stringList, String param1, String param2) {
         RecyclerViewFragment fragment = new RecyclerViewFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        args.putStringArrayList(ARG_PARAM3, stringList);
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,10 +104,12 @@ public class RecyclerViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
+        Log.d(TAG, "onCreate: ");
+        collectionStrings = new ArrayList<>();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            collectionStrings = getArguments().getStringArrayList(ARG_PARAM3);
         }
     }
 
@@ -110,9 +131,7 @@ public class RecyclerViewFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setAdapter();
-
         swipeRefreshRecyclerList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -167,7 +186,7 @@ public class RecyclerViewFragment extends Fragment {
 
     private void setAdapter() {
 
-
+        /*
         modelList.add(new AbstractModel("Android", "Hello " + " Android"));
         modelList.add(new AbstractModel("Beta", "Hello " + " Beta"));
         modelList.add(new AbstractModel("Cupcake", "Hello " + " Cupcake"));
@@ -183,20 +202,39 @@ public class RecyclerViewFragment extends Fragment {
         modelList.add(new AbstractModel("Marshmallow", "Hello " + " Marshmallow"));
         modelList.add(new AbstractModel("Nougat", "Hello " + " Nougat"));
         modelList.add(new AbstractModel("Android O", "Hello " + " Android O"));
+        */
 
+        final Calendar c = new GregorianCalendar();
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+
+
+        final Source source = Source.SERVER;
+
+        for(String collectionPath: collectionStrings){
+            AppHelper.getFirestore().collection(collectionPath).whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(c.getTime()))
+                .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            QuerySnapshot querySnapshot = task.getResult();
+                            for(DocumentSnapshot documentSnapshot: querySnapshot.getDocuments()){
+                                Map<String, Object> dataDoc = documentSnapshot.getData();
+                                modelList.add(new AbstractModel(dataDoc.get("vehicle_no").toString(), dataDoc.get("rid").toString()));
+                            }
+                        }else{
+                            Log.d(TAG, "onComplete: Cached get failed - ", task.getException());
+                        }
+                    }
+                });
+        }
 
         mAdapter = new RecyclerViewAdapter(getActivity(), modelList);
-
         recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-
-
         recyclerView.setAdapter(mAdapter);
-
-
         mAdapter.SetOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, AbstractModel model) {
