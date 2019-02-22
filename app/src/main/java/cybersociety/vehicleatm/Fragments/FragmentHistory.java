@@ -61,8 +61,8 @@ public class FragmentHistory extends Fragment{
         assHole.add("log-acknowledged");
         assHole.add("log-unacknowledged");
         recyclerViewFragment = RecyclerViewFragment.newInstance(assHole, "null", "null");
-        Bundle args = new Bundle();
-        recyclerViewFragment.setArguments(args);
+        //Bundle args = new Bundle();
+        //recyclerViewFragment.setArguments(args);
         fragmentTransaction.add(R.id.fragment_history_container, recyclerViewFragment);
         fragmentTransaction.commit();
         return layout;

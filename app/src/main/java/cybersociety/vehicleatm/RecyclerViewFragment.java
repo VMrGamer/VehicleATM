@@ -5,8 +5,6 @@ import android.net.Uri;
 
 import android.os.Bundle;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -140,7 +138,33 @@ public class RecyclerViewFragment extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        final Calendar c = new GregorianCalendar();
+                        c.set(Calendar.HOUR_OF_DAY, 0);
+                        c.set(Calendar.MINUTE, 0);
+                        c.set(Calendar.SECOND, 0);
 
+
+                        final Source source = Source.SERVER;
+
+                        for(final String collectionPath: collectionStrings){
+                            AppHelper.getFirestore().collection(collectionPath).whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(c.getTime()))
+                                    .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        QuerySnapshot querySnapshot = task.getResult();
+                                        Log.d(TAG, "onComplete: Cached get Success - " + collectionPath + " - "+ querySnapshot.getDocuments().size());
+                                        for(DocumentSnapshot documentSnapshot: querySnapshot.getDocuments()){
+                                            Map<String, Object> dataDoc = documentSnapshot.getData();
+                                            modelList.add(new AbstractModel(dataDoc.get("vehicle_no").toString(), dataDoc.get("rid").toString()));
+                                            mAdapter.updateList(modelList);
+                                        }
+                                    }else{
+                                        Log.d(TAG, "onComplete: Cached get failed - ", task.getException());
+                                    }
+                                }
+                            });
+                        }
                         if (swipeRefreshRecyclerList.isRefreshing())
                             swipeRefreshRecyclerList.setRefreshing(false);
                     }
@@ -204,6 +228,7 @@ public class RecyclerViewFragment extends Fragment {
         modelList.add(new AbstractModel("Android O", "Hello " + " Android O"));
         */
 
+        mAdapter = new RecyclerViewAdapter(getActivity(), modelList);
         final Calendar c = new GregorianCalendar();
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
@@ -212,16 +237,18 @@ public class RecyclerViewFragment extends Fragment {
 
         final Source source = Source.SERVER;
 
-        for(String collectionPath: collectionStrings){
+        for(final String collectionPath: collectionStrings){
             AppHelper.getFirestore().collection(collectionPath).whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(c.getTime()))
                 .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
                             QuerySnapshot querySnapshot = task.getResult();
+                            Log.d(TAG, "onComplete: Cached get Success - " + collectionPath + " - "+ querySnapshot.getDocuments().size());
                             for(DocumentSnapshot documentSnapshot: querySnapshot.getDocuments()){
                                 Map<String, Object> dataDoc = documentSnapshot.getData();
                                 modelList.add(new AbstractModel(dataDoc.get("vehicle_no").toString(), dataDoc.get("rid").toString()));
+                                mAdapter.updateList(modelList);
                             }
                         }else{
                             Log.d(TAG, "onComplete: Cached get failed - ", task.getException());
@@ -230,7 +257,6 @@ public class RecyclerViewFragment extends Fragment {
                 });
         }
 
-        mAdapter = new RecyclerViewAdapter(getActivity(), modelList);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
