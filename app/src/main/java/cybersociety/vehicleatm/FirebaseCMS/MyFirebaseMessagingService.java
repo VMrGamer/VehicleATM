@@ -21,15 +21,10 @@ import cybersociety.vehicleatm.MainActivity;
 import cybersociety.vehicleatm.R;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
     private static final String TAG = "MyFirebaseMsgService";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // Check if message contains a data payload.
-        Log.d(TAG, "onMessageReceived: called");
-        Log.d(TAG, "onMessageReceived: data: "+remoteMessage.getNotification().getBody());
-        Log.d(TAG, "Message data payload: " + remoteMessage.getData());
         sendNotification(remoteMessage);
     }
 

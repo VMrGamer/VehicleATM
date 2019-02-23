@@ -143,7 +143,6 @@ public class RecyclerViewFragment extends Fragment {
                         c.set(Calendar.MINUTE, 0);
                         c.set(Calendar.SECOND, 0);
 
-
                         final Source source = Source.SERVER;
 
                         for(final String collectionPath: collectionStrings){
@@ -156,6 +155,7 @@ public class RecyclerViewFragment extends Fragment {
                                         Log.d(TAG, "onComplete: Cached get Success - " + collectionPath + " - "+ querySnapshot.getDocuments().size());
                                         for(DocumentSnapshot documentSnapshot: querySnapshot.getDocuments()){
                                             Map<String, Object> dataDoc = documentSnapshot.getData();
+                                            modelList = new ArrayList<>();
                                             modelList.add(new AbstractModel(dataDoc.get("vehicle_no").toString(), dataDoc.get("rid").toString()));
                                             mAdapter.updateList(modelList);
                                         }
