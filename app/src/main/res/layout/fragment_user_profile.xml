@@ -5,11 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.FragmentUserProfile">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="23sp"
-        android:text="@string/user_profile_fragment" />
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/grid_layout01" />
 
 </FrameLayout>
