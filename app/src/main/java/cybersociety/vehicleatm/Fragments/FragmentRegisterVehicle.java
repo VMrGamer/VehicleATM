@@ -22,9 +22,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
@@ -57,6 +59,10 @@ public class FragmentRegisterVehicle extends Fragment {
         b1 = view.findViewById(R.id.button2);
         // Store values at the time of the registration attempt.
 
+        final Calendar calendar = new GregorianCalendar();
+        calendar.setTime(new Date());
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
+
         //registering the vehicle
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +72,7 @@ public class FragmentRegisterVehicle extends Fragment {
                     Toast.makeText(getContext(), "PROCEEDING REG...", Toast.LENGTH_LONG).show();
                     Map<String, Object> doc_vehicle = new HashMap<>();
                     doc_vehicle.put("vehicle_no", veh_no.getText().toString());
-                    doc_vehicle.put("timestamp", new Timestamp(new Date()));
+                    doc_vehicle.put("timestamp", new Timestamp(calendar.getTime()));
                     doc_vehicle.put("owner", user.getUid());
                     doc_vehicle.put("rid", "null");
                     //writing data

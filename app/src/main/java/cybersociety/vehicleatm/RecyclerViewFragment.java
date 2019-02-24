@@ -144,6 +144,7 @@ public class RecyclerViewFragment extends Fragment {
                         c.set(Calendar.SECOND, 0);
 
                         final Source source = Source.SERVER;
+                        modelList = new ArrayList<>();
 
                         for(final String collectionPath: collectionStrings){
                             AppHelper.getFirestore().collection(collectionPath).whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(c.getTime()))
@@ -155,7 +156,6 @@ public class RecyclerViewFragment extends Fragment {
                                         Log.d(TAG, "onComplete: Cached get Success - " + collectionPath + " - "+ querySnapshot.getDocuments().size());
                                         for(DocumentSnapshot documentSnapshot: querySnapshot.getDocuments()){
                                             Map<String, Object> dataDoc = documentSnapshot.getData();
-                                            modelList = new ArrayList<>();
                                             modelList.add(new AbstractModel(dataDoc.get("vehicle_no").toString(), dataDoc.get("rid").toString()));
                                             mAdapter.updateList(modelList);
                                         }
@@ -165,6 +165,7 @@ public class RecyclerViewFragment extends Fragment {
                                 }
                             });
                         }
+
                         if (swipeRefreshRecyclerList.isRefreshing())
                             swipeRefreshRecyclerList.setRefreshing(false);
                     }
