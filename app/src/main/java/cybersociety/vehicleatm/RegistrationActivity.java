@@ -274,31 +274,31 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                             }
                                         });
                                 startActivity(new Intent(RegistrationActivity.this, ProfileActivity.class));
-                                updateUI(user);
+                               // updateUI(user);
 
                             } else {
 
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(RegistrationActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                                updateUI(null);
+                               // updateUI(null);
                             }
                         }
                     });
         }
     }
-
+/*
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             //mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
-                    user.getEmail(), user.isEmailVerified()));
+                    user.getEmail(), user.isEmailVerified());
             //mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
         } else {
             //mStatusTextView.setText(R.string.signed_out);
             //mDetailTextView.setText(null);
         }
     }
-
+*/
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
