@@ -139,7 +139,10 @@ public class ProfileActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_logout:
-
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                Toast.makeText(getApplicationContext(), "LOGGED OUT..", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_faq:
                 fragment = new FragmentUserProfile();

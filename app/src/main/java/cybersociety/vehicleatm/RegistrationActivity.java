@@ -65,8 +65,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
+
     private TextView mFirstNameView;
     private TextView mLastNameView;
     private EditText mFlatNoView;

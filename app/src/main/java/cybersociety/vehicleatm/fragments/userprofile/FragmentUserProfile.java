@@ -31,7 +31,6 @@ import cybersociety.vehicleatm.R;
  * create an instance of this fragment.
  */
 
-
 public class FragmentUserProfile extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -103,7 +102,6 @@ public class FragmentUserProfile extends Fragment {
 
         // ButterKnife.bind(this);
         findViews(view);
-
         return view;
 
     }
@@ -114,13 +112,10 @@ public class FragmentUserProfile extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setAdapter();
-
-
     }
 
 
     private void findViews(View view) {
-
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
     }
 
@@ -153,9 +148,9 @@ public class FragmentUserProfile extends Fragment {
 
 
         modelList.add(new UserProfileModel("GUEST REGISTRATION", "Register your expected guests"));
-        modelList.add(new UserProfileModel("Beta", "Hello " + " Beta"));
-        modelList.add(new UserProfileModel("Cupcake", "Hello " + " Cupcake"));
-        modelList.add(new UserProfileModel("Donut", "Hello " + " Donut"));
+        modelList.add(new UserProfileModel("CONTACT SPOC", "Contact any SPOC"));
+        modelList.add(new UserProfileModel("CONTACT GUARD", "Contact a guard"));
+        modelList.add(new UserProfileModel("CONTACT RESIDENT", "Contact any fellow Resident"));
 
 
 
@@ -177,11 +172,10 @@ public class FragmentUserProfile extends Fragment {
 
                 //handle item click events here
                 switch (position){
-                    case 0 :
+                    case 0 : ;
                         break;
                 }
-                Toast.makeText(getActivity(), "Hey " + model.getTitle(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getActivity(), " "+model.getTitle(), Toast.LENGTH_SHORT).show();
 
             }
         });
