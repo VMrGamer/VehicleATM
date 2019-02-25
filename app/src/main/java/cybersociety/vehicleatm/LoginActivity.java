@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -213,13 +214,17 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmailView.setError(getString(R.string.input_error_email_invalid));
+            mEmailView.requestFocus();
+            return false;
+        }
+        else
+            return true;
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 6;
     }
 
     private void showProgress(final boolean show) {

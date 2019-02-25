@@ -39,15 +39,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Objects;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -65,19 +63,15 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
     private TextView mFirstNameView;
     private TextView mLastNameView;
     private EditText mFlatNoView;
     private EditText mVehiclesView;
     private EditText mMobileView;
-    private Spinner spinnerUserType;
 
     private String userTypeString;
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +79,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         setContentView(R.layout.activity_registration);
 
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
 
         //mStatusTextView = findViewById(R.id.status);
         //mDetailTextView = findViewById(R.id.detail);
@@ -94,7 +87,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         mFlatNoView = findViewById(R.id.flat_no);
         mVehiclesView = findViewById(R.id.vehicles);
         mMobileView = findViewById(R.id.mobile_no);
-        spinnerUserType = findViewById(R.id.user_type_spinner);
+        Spinner spinnerUserType = findViewById(R.id.user_type_spinner);
 
 
         // Set up the login form.
@@ -124,11 +117,11 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         //populating the spinner
-        List<String> itemsList = new ArrayList<String>();
+        List<String> itemsList = new ArrayList<>();
         itemsList.add("Normal");
         itemsList.add("POC");
         itemsList.add("Guard");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemsList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, itemsList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerUserType.setAdapter(adapter);
 
@@ -247,18 +240,23 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                showProgress(false);
                                 Log.d(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 Map<String, Object> doc_user = new HashMap<>();
-                                doc_user.put("email", user.getEmail());
+                                if (user != null) {
+                                    doc_user.put("email", Objects.requireNonNull(user.getEmail()));
+                                }
                                 doc_user.put("flat_no", mFlatNoView.getText().toString());
                                 doc_user.put("mobile_no", Arrays.asList(mMobileView.getText().toString(),"null"));
                                 doc_user.put("name", Arrays.asList(mFirstNameView.getText().toString(),mLastNameView.getText().toString()));
-                                doc_user.put("uid", user.getUid());
+                                if (user != null) {
+                                    doc_user.put("uid", user.getUid());
+                                }
                                 doc_user.put("user_type", userTypeString);
                                 doc_user.put("vehicles", Arrays.asList(mVehiclesView.getText().toString(),"null"));
                                 AppHelper.getFirestore().collection("users")
-                                        .document(user.getUid())
+                                        .document(Objects.requireNonNull(user).getUid())
                                         .set(doc_user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -274,33 +272,19 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                             }
                                         });
                                 startActivity(new Intent(RegistrationActivity.this, ProfileActivity.class));
-                               // updateUI(user);
 
                             } else {
-
+                                showProgress(false);
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(RegistrationActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                               // updateUI(null);
                             }
                         }
                     });
         }
     }
-/*
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            //mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
-                    user.getEmail(), user.isEmailVerified());
-            //mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-        } else {
-            //mStatusTextView.setText(R.string.signed_out);
-            //mDetailTextView.setText(null);
-        }
-    }
-*/
+
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             mEmailView.setError(getString(R.string.input_error_email_invalid));
             mEmailView.requestFocus();
@@ -308,21 +292,9 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         }
         else
             return true;
-
     }
-    /*
-    // validating vehicle No
-    private boolean isValidVehicleNo(String no) {
-        String NO_PATTERN = "^[A-Z][A-Z]+[0-9][0-9]"
-                + "[A-Z][A-Z]+[0-9][0-9][0-9][0-9]$";
 
-        Pattern pattern = Pattern.compile(NO_PATTERN);
-        Matcher matcher = pattern.matcher(no);
-        return matcher.matches();
-    }
-        */
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 6;
     }
 
