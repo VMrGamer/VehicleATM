@@ -12,8 +12,10 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import cybersociety.vehicleatm.fragments.feed24hr.Fragment24HrFeed;
 
-public class MainActivity extends FragmentActivity implements RecyclerViewFragment.OnFragmentInteractionListener {
+
+public class MainActivity extends FragmentActivity implements Fragment24HrFeed.OnFragmentInteractionListener {
 
     private static final String TAG = "MainActivity";
 

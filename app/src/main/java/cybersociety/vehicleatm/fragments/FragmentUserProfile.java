@@ -1,4 +1,4 @@
-package cybersociety.vehicleatm.Fragments;
+package cybersociety.vehicleatm.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

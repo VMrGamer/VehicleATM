@@ -5,9 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import cybersociety.vehicleatm.Fragments.FragmentAll;
-import cybersociety.vehicleatm.Fragments.FragmentHistory;
-import cybersociety.vehicleatm.Fragments.FragmentRegister;
+import java.util.ArrayList;
+
+import cybersociety.vehicleatm.fragments.FragmentAll;
+import cybersociety.vehicleatm.fragments.FragmentRegister;
+import cybersociety.vehicleatm.fragments.feed24hr.Fragment24HrFeed;
 
 class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     private String[] tabTitles = new String[]{"All", "Register", "History"};
@@ -32,7 +34,11 @@ class MyFragmentPagerAdapter extends FragmentPagerAdapter {
                 fragment = FragmentRegister.newInstance(0, "Register");
                 break;
             case 2:
-                fragment = FragmentHistory.newInstance(0, "History");
+                ArrayList<String> assHole = new ArrayList<>();
+                assHole.add("entry-exit-buffer");
+                assHole.add("log-acknowledged");
+                assHole.add("log-unacknowledged");
+                fragment = Fragment24HrFeed.newInstance(assHole,"0", "24Hr Feed");
         }
         return  fragment;
     }

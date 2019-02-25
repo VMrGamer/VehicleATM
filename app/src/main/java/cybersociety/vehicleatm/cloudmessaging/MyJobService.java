@@ -1,4 +1,4 @@
-package cybersociety.vehicleatm.FirebaseCMS;
+package cybersociety.vehicleatm.cloudmessaging;
 
 import android.util.Log;
 

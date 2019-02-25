@@ -1,4 +1,4 @@
-package cybersociety.vehicleatm;
+package cybersociety.vehicleatm.fragments.feed24hr;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,8 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -29,7 +27,6 @@ import android.os.Handler;
 
 
 import android.view.ViewGroup;
-import android.view.MenuInflater;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,18 +35,21 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 
+import cybersociety.vehicleatm.AppHelper;
+import cybersociety.vehicleatm.R;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RecyclerViewFragment.OnFragmentInteractionListener} interface
+ * {@link Fragment24HrFeed.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RecyclerViewFragment#newInstance} factory method to
+ * Use the {@link Fragment24HrFeed#newInstance} factory method to
  * create an instance of this fragment.
  */
 
 
-public class RecyclerViewFragment extends Fragment {
-    private static final String TAG = "RecyclerViewFragment";
+public class Fragment24HrFeed extends Fragment {
+    private static final String TAG = "Fragment24HrFeed";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,17 +74,17 @@ public class RecyclerViewFragment extends Fragment {
     // SwipeRefreshLayout swipeRefreshRecyclerList;
 
     private SwipeRefreshLayout swipeRefreshRecyclerList;
-    private RecyclerViewAdapter mAdapter;
+    private RecyclerView24HrFeedAdapter mAdapter;
 
     private ArrayList<AbstractModel> modelList = new ArrayList<>();
 
 
-    public RecyclerViewFragment() {
+    public Fragment24HrFeed() {
         // Required empty public constructor
     }
 
-    public static RecyclerViewFragment newInstance(ArrayList<String> stringList, String param1, String param2) {
-        RecyclerViewFragment fragment = new RecyclerViewFragment();
+    public static Fragment24HrFeed newInstance(ArrayList<String> stringList, String param1, String param2) {
+        Fragment24HrFeed fragment = new Fragment24HrFeed();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -93,8 +93,8 @@ public class RecyclerViewFragment extends Fragment {
         return fragment;
     }
 
-    public static RecyclerViewFragment newInstance() {
-        RecyclerViewFragment fragment = new RecyclerViewFragment();
+    public static Fragment24HrFeed newInstance() {
+        Fragment24HrFeed fragment = new Fragment24HrFeed();
         return fragment;
     }
 
@@ -116,7 +116,7 @@ public class RecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_24hr_feed, container, false);
 
         // ButterKnife.bind(this);
         findViews(view);
@@ -229,7 +229,7 @@ public class RecyclerViewFragment extends Fragment {
         modelList.add(new AbstractModel("Android O", "Hello " + " Android O"));
         */
 
-        mAdapter = new RecyclerViewAdapter(getActivity(), modelList);
+        mAdapter = new RecyclerView24HrFeedAdapter(getActivity(), modelList);
         final Calendar c = new GregorianCalendar();
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
@@ -262,7 +262,7 @@ public class RecyclerViewFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
-        mAdapter.SetOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+        mAdapter.SetOnItemClickListener(new RecyclerView24HrFeedAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, AbstractModel model) {
 

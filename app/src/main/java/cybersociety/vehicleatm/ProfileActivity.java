@@ -1,6 +1,7 @@
 package cybersociety.vehicleatm;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,16 +16,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import cybersociety.vehicleatm.Fragments.FragmentRegisterVehicle;
-import cybersociety.vehicleatm.Fragments.FragmentUserProfile;
+import java.util.ArrayList;
+
+import cybersociety.vehicleatm.fragments.FragmentRegisterVehicle;
+import cybersociety.vehicleatm.fragments.FragmentUserProfile;
+import cybersociety.vehicleatm.fragments.feed24hr.Fragment24HrFeed;
 
 public class ProfileActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Fragment24HrFeed.OnFragmentInteractionListener {
 
 
     @Override
@@ -34,7 +37,6 @@ public class ProfileActivity extends AppCompatActivity
         AppHelper.init(getApplicationContext());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        LinearLayout container = findViewById(R.id.container);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +98,6 @@ public class ProfileActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
        
@@ -124,9 +125,13 @@ public class ProfileActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), "REGISTRATION FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_main:
-                Intent mainA = new Intent(ProfileActivity.this, MainActivity.class);
-                startActivity(mainA);
-                finish();
+                ArrayList<String> assHole = new ArrayList<>();
+                assHole.add("entry-exit-buffer");
+                assHole.add("log-acknowledged");
+                assHole.add("log-unacknowledged");
+                fragment = Fragment24HrFeed.newInstance(assHole, "yo", "yo");
+                Toast.makeText(getApplicationContext(), "24Hr Feed FRAGMENT", Toast.LENGTH_LONG).show();
+                break;
             case R.id.nav_report_an_issue:
                 fragment = new FragmentUserProfile();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
@@ -167,5 +172,10 @@ public class ProfileActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

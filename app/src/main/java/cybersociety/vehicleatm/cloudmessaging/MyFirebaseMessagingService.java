@@ -1,4 +1,4 @@
-package cybersociety.vehicleatm.FirebaseCMS;
+package cybersociety.vehicleatm.cloudmessaging;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

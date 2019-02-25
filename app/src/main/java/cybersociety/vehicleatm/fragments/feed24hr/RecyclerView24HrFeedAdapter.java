@@ -1,4 +1,4 @@
-package cybersociety.vehicleatm;
+package cybersociety.vehicleatm.fragments.feed24hr;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import android.support.v7.widget.LinearLayoutManager;
+import cybersociety.vehicleatm.R;
 
 
 /**
  * A custom adapter to use with the RecyclerView widget.
  */
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecyclerView24HrFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private ArrayList<AbstractModel> modelList;
@@ -24,7 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private OnItemClickListener mItemClickListener;
 
 
-    public RecyclerViewAdapter(Context context, ArrayList<AbstractModel> modelList) {
+    public RecyclerView24HrFeedAdapter(Context context, ArrayList<AbstractModel> modelList) {
         this.mContext = context;
         this.modelList = modelList;
     }
@@ -38,7 +38,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_recycler_list, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_24hr_recycler_list, viewGroup, false);
 
         return new ViewHolder(view);
     }
