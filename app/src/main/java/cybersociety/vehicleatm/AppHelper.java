@@ -42,7 +42,6 @@ public class AppHelper {
 
     //Firebase Inits
     private static FirebaseAuth mAuth;
-    private static FirebaseApp mApp;
     private static FirebaseUser mUser;
     private static FirebaseInstanceId mInstanceId;
     private static FirebaseFirestore mFirestore;
@@ -108,13 +107,6 @@ public class AppHelper {
             mMessaginig = FirebaseMessaging.getInstance();
         }
         mMessaginig.setAutoInitEnabled(true);
-        if(mApp == null){
-            mApp = FirebaseApp.initializeApp(context);
-        }
-        else {
-            mApp = null;
-            mApp = FirebaseApp.initializeApp(context);
-        }
     }
 
     public static Map<String, Object> getCurrUserAttributes(){
