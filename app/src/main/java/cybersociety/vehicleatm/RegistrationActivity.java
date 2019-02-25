@@ -273,7 +273,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                                 Log.w(TAG, "Error writing document", e);
                                             }
                                         });
-                                startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                                startActivity(new Intent(RegistrationActivity.this, ProfileActivity.class));
                                 updateUI(user);
 
                             } else {
