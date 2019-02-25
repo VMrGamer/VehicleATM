@@ -21,6 +21,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class AppHelper {
     private static final String TAG = "AppHelper";
@@ -79,7 +80,7 @@ public class AppHelper {
                             Log.w(TAG, "getInstanceId failed", task.getException());
                             return;
                         }
-                        token = task.getResult().getToken();
+                        token = Objects.requireNonNull(task.getResult()).getToken();
                         String msg = "InstanceID Token: " + token;
                         Log.d(TAG, msg);
                     }
@@ -145,13 +146,13 @@ public class AppHelper {
 
     //Setting up more accessible fields to use in the App
     private static void setUserData() {
-        uid = currUserAttributes.get("uid").toString();
-        token = currUserAttributes.get("token").toString();
+        uid = Objects.requireNonNull(currUserAttributes.get("uid")).toString();
+        token = Objects.requireNonNull(currUserAttributes.get("token")).toString();
         firstName = ((List<String>)currUserAttributes.get("name")).get(0);
         lastName = ((List<String>)currUserAttributes.get("name")).get(0);
-        email = currUserAttributes.get("email").toString();
-        userType = currUserAttributes.get("user_type").toString();
-        flat_no = currUserAttributes.get("flat_no").toString();
+        email = Objects.requireNonNull(currUserAttributes.get("email")).toString();
+        userType = Objects.requireNonNull(currUserAttributes.get("user_type")).toString();
+        flat_no = Objects.requireNonNull(currUserAttributes.get("flat_no")).toString();
         mobile_no = (List<String>)currUserAttributes.get("mobile_no");
         vehicle_no = (List<String>)currUserAttributes.get("vehicles");
     }//You can reference the assignments for use of the currUserAttributes Map, or any other Document Snapshot

@@ -1,6 +1,5 @@
 package cybersociety.vehicleatm;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Handler;
@@ -14,7 +13,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
@@ -35,7 +33,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +65,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         FirebaseApp.initializeApp(this);
         AppHelper.init(getApplicationContext());
         mAuth = AppHelper.getFirebaseAuth();
-
-        //mStatusTextView = findViewById(R.id.status);
-        //mDetailTextView = findViewById(R.id.detail);
 
         // Set up the login form.
         mEmailView = findViewById(R.id.email);
@@ -228,10 +222,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         return password.length() > 4;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
         mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
