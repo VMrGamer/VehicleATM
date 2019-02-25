@@ -1,6 +1,5 @@
 package cybersociety.vehicleatm;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Handler;
@@ -14,11 +13,11 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,7 +34,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +66,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         FirebaseApp.initializeApp(this);
         AppHelper.init(getApplicationContext());
         mAuth = AppHelper.getFirebaseAuth();
-
-        //mStatusTextView = findViewById(R.id.status);
-        //mDetailTextView = findViewById(R.id.detail);
 
         // Set up the login form.
         mEmailView = findViewById(R.id.email);
@@ -219,19 +214,19 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEmailView.setError(getString(R.string.input_error_email_invalid));
+            mEmailView.requestFocus();
+            return false;
+        }
+        else
+            return true;
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 6;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
         mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
