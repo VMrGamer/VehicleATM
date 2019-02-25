@@ -23,11 +23,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import cybersociety.vehicleatm.fragments.FragmentRegisterVehicle;
-import cybersociety.vehicleatm.fragments.FragmentUserProfile;
 import cybersociety.vehicleatm.fragments.feed24hr.Fragment24HrFeed;
+import cybersociety.vehicleatm.fragments.userprofile.FragmentUserProfile;
 
 public class ProfileActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Fragment24HrFeed.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Fragment24HrFeed.OnFragmentInteractionListener, FragmentUserProfile.OnFragmentInteractionListener {
 
 
     @Override
@@ -48,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
             }
         });
+
 
         // load nav menu header data
         loadNavHeader();
@@ -113,7 +114,7 @@ public class ProfileActivity extends AppCompatActivity
         //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.nav_profile:
-                fragment = new FragmentUserProfile();
+                fragment = FragmentUserProfile.newInstance();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_notifications:

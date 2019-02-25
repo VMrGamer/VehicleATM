@@ -19,7 +19,7 @@ public class FragmentMenu1UserProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //returning our layout file
         //change R.layout.your layout filename for each of your fragments
-        return inflater.inflate(R.layout.fragment_user_profile, container, false);
+        return inflater.inflate(R.layout.fragment_fragment_user_profile, container, false);
 
     }
 
