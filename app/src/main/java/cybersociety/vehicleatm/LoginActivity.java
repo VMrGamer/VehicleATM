@@ -1,7 +1,5 @@
 package cybersociety.vehicleatm;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -58,8 +56,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
     private boolean doubleBackToExitPressedOnce = false;
 
     //Firebase Variables
@@ -117,8 +113,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser user = AppHelper.getFirebaseCurrentUser();
-
     }
 
     private void populateAutoComplete() {
@@ -203,8 +197,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             showProgress(true);
             Log.d(TAG, "signIn:" + email);
             mAuth.signInWithEmailAndPassword(email, password)
@@ -214,38 +206,18 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                             if (task.isSuccessful()) {
                                 showProgress(false);
                                 Log.d(TAG, "signInWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                //updateUI(user);
-
                                 startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
 
                             } else {
-                                // If sign in fails, display a message to the user.
+                                showProgress(false);
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                                //updateUI(null);
                             }
-                            /*
-                            if (!task.isSuccessful()) {
-                                mStatusTextView.setText(R.string.auth_failed);
-                            }*/
                         }
                     });
         }
     }
-    /*
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
-                    user.getEmail(), user.isEmailVerified()));
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-        } else {
-            mStatusTextView.setText(R.string.signed_out);
-            mDetailTextView.setText(null);
-        }
-    }
-     */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");

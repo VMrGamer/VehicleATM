@@ -125,11 +125,12 @@ public class ProfileActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), "REGISTRATION FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_main:
-                ArrayList<String> assHole = new ArrayList<>();
-                assHole.add("entry-exit-buffer");
-                assHole.add("log-acknowledged");
-                assHole.add("log-unacknowledged");
-                fragment = Fragment24HrFeed.newInstance(assHole, "yo", "yo");
+                ArrayList<String> collectionPaths = new ArrayList<>();
+                collectionPaths.add("entry-exit-buffer");
+                collectionPaths.add("log-acknowledged");
+                collectionPaths.add("log-unacknowledged");
+
+                fragment = Fragment24HrFeed.newInstance(collectionPaths, "yo", "yo");
                 Toast.makeText(getApplicationContext(), "24Hr Feed FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_report_an_issue:

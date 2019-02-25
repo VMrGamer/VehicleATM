@@ -8,7 +8,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -44,13 +43,12 @@ public class AppHelper {
     private static FirebaseAuth mAuth;
     private static FirebaseUser mUser;
     private static FirebaseInstanceId mInstanceId;
-    private static FirebaseFirestore mFirestore;
     private static FirebaseFunctions mFunctions;
     private static FirebaseMessaging mMessaginig;
 
     private static AppHelper appHelper;
 
-    public static void init(Context context) {
+    static void init(Context context) {
         if (appHelper == null)
             appHelper = new AppHelper();
         else {
@@ -86,13 +84,6 @@ public class AppHelper {
                         Log.d(TAG, msg);
                     }
                 });
-
-        if(mFirestore == null)
-            mFirestore = FirebaseFirestore.getInstance();
-        else{
-            mFirestore = null;
-            mFirestore = FirebaseFirestore.getInstance();
-        }
         if(mFunctions == null)
             mFunctions = FirebaseFunctions.getInstance();
         else{
@@ -114,30 +105,36 @@ public class AppHelper {
     }
 
     public static void loginFieldGet(){
-        DocumentReference docRef = mFirestore.collection("users").document(mUser.getUid());
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection("users").document(mUser.getUid());
         Source source = Source.SERVER;
         docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    currUserAttributes = document.getData();
-                    boolean updateValue = false;
-                    if (currUserAttributes.containsKey("token")){
-                        if(currUserAttributes.get("token") != token){
-                            currUserAttributes.put("token", token);
-                            updateValue = true;
+                    if (document != null) {
+                        currUserAttributes = document.getData();
+                        boolean updateValue = false;
+                        if (currUserAttributes != null) {
+                            if (currUserAttributes.containsKey("token")){
+                                if(currUserAttributes.get("token") != token){
+                                    currUserAttributes.put("token", token);
+                                    updateValue = true;
+                                }
+                            }
+                            else{
+                                currUserAttributes.put("token",token);
+                                updateValue = true;
+                            }
                         }
+                        setUserData();
+                        if(updateValue){
+                            updateFirestore("users", uid, currUserAttributes);
+                        }
+                        Log.d(TAG, "Cached document data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "onComplete: Something is wrong, contact developer");
                     }
-                    else{
-                        currUserAttributes.put("token",token);
-                        updateValue = true;
-                    }
-                    setUserData();
-                    if(updateValue){
-                        updateFirestore("users", uid, currUserAttributes);
-                    }
-                    Log.d(TAG, "Cached document data: " + document.getData());
                 } else {
                     Log.d(TAG, "Cached get failed: ", task.getException());
                 }
@@ -161,7 +158,7 @@ public class AppHelper {
 
     //A General function to add or update firestore documents on an already existing collection
     public static void updateFirestore(String collectionPath, String document, Map<String, Object> doc){
-        mFirestore.collection(collectionPath)
+        FirebaseFirestore.getInstance().collection(collectionPath)
             .document(document)
             .set(doc)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -210,7 +207,7 @@ public class AppHelper {
     }
 
     public static FirebaseFirestore getFirestore(){
-        return mFirestore;
+        return FirebaseFirestore.getInstance();
     }
 
     public static String getFirstName() {
