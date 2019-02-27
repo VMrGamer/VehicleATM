@@ -149,7 +149,7 @@ public class AppHelper {
         uid = Objects.requireNonNull(currUserAttributes.get("uid")).toString();
         token = Objects.requireNonNull(currUserAttributes.get("token")).toString();
         firstName = ((List<String>)currUserAttributes.get("name")).get(0);
-        lastName = ((List<String>)currUserAttributes.get("name")).get(0);
+        lastName = ((List<String>)currUserAttributes.get("name")).get(1);
         email = Objects.requireNonNull(currUserAttributes.get("email")).toString();
         userType = Objects.requireNonNull(currUserAttributes.get("user_type")).toString();
         flat_no = Objects.requireNonNull(currUserAttributes.get("flat_no")).toString();

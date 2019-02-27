@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,15 +18,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import cybersociety.vehicleatm.fragments.FragmentRegisterVehicle;
 import cybersociety.vehicleatm.fragments.feed24hr.Fragment24HrFeed;
 import cybersociety.vehicleatm.fragments.userprofile.FragmentUserProfile;
+import io.opencensus.tags.Tag;
 
 public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Fragment24HrFeed.OnFragmentInteractionListener, FragmentUserProfile.OnFragmentInteractionListener {
@@ -35,6 +45,8 @@ public class ProfileActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        //code starts
         AppHelper.init(getApplicationContext());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                Snackbar.make(view, "LOGGED OUT..", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "LOGGED OUT...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 Toast.makeText(getApplicationContext(), "LOGGED OUT..", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
@@ -66,7 +78,38 @@ public class ProfileActivity extends AppCompatActivity
     }
 
     private void loadNavHeader() {
+        final TextView user_name, user_email;
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        user_name = headerView.findViewById(R.id.nav_header_title);
+        user_email = headerView.findViewById(R.id.nav_header_subtitle);
+
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String,Object> currUserAttributes = document.getData();
+                        String name="";
+                        String firstName = ((List<String>)currUserAttributes.get("name")).get(0);
+                        String lastName = ((List<String>)currUserAttributes.get("name")).get(1);
+                        name = firstName + " " + lastName;
+
+                        String email = document.getString("email");
+                        user_name.setText(name);
+                        user_email.setText(email);
+                        Log.d("MSG", "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d("MSG", "No such document");
+                    }
+                } else {
+                    Log.d("MSG", "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     @Override
@@ -116,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity
         switch (itemId) {
             case R.id.nav_home:
                 fragment = FragmentUserProfile.newInstance();
-                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "HOME", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_notifications:
                 fragment = new FragmentUserProfile();

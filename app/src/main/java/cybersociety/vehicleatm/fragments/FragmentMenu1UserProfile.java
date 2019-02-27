@@ -27,6 +27,6 @@ public class FragmentMenu1UserProfile extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-        Objects.requireNonNull(getActivity()).setTitle("USER PROFILE");
+        Objects.requireNonNull(getActivity()).setTitle("HOME");
     }
 }
