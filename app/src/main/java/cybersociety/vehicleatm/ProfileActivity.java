@@ -126,7 +126,7 @@ public class ProfileActivity extends AppCompatActivity
                 fragment = new FragmentRegisterVehicle();
                 Toast.makeText(getApplicationContext(), "REGISTRATION FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
-            case R.id.nav_main:
+            case R.id.nav_24hrfeed:
                 ArrayList<String> collectionPaths = new ArrayList<>();
                 collectionPaths.add("entry-exit-buffer");
                 collectionPaths.add("log-acknowledged");
