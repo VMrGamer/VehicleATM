@@ -62,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         //add this line to display menu1 when the activity is loaded
-        displaySelectedScreen(R.id.nav_profile);
+        displaySelectedScreen(R.id.nav_home);
     }
 
     private void loadNavHeader() {
