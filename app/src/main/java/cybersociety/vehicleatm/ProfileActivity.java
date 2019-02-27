@@ -114,7 +114,7 @@ public class ProfileActivity extends AppCompatActivity
 
         //initializing the fragment object which is selected
         switch (itemId) {
-            case R.id.nav_profile:
+            case R.id.nav_home:
                 fragment = FragmentUserProfile.newInstance();
                 Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
