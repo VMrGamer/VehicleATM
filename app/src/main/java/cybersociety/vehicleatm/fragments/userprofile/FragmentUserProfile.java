@@ -1,6 +1,7 @@
 package cybersociety.vehicleatm.fragments.userprofile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 
 import android.view.ViewGroup;
 
+import cybersociety.vehicleatm.GuestReg;
+import cybersociety.vehicleatm.ProfileActivity;
 import cybersociety.vehicleatm.R;
 
 /**
@@ -172,7 +175,8 @@ public class FragmentUserProfile extends Fragment {
 
                 //handle item click events here
                 switch (position){
-                    case 0 : ;
+                    case 0 :
+                        startActivity(new Intent(getActivity(), GuestReg.class));
                         break;
                 }
                 Toast.makeText(getActivity(), " "+model.getTitle(), Toast.LENGTH_SHORT).show();

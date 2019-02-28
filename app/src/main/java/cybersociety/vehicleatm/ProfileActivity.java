@@ -145,7 +145,7 @@ public class ProfileActivity extends AppCompatActivity
         return true;
     }
 
-    private void displaySelectedScreen(int itemId) {
+    public void displaySelectedScreen(int itemId) {
         //creating fragment object
         Fragment fragment = null;
 
