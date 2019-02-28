@@ -2,20 +2,33 @@ package cybersociety.vehicleatm.fragments.feed24hr;
 
 import java.util.ArrayList;
 
-public class AbstractModel {
+public class Feed24hrModel {
+
+    private String docID;
 
     private String title;
 
     private String message;
 
 
-    public AbstractModel(String title, String message) {
+    public Feed24hrModel(String docID, String title, String message) {
+        this.docID = docID;
         this.title = title;
         this.message = message;
     }
 
-    public AbstractModel() {
+    public Feed24hrModel() {
+        this.docID = "none";
+        this.title = "none";
+        this.message = "none";
+    }
 
+    public String getDocID() {
+        return docID;
+    }
+
+    public void setDocID(String docID) {
+        this.docID = docID;
     }
 
     public String getTitle() {

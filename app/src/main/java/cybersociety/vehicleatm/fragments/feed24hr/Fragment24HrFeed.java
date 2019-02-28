@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 
@@ -76,7 +77,7 @@ public class Fragment24HrFeed extends Fragment {
     private SwipeRefreshLayout swipeRefreshRecyclerList;
     private RecyclerView24HrFeedAdapter mAdapter;
 
-    private ArrayList<AbstractModel> modelList = new ArrayList<>();
+    private ArrayList<Feed24hrModel> modelList = new ArrayList<>();
 
 
     public Fragment24HrFeed() {
@@ -94,8 +95,7 @@ public class Fragment24HrFeed extends Fragment {
     }
 
     public static Fragment24HrFeed newInstance() {
-        Fragment24HrFeed fragment = new Fragment24HrFeed();
-        return fragment;
+        return new Fragment24HrFeed();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class Fragment24HrFeed extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_24hr_feed, container, false);
@@ -127,7 +127,7 @@ public class Fragment24HrFeed extends Fragment {
 
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setAdapter();
         swipeRefreshRecyclerList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -147,16 +147,18 @@ public class Fragment24HrFeed extends Fragment {
                         modelList = new ArrayList<>();
 
                         for(final String collectionPath: collectionStrings){
-                            AppHelper.getFirestore().collection(collectionPath).whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(c.getTime()))
+                            AppHelper.getFirestore().collection(collectionPath).whereGreaterThanOrEqualTo("timestamp", new Timestamp(c.getTime()))
                                     .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if(task.isSuccessful()){
                                         QuerySnapshot querySnapshot = task.getResult();
-                                        Log.d(TAG, "onComplete: Cached get Success - " + collectionPath + " - "+ querySnapshot.getDocuments().size());
+                                        Log.d(TAG, "onComplete: Cached get Success - " + collectionPath + " - "+ Objects.requireNonNull(querySnapshot).getDocuments().size());
                                         for(DocumentSnapshot documentSnapshot: querySnapshot.getDocuments()){
                                             Map<String, Object> dataDoc = documentSnapshot.getData();
-                                            modelList.add(new AbstractModel(dataDoc.get("vehicle_no").toString(), dataDoc.get("rid").toString()));
+                                            modelList.add(new Feed24hrModel(documentSnapshot.getId(),
+                                                    Objects.requireNonNull(Objects.requireNonNull(dataDoc).get("vehicle_no")).toString(),
+                                                    Objects.requireNonNull(dataDoc.get("rid")).toString()));
                                             mAdapter.updateList(modelList);
                                         }
                                     }else{
@@ -212,21 +214,21 @@ public class Fragment24HrFeed extends Fragment {
     private void setAdapter() {
 
         /*
-        modelList.add(new AbstractModel("Android", "Hello " + " Android"));
-        modelList.add(new AbstractModel("Beta", "Hello " + " Beta"));
-        modelList.add(new AbstractModel("Cupcake", "Hello " + " Cupcake"));
-        modelList.add(new AbstractModel("Donut", "Hello " + " Donut"));
-        modelList.add(new AbstractModel("Eclair", "Hello " + " Eclair"));
-        modelList.add(new AbstractModel("Froyo", "Hello " + " Froyo"));
-        modelList.add(new AbstractModel("Gingerbread", "Hello " + " Gingerbread"));
-        modelList.add(new AbstractModel("Honeycomb", "Hello " + " Honeycomb"));
-        modelList.add(new AbstractModel("Ice Cream Sandwich", "Hello " + " Ice Cream Sandwich"));
-        modelList.add(new AbstractModel("Jelly Bean", "Hello " + " Jelly Bean"));
-        modelList.add(new AbstractModel("KitKat", "Hello " + " KitKat"));
-        modelList.add(new AbstractModel("Lollipop", "Hello " + " Lollipop"));
-        modelList.add(new AbstractModel("Marshmallow", "Hello " + " Marshmallow"));
-        modelList.add(new AbstractModel("Nougat", "Hello " + " Nougat"));
-        modelList.add(new AbstractModel("Android O", "Hello " + " Android O"));
+        modelList.add(new Feed24hrModel("Android", "Hello " + " Android"));
+        modelList.add(new Feed24hrModel("Beta", "Hello " + " Beta"));
+        modelList.add(new Feed24hrModel("Cupcake", "Hello " + " Cupcake"));
+        modelList.add(new Feed24hrModel("Donut", "Hello " + " Donut"));
+        modelList.add(new Feed24hrModel("Eclair", "Hello " + " Eclair"));
+        modelList.add(new Feed24hrModel("Froyo", "Hello " + " Froyo"));
+        modelList.add(new Feed24hrModel("Gingerbread", "Hello " + " Gingerbread"));
+        modelList.add(new Feed24hrModel("Honeycomb", "Hello " + " Honeycomb"));
+        modelList.add(new Feed24hrModel("Ice Cream Sandwich", "Hello " + " Ice Cream Sandwich"));
+        modelList.add(new Feed24hrModel("Jelly Bean", "Hello " + " Jelly Bean"));
+        modelList.add(new Feed24hrModel("KitKat", "Hello " + " KitKat"));
+        modelList.add(new Feed24hrModel("Lollipop", "Hello " + " Lollipop"));
+        modelList.add(new Feed24hrModel("Marshmallow", "Hello " + " Marshmallow"));
+        modelList.add(new Feed24hrModel("Nougat", "Hello " + " Nougat"));
+        modelList.add(new Feed24hrModel("Android O", "Hello " + " Android O"));
         */
 
         mAdapter = new RecyclerView24HrFeedAdapter(getActivity(), modelList);
@@ -239,16 +241,18 @@ public class Fragment24HrFeed extends Fragment {
         final Source source = Source.SERVER;
 
         for(final String collectionPath: collectionStrings){
-            AppHelper.getFirestore().collection(collectionPath).whereGreaterThanOrEqualTo("timestamp_entry", new Timestamp(c.getTime()))
+            AppHelper.getFirestore().collection(collectionPath).whereGreaterThanOrEqualTo("timestamp", new Timestamp(c.getTime()))
                 .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
                             QuerySnapshot querySnapshot = task.getResult();
-                            Log.d(TAG, "onComplete: Cached get Success - " + collectionPath + " - "+ querySnapshot.getDocuments().size());
+                            Log.d(TAG, "onComplete: Cached get Success - " + collectionPath + " - "+ Objects.requireNonNull(querySnapshot).getDocuments().size());
                             for(DocumentSnapshot documentSnapshot: querySnapshot.getDocuments()){
                                 Map<String, Object> dataDoc = documentSnapshot.getData();
-                                modelList.add(new AbstractModel(dataDoc.get("vehicle_no").toString(), dataDoc.get("rid").toString()));
+                                modelList.add(new Feed24hrModel(documentSnapshot.getId(),
+                                        Objects.requireNonNull(Objects.requireNonNull(dataDoc).get("vehicle_no")).toString(),
+                                        Objects.requireNonNull(dataDoc.get("timestamp")).toString()));
                                 mAdapter.updateList(modelList);
                             }
                         }else{
@@ -264,7 +268,7 @@ public class Fragment24HrFeed extends Fragment {
         recyclerView.setAdapter(mAdapter);
         mAdapter.SetOnItemClickListener(new RecyclerView24HrFeedAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position, AbstractModel model) {
+            public void onItemClick(View view, int position, Feed24hrModel model) {
 
                 //handle item click events here
                 Toast.makeText(getActivity(), "Hey " + model.getTitle(), Toast.LENGTH_SHORT).show();

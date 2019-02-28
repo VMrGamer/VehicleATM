@@ -48,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity
 
         //code starts
         AppHelper.init(getApplicationContext());
+        AppHelper.loginFieldGet();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -84,7 +85,7 @@ public class ProfileActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         user_name = headerView.findViewById(R.id.nav_header_title);
         user_email = headerView.findViewById(R.id.nav_header_subtitle);
-
+/*
         DocumentReference docRef = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -109,7 +110,8 @@ public class ProfileActivity extends AppCompatActivity
                     Log.d("MSG", "get failed with ", task.getException());
                 }
             }
-        });
+        });*/
+        user_name.setText(AppHelper.getFirstName() + " " + AppHelper.getLastName());
     }
 
     @Override
@@ -171,9 +173,10 @@ public class ProfileActivity extends AppCompatActivity
                 break;
             case R.id.nav_24hrfeed:
                 ArrayList<String> collectionPaths = new ArrayList<>();
-                collectionPaths.add("entry-exit-buffer");
-                collectionPaths.add("log-acknowledged");
-                collectionPaths.add("log-unacknowledged");
+                //collectionPaths.add("entry-exit-buffer");
+                //collectionPaths.add("log-acknowledged");
+                //collectionPaths.add("log-unacknowledged");
+                collectionPaths.add("log-vehicle");
 
                 fragment = Fragment24HrFeed.newInstance(collectionPaths, "yo", "yo");
                 Toast.makeText(getApplicationContext(), "24Hr Feed FRAGMENT", Toast.LENGTH_LONG).show();
