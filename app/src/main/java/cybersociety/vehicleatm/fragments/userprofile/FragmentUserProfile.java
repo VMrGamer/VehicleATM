@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import android.widget.Toast;
 import android.view.ViewGroup;
@@ -167,9 +166,11 @@ public class FragmentUserProfile extends Fragment {
                         Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_view_vehicles, )
                             .commit();*/
+                        Toast.makeText(getContext(), "GO THROUGH NAV_BAR", Toast.LENGTH_SHORT).show();
+                        //startActivity(new Intent(getActivity(), ViewVehiclesActivity.class));
                         break;
                 }
-                Toast.makeText(getActivity(), " "+model.getTitle(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), " "+model.getTitle(), Toast.LENGTH_SHORT).show();
 
 
             }

@@ -81,4 +81,5 @@
     <string name="enter_the_description_of_occasion">ENTER THE DESCRIPTION OF OCCASION</string>
     <string name="enter_contact_no">ENTER CONTACT NO.</string>
     <string name="enter_guest_name">ENTER GUEST NAME</string>
+    <string name="title_activity_view_vehicles">ViewVehiclesActivity</string>
 </resources>

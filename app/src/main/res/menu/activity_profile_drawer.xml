@@ -29,9 +29,9 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Report An Issue" />
         <item
-            android:id="@+id/nav_faq"
+            android:id="@+id/nav_reg_veh"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="FAQ"/>
+            android:title="REGISTERED VEHICLES"/>
         <item
             android:id="@+id/nav_registration"
             android:icon="@drawable/ic_menu_slideshow"
