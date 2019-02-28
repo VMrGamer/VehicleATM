@@ -34,10 +34,14 @@ import java.util.Map;
 
 import cybersociety.vehicleatm.fragments.FragmentRegisterVehicle;
 import cybersociety.vehicleatm.fragments.feed24hr.FragmentFeed24hr;
+import cybersociety.vehicleatm.fragments.notification.FragmentNotification;
 import cybersociety.vehicleatm.fragments.userprofile.FragmentUserProfile;
 
 public class ProfileActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragmentFeed24hr.OnFragmentInteractionListener, FragmentUserProfile.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        FragmentFeed24hr.OnFragmentInteractionListener,
+        FragmentUserProfile.OnFragmentInteractionListener,
+        FragmentNotification.OnFragmentInteractionListener {
 
 
     @Override
@@ -162,15 +166,15 @@ public class ProfileActivity extends AppCompatActivity
         switch (itemId) {
             case R.id.nav_home:
                 fragment = FragmentUserProfile.newInstance();
-                Toast.makeText(getApplicationContext(), "HOME", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_notifications:
-                fragment = new FragmentUserProfile();
-                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                fragment = FragmentNotification.newInstance();
+                Toast.makeText(getApplicationContext(), "Notifications", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_registration:
                 fragment = new FragmentRegisterVehicle();
-                Toast.makeText(getApplicationContext(), "REGISTRATION FRAGMENT", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Registration Fragment", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_24hrfeed:
                 ArrayList<String> collectionPaths = new ArrayList<>();
@@ -180,17 +184,17 @@ public class ProfileActivity extends AppCompatActivity
                 collectionPaths.add("log-vehicle");
 
                 fragment = FragmentFeed24hr.newInstance(collectionPaths, "yo", "yo");
-                Toast.makeText(getApplicationContext(), "24Hr Feed FRAGMENT", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "24Hr Feed Fragment", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_report_an_issue:
                 fragment = new FragmentUserProfile();
-                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Profile Fragment", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_logout:
+                Toast.makeText(getApplicationContext(), "Logging Out..", Toast.LENGTH_LONG).show();
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                Toast.makeText(getApplicationContext(), "LOGGED OUT..", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_faq:
                 fragment = new FragmentUserProfile();
