@@ -1,16 +1,15 @@
 package cybersociety.vehicleatm.fragments.notification;
 
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -22,7 +21,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
-import cybersociety.vehicleatm.fragments.feed24hr.Feed24hrModel;
+import cybersociety.vehicleatm.fragments.feed24hr.FragmentFeed24hr;
 
 import android.widget.Toast;
 import android.os.Handler;
@@ -40,19 +39,7 @@ import android.text.Spanned;
 import android.view.ViewGroup;
 import android.view.MenuInflater;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Source;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentNotification#newInstance} factory method to
- * create an instance of this fragment.
- */
-
 
 public class FragmentNotification extends Fragment {
     private static final String TAG = "FragmentFeed24hr";
@@ -66,6 +53,7 @@ public class FragmentNotification extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private OnFragmentInteractionListener mListener;
 
     private RecyclerView recyclerView;
 
@@ -105,9 +93,8 @@ public class FragmentNotification extends Fragment {
     }
 
     public static FragmentNotification newInstance() {
-        FragmentNotification fragment = new FragmentNotification();
 
-        return fragment;
+        return new FragmentNotification();
     }
 
     @Override
@@ -123,7 +110,7 @@ public class FragmentNotification extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
@@ -135,9 +122,26 @@ public class FragmentNotification extends Fragment {
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentFeed24hr.OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setAdapter();
@@ -245,6 +249,7 @@ public class FragmentNotification extends Fragment {
 
 
     private void setAdapter() {
+        mAdapter = new NotificationAdapter(getActivity(), modelList);
         for(DocumentSnapshot documentSnapshot: AppHelper.getNotification()){
             Map<String, Object> dataDoc = documentSnapshot.getData();
             modelList.add(new NotificationModel(Objects.requireNonNull(Objects.requireNonNull(dataDoc).get("title")).toString(),
@@ -271,4 +276,8 @@ public class FragmentNotification extends Fragment {
 
     }
 
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
 }

@@ -38,7 +38,10 @@ import cybersociety.vehicleatm.fragments.notification.FragmentNotification;
 import cybersociety.vehicleatm.fragments.userprofile.FragmentUserProfile;
 
 public class ProfileActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragmentFeed24hr.OnFragmentInteractionListener, FragmentUserProfile.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        FragmentFeed24hr.OnFragmentInteractionListener,
+        FragmentUserProfile.OnFragmentInteractionListener,
+        FragmentNotification.OnFragmentInteractionListener {
 
 
     @Override
