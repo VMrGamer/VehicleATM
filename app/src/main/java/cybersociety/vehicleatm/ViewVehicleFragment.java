@@ -1,33 +1,40 @@
-package cybersociety.vehicleatm.fragments.userprofile;
+package cybersociety.vehicleatm;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
+
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
 import android.support.v7.widget.LinearLayoutManager;
+
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import java.util.ArrayList;
-import java.util.Objects;
+
 
 import android.widget.Toast;
+import android.os.Handler;
+
+
 import android.view.ViewGroup;
-import cybersociety.vehicleatm.GuestReg;
-import cybersociety.vehicleatm.R;
+import android.view.MenuInflater;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentUserProfile.OnFragmentInteractionListener} interface
+ * {@link ViewVehicleFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentUserProfile#newInstance} factory method to
+ * Use the {@link ViewVehicleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 
-public class FragmentUserProfile extends Fragment {
+
+public class ViewVehicleFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,18 +53,26 @@ public class FragmentUserProfile extends Fragment {
     // RecyclerView recyclerView;
 
 
-    private UserProfileAdapter mAdapter;
+    private RecyclerViewAdapter2 mAdapter;
 
-    private ArrayList<UserProfileModel> modelList = new ArrayList<>();
+    private ArrayList<AbstractModel2> modelList = new ArrayList<>();
 
 
-    public FragmentUserProfile() {
+    public ViewVehicleFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment ViewVehicleFragment.
+     */
     // TODO: Rename and change types and number of parameters
-    public static FragmentUserProfile newInstance(String param1, String param2) {
-        FragmentUserProfile fragment = new FragmentUserProfile();
+    public static ViewVehicleFragment newInstance(String param1, String param2) {
+        ViewVehicleFragment fragment = new ViewVehicleFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,8 +80,9 @@ public class FragmentUserProfile extends Fragment {
         return fragment;
     }
 
-    public static FragmentUserProfile newInstance() {
-        return new FragmentUserProfile();
+    public static ViewVehicleFragment newInstance() {
+        ViewVehicleFragment fragment = new ViewVehicleFragment();
+        return fragment;
     }
 
     @Override
@@ -82,28 +98,32 @@ public class FragmentUserProfile extends Fragment {
 
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_fragment_user_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_view_vehicle, container, false);
 
         // ButterKnife.bind(this);
         findViews(view);
+
         return view;
 
     }
 
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setAdapter();
+
+
     }
 
 
     private void findViews(View view) {
-        recyclerView = view.findViewById(R.id.recycler_view);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
     }
 
 
@@ -133,15 +153,25 @@ public class FragmentUserProfile extends Fragment {
 
     private void setAdapter() {
 
-        modelList.add(new UserProfileModel("GUEST REGISTRATION", "Register your expected guests"));
-        //modelList.add(new UserProfileModel("STRANGER VEHICLE REG.", "Register any unexpected guests"));
-        modelList.add(new UserProfileModel("REGISTERED VEHICLES", "view vehicles registered under you"));
-        modelList.add(new UserProfileModel("CONTACT SPOC", "Contact any SPOC"));
-        modelList.add(new UserProfileModel("CONTACT GUARD", "Contact a guard"));
-        modelList.add(new UserProfileModel("CONTACT RESIDENT", "Contact any fellow Resident"));
+
+        modelList.add(new AbstractModel2("Android", "Hello " + " Android"));
+        modelList.add(new AbstractModel2("Beta", "Hello " + " Beta"));
+        modelList.add(new AbstractModel2("Cupcake", "Hello " + " Cupcake"));
+        modelList.add(new AbstractModel2("Donut", "Hello " + " Donut"));
+        modelList.add(new AbstractModel2("Eclair", "Hello " + " Eclair"));
+        modelList.add(new AbstractModel2("Froyo", "Hello " + " Froyo"));
+        modelList.add(new AbstractModel2("Gingerbread", "Hello " + " Gingerbread"));
+        modelList.add(new AbstractModel2("Honeycomb", "Hello " + " Honeycomb"));
+        modelList.add(new AbstractModel2("Ice Cream Sandwich", "Hello " + " Ice Cream Sandwich"));
+        modelList.add(new AbstractModel2("Jelly Bean", "Hello " + " Jelly Bean"));
+        modelList.add(new AbstractModel2("KitKat", "Hello " + " KitKat"));
+        modelList.add(new AbstractModel2("Lollipop", "Hello " + " Lollipop"));
+        modelList.add(new AbstractModel2("Marshmallow", "Hello " + " Marshmallow"));
+        modelList.add(new AbstractModel2("Nougat", "Hello " + " Nougat"));
+        modelList.add(new AbstractModel2("Android O", "Hello " + " Android O"));
 
 
-        mAdapter = new UserProfileAdapter(getActivity(), modelList);
+        mAdapter = new RecyclerViewAdapter2(getActivity(), modelList);
 
         recyclerView.setHasFixedSize(true);
 
@@ -153,27 +183,18 @@ public class FragmentUserProfile extends Fragment {
         recyclerView.setAdapter(mAdapter);
 
 
-        mAdapter.SetOnItemClickListener(new UserProfileAdapter.OnItemClickListener() {
+        mAdapter.SetOnItemClickListener(new RecyclerViewAdapter2.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position, UserProfileModel model) {
+            public void onItemClick(View view, int position, AbstractModel2 model) {
 
                 //handle item click events here
-                switch (position){
-                    case 0 :
-                        startActivity(new Intent(getActivity(), GuestReg.class));
-                        break;
-
-                    case 1 :
-                        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_view_vehicles, )
-                            .commit();
-                        break;
-                }
-                Toast.makeText(getActivity(), " "+model.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Hey " + model.getTitle(), Toast.LENGTH_SHORT).show();
 
 
             }
         });
+
+
     }
 
 

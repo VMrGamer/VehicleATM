@@ -247,8 +247,7 @@ public class FragmentFeed24hr extends Fragment {
                         .commit();
             }
         });
-
-
+        
     }
 
     public interface OnFragmentInteractionListener {
