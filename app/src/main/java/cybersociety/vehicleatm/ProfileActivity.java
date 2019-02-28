@@ -1,5 +1,6 @@
 package cybersociety.vehicleatm;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,8 +45,8 @@ public class ProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_profile);
 
         //code starts
-        //AppHelper.init(getApplicationContext());
-        //AppHelper.loginFieldGet();
+        AppHelper.init(getApplicationContext());
+        AppHelper.loginFieldGet();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -78,40 +79,39 @@ public class ProfileActivity extends AppCompatActivity
 
     private void loadNavHeader() {
         final TextView user_name, user_email;
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         user_name = headerView.findViewById(R.id.nav_header_title);
         user_email = headerView.findViewById(R.id.nav_header_subtitle);
-/*
-        DocumentReference docRef = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Map<String,Object> currUserAttributes = document.getData();
-                        String name="";
-                        String firstName = ((List<String>)currUserAttributes.get("name")).get(0);
-                        String lastName = ((List<String>)currUserAttributes.get("name")).get(1);
-                        name = firstName + " " + lastName;
-
-                        String email = document.getString("email");
-                        user_name.setText(name);
-                        user_email.setText(email);
-                        Log.d("MSG", "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d("MSG", "No such document");
+        Thread th = new Thread(new Runnable() {
+            private long startTime = System.currentTimeMillis();
+            public void run() {
+                while (AppHelper.getFirstName() == null) {
+                    runOnUiThread(new Runnable() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void run() {
+                            user_email.setText(""+((System.currentTimeMillis()-startTime)/1000));
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
                     }
-                } else {
-                    Log.d("MSG", "get failed with ", task.getException());
+                    catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        user_name.setText(String.format("%s %s", AppHelper.getFirstName(), AppHelper.getLastName()));
+                        user_email.setText(AppHelper.getEmail());
+                    }
+                });
             }
         });
-*/
-        user_name.setText(String.format("%s %s", AppHelper.getFirstName(), AppHelper.getLastName()));
-        user_email.setText(AppHelper.getEmail());
+        th.start();
+
     }
 
     @Override
@@ -192,7 +192,7 @@ public class ProfileActivity extends AppCompatActivity
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                 break;
             case R.id.nav_reg_veh:
-                fragment = new FragmentViewVehicle();
+                fragment = FragmentViewVehicle.newInstance();
                 Toast.makeText(getApplicationContext(), "Registered Veh.", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_settings:
