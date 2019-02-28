@@ -50,7 +50,6 @@ import java.util.Objects;
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class RegistrationActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
-
     private static final String TAG = "RegistrationActivity";
 
     /**
@@ -242,7 +241,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                             if (task.isSuccessful()) {
                                 showProgress(false);
                                 Log.d(TAG, "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                final FirebaseUser user = mAuth.getCurrentUser();
                                 Map<String, Object> doc_user = new HashMap<>();
                                 if (user != null) {
                                     doc_user.put("email", Objects.requireNonNull(user.getEmail()));
@@ -271,8 +270,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                                 Log.w(TAG, "Error writing document", e);
                                             }
                                         });
-                                startActivity(new Intent(RegistrationActivity.this, ProfileActivity.class));
-
                             } else {
                                 showProgress(false);
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());

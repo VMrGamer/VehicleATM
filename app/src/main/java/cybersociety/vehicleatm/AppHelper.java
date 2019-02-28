@@ -13,7 +13,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 import com.google.firebase.functions.FirebaseFunctions;
@@ -42,7 +41,8 @@ public class AppHelper {
 
     //Master Variable Map
     private static Map<String, Object> currUserAttributes;
-    private static ArrayList<Map<String, Object>> notification = new ArrayList<>();
+
+    private static ArrayList<DocumentSnapshot> notification = new ArrayList<>();
 
     //Firebase Inits
     private static FirebaseAuth mAuth;
@@ -145,24 +145,24 @@ public class AppHelper {
                 }
             }
         });
+        getNewNotifications();
     }
 
     //Getting Notifications
-    private static void getNotification(){
-        FirebaseFirestore.getInstance().collection("users").document(uid).collection("notification").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public static void getNewNotifications(){
+        notification = new ArrayList<>();
+        FirebaseFirestore.getInstance().collection("notification").whereEqualTo("to_uid", getFirebaseCurrentUser().getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                notification.add(document.getData());
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        notification.addAll(queryDocumentSnapshots.getDocuments());
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Error getting documents: ", e);
+            }
+        });
     }
 
     //Setting up more accessible fields to use in the App
@@ -286,5 +286,13 @@ public class AppHelper {
 
     public static void setVehicle_no(List<String> vehicle_no) {
         AppHelper.vehicle_no = vehicle_no;
+    }
+
+    public static ArrayList<DocumentSnapshot> getNotification() {
+        return notification;
+    }
+
+    public static void setNotification(ArrayList<DocumentSnapshot> notification) {
+        AppHelper.notification = notification;
     }
 }
