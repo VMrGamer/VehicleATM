@@ -163,10 +163,10 @@ public class FragmentUserProfile extends Fragment {
                         startActivity(new Intent(getActivity(), GuestReg.class));
                         break;
 
-                    case 1 :
+                    case 1 :/*
                         Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_view_vehicles, )
-                            .commit();
+                            .commit();*/
                         break;
                 }
                 Toast.makeText(getActivity(), " "+model.getTitle(), Toast.LENGTH_SHORT).show();
