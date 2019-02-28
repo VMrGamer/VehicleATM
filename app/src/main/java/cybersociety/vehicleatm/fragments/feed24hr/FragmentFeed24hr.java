@@ -17,7 +17,6 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -39,18 +38,8 @@ import com.google.firebase.firestore.Source;
 import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Fragment24HrFeed.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Fragment24HrFeed#newInstance} factory method to
- * create an instance of this fragment.
- */
-
-
-public class Fragment24HrFeed extends Fragment {
-    private static final String TAG = "Fragment24HrFeed";
+public class FragmentFeed24hr extends Fragment {
+    private static final String TAG = "FragmentFeed24hr";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,7 +50,6 @@ public class Fragment24HrFeed extends Fragment {
     private String mParam1;
     private String mParam2;
     private ArrayList<String> collectionStrings;
-    private List<DocumentSnapshot> documentSnapshotList;
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,17 +63,17 @@ public class Fragment24HrFeed extends Fragment {
     // SwipeRefreshLayout swipeRefreshRecyclerList;
 
     private SwipeRefreshLayout swipeRefreshRecyclerList;
-    private RecyclerView24HrFeedAdapter mAdapter;
+    private Feed24hrAdapter mAdapter;
 
     private ArrayList<Feed24hrModel> modelList = new ArrayList<>();
 
 
-    public Fragment24HrFeed() {
+    public FragmentFeed24hr() {
         // Required empty public constructor
     }
 
-    public static Fragment24HrFeed newInstance(ArrayList<String> stringList, String param1, String param2) {
-        Fragment24HrFeed fragment = new Fragment24HrFeed();
+    public static FragmentFeed24hr newInstance(ArrayList<String> stringList, String param1, String param2) {
+        FragmentFeed24hr fragment = new FragmentFeed24hr();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -94,8 +82,8 @@ public class Fragment24HrFeed extends Fragment {
         return fragment;
     }
 
-    public static Fragment24HrFeed newInstance() {
-        return new Fragment24HrFeed();
+    public static FragmentFeed24hr newInstance() {
+        return new FragmentFeed24hr();
     }
 
     @Override
@@ -158,7 +146,8 @@ public class Fragment24HrFeed extends Fragment {
                                             Map<String, Object> dataDoc = documentSnapshot.getData();
                                             modelList.add(new Feed24hrModel(documentSnapshot.getId(),
                                                     Objects.requireNonNull(Objects.requireNonNull(dataDoc).get("vehicle_no")).toString(),
-                                                    Objects.requireNonNull(dataDoc.get("rid")).toString()));
+                                                    Objects.requireNonNull(dataDoc.get("rid")).toString(),
+                                                    Objects.requireNonNull(dataDoc.get("snap_link")).toString()));
                                             mAdapter.updateList(modelList);
                                         }
                                     }else{
@@ -231,7 +220,7 @@ public class Fragment24HrFeed extends Fragment {
         modelList.add(new Feed24hrModel("Android O", "Hello " + " Android O"));
         */
 
-        mAdapter = new RecyclerView24HrFeedAdapter(getActivity(), modelList);
+        mAdapter = new Feed24hrAdapter(getActivity(), modelList);
         final Calendar c = new GregorianCalendar();
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
@@ -252,7 +241,8 @@ public class Fragment24HrFeed extends Fragment {
                                 Map<String, Object> dataDoc = documentSnapshot.getData();
                                 modelList.add(new Feed24hrModel(documentSnapshot.getId(),
                                         Objects.requireNonNull(Objects.requireNonNull(dataDoc).get("vehicle_no")).toString(),
-                                        Objects.requireNonNull(dataDoc.get("timestamp")).toString()));
+                                        Objects.requireNonNull(dataDoc.get("timestamp")).toString(),
+                                        Objects.requireNonNull(dataDoc.get("snap_link")).toString()));
                                 mAdapter.updateList(modelList);
                             }
                         }else{
@@ -266,7 +256,7 @@ public class Fragment24HrFeed extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
-        mAdapter.SetOnItemClickListener(new RecyclerView24HrFeedAdapter.OnItemClickListener() {
+        mAdapter.SetOnItemClickListener(new Feed24hrAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, Feed24hrModel model) {
 

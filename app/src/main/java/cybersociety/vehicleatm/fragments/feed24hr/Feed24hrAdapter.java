@@ -12,11 +12,7 @@ import java.util.ArrayList;
 
 import cybersociety.vehicleatm.R;
 
-
-/**
- * A custom adapter to use with the RecyclerView widget.
- */
-public class RecyclerView24HrFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class Feed24hrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private ArrayList<Feed24hrModel> modelList;
@@ -24,7 +20,7 @@ public class RecyclerView24HrFeedAdapter extends RecyclerView.Adapter<RecyclerVi
     private OnItemClickListener mItemClickListener;
 
 
-    public RecyclerView24HrFeedAdapter(Context context, ArrayList<Feed24hrModel> modelList) {
+    public Feed24hrAdapter(Context context, ArrayList<Feed24hrModel> modelList) {
         this.mContext = context;
         this.modelList = modelList;
     }

@@ -25,11 +25,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import cybersociety.vehicleatm.fragments.FragmentRegisterVehicle;
-import cybersociety.vehicleatm.fragments.feed24hr.Fragment24HrFeed;
+import cybersociety.vehicleatm.fragments.feed24hr.FragmentFeed24hr;
 import cybersociety.vehicleatm.fragments.userprofile.FragmentUserProfile;
 
 public class ProfileActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Fragment24HrFeed.OnFragmentInteractionListener, FragmentUserProfile.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentFeed24hr.OnFragmentInteractionListener, FragmentUserProfile.OnFragmentInteractionListener {
 
 
     @Override
@@ -170,7 +170,7 @@ public class ProfileActivity extends AppCompatActivity
                 //collectionPaths.add("log-unacknowledged");
                 collectionPaths.add("log-vehicle");
 
-                fragment = Fragment24HrFeed.newInstance(collectionPaths, "yo", "yo");
+                fragment = FragmentFeed24hr.newInstance(collectionPaths, "yo", "yo");
                 Toast.makeText(getApplicationContext(), "24Hr Feed FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_report_an_issue:

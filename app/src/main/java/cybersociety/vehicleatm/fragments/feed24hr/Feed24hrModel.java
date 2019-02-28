@@ -10,17 +10,20 @@ public class Feed24hrModel {
 
     private String message;
 
+    private String snap_link;
 
-    public Feed24hrModel(String docID, String title, String message) {
+    public Feed24hrModel(String docID, String title, String message, String snap_link) {
         this.docID = docID;
         this.title = title;
         this.message = message;
+        this.snap_link = snap_link;
     }
 
     public Feed24hrModel() {
         this.docID = "none";
         this.title = "none";
         this.message = "none";
+        this.snap_link = "none";
     }
 
     public String getDocID() {
@@ -45,5 +48,13 @@ public class Feed24hrModel {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getSnap_link() {
+        return snap_link;
+    }
+
+    public void setSnap_link(String snap_link) {
+        this.snap_link = snap_link;
     }
 }
