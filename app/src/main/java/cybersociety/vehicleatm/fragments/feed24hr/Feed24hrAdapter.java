@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import cybersociety.vehicleatm.R;
@@ -49,8 +51,7 @@ public class Feed24hrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof ViewHolder) {
             final Feed24hrModel model = getItem(position);
             ViewHolder genericViewHolder = (ViewHolder) holder;
-
-            genericViewHolder.imgUser.setImageURI(Uri.parse(model.getSnap_link()));
+            Picasso.with(this.mContext).load(model.getSnap_link()).into(genericViewHolder.imgUser);
             genericViewHolder.itemTxtTitle.setText(model.getTitle());
             genericViewHolder.itemTxtMessage.setText(model.getMessage());
         }

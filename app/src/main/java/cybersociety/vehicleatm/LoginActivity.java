@@ -199,6 +199,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                AppHelper.init(getApplicationContext());
+                                AppHelper.loginFieldGet();
                                 showProgress(false);
                                 Log.d(TAG, "signInWithEmail:success");
                                 startActivity(new Intent(LoginActivity.this, ProfileActivity.class));

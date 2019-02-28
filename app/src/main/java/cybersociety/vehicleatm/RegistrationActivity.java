@@ -260,6 +260,8 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
+                                                AppHelper.init(getApplicationContext());
+                                                AppHelper.loginFieldGet();
                                                 Log.d(TAG, "DocumentSnapshot successfully written!");
                                                 startActivity(new Intent(RegistrationActivity.this, ProfileActivity.class));
                                             }

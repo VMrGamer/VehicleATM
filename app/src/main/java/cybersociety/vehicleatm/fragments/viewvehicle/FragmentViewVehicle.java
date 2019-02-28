@@ -1,4 +1,4 @@
-package cybersociety.vehicleatm;
+package cybersociety.vehicleatm.fragments.viewvehicle;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,8 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -18,23 +16,23 @@ import java.util.ArrayList;
 
 
 import android.widget.Toast;
-import android.os.Handler;
 
 
 import android.view.ViewGroup;
-import android.view.MenuInflater;
+
+import cybersociety.vehicleatm.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ViewVehicleFragment.OnFragmentInteractionListener} interface
+ * {@link FragmentViewVehicle.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ViewVehicleFragment#newInstance} factory method to
+ * Use the {@link FragmentViewVehicle#newInstance} factory method to
  * create an instance of this fragment.
  */
 
 
-public class ViewVehicleFragment extends Fragment {
+public class FragmentViewVehicle extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,12 +51,12 @@ public class ViewVehicleFragment extends Fragment {
     // RecyclerView recyclerView;
 
 
-    private RecyclerViewAdapter2 mAdapter;
+    private ViewVehicleAdapter mAdapter;
 
-    private ArrayList<AbstractModel2> modelList = new ArrayList<>();
+    private ArrayList<ViewVehicleModel> modelList = new ArrayList<>();
 
 
-    public ViewVehicleFragment() {
+    public FragmentViewVehicle() {
         // Required empty public constructor
     }
 
@@ -68,11 +66,11 @@ public class ViewVehicleFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ViewVehicleFragment.
+     * @return A new instance of fragment FragmentViewVehicle.
      */
     // TODO: Rename and change types and number of parameters
-    public static ViewVehicleFragment newInstance(String param1, String param2) {
-        ViewVehicleFragment fragment = new ViewVehicleFragment();
+    public static FragmentViewVehicle newInstance(String param1, String param2) {
+        FragmentViewVehicle fragment = new FragmentViewVehicle();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -80,8 +78,8 @@ public class ViewVehicleFragment extends Fragment {
         return fragment;
     }
 
-    public static ViewVehicleFragment newInstance() {
-        ViewVehicleFragment fragment = new ViewVehicleFragment();
+    public static FragmentViewVehicle newInstance() {
+        FragmentViewVehicle fragment = new FragmentViewVehicle();
         return fragment;
     }
 
@@ -154,24 +152,24 @@ public class ViewVehicleFragment extends Fragment {
     private void setAdapter() {
 
 
-        modelList.add(new AbstractModel2("Android", "Hello " + " Android"));
-        modelList.add(new AbstractModel2("Beta", "Hello " + " Beta"));
-        modelList.add(new AbstractModel2("Cupcake", "Hello " + " Cupcake"));
-        modelList.add(new AbstractModel2("Donut", "Hello " + " Donut"));
-        modelList.add(new AbstractModel2("Eclair", "Hello " + " Eclair"));
-        modelList.add(new AbstractModel2("Froyo", "Hello " + " Froyo"));
-        modelList.add(new AbstractModel2("Gingerbread", "Hello " + " Gingerbread"));
-        modelList.add(new AbstractModel2("Honeycomb", "Hello " + " Honeycomb"));
-        modelList.add(new AbstractModel2("Ice Cream Sandwich", "Hello " + " Ice Cream Sandwich"));
-        modelList.add(new AbstractModel2("Jelly Bean", "Hello " + " Jelly Bean"));
-        modelList.add(new AbstractModel2("KitKat", "Hello " + " KitKat"));
-        modelList.add(new AbstractModel2("Lollipop", "Hello " + " Lollipop"));
-        modelList.add(new AbstractModel2("Marshmallow", "Hello " + " Marshmallow"));
-        modelList.add(new AbstractModel2("Nougat", "Hello " + " Nougat"));
-        modelList.add(new AbstractModel2("Android O", "Hello " + " Android O"));
+        modelList.add(new ViewVehicleModel("Android", "Hello " + " Android"));
+        modelList.add(new ViewVehicleModel("Beta", "Hello " + " Beta"));
+        modelList.add(new ViewVehicleModel("Cupcake", "Hello " + " Cupcake"));
+        modelList.add(new ViewVehicleModel("Donut", "Hello " + " Donut"));
+        modelList.add(new ViewVehicleModel("Eclair", "Hello " + " Eclair"));
+        modelList.add(new ViewVehicleModel("Froyo", "Hello " + " Froyo"));
+        modelList.add(new ViewVehicleModel("Gingerbread", "Hello " + " Gingerbread"));
+        modelList.add(new ViewVehicleModel("Honeycomb", "Hello " + " Honeycomb"));
+        modelList.add(new ViewVehicleModel("Ice Cream Sandwich", "Hello " + " Ice Cream Sandwich"));
+        modelList.add(new ViewVehicleModel("Jelly Bean", "Hello " + " Jelly Bean"));
+        modelList.add(new ViewVehicleModel("KitKat", "Hello " + " KitKat"));
+        modelList.add(new ViewVehicleModel("Lollipop", "Hello " + " Lollipop"));
+        modelList.add(new ViewVehicleModel("Marshmallow", "Hello " + " Marshmallow"));
+        modelList.add(new ViewVehicleModel("Nougat", "Hello " + " Nougat"));
+        modelList.add(new ViewVehicleModel("Android O", "Hello " + " Android O"));
 
 
-        mAdapter = new RecyclerViewAdapter2(getActivity(), modelList);
+        mAdapter = new ViewVehicleAdapter(getActivity(), modelList);
 
         recyclerView.setHasFixedSize(true);
 
@@ -183,9 +181,9 @@ public class ViewVehicleFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
 
 
-        mAdapter.SetOnItemClickListener(new RecyclerViewAdapter2.OnItemClickListener() {
+        mAdapter.SetOnItemClickListener(new ViewVehicleAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position, AbstractModel2 model) {
+            public void onItemClick(View view, int position, ViewVehicleModel model) {
 
                 //handle item click events here
                 Toast.makeText(getActivity(), "Hey " + model.getTitle(), Toast.LENGTH_SHORT).show();

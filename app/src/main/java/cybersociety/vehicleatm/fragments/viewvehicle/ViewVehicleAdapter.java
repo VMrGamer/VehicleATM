@@ -1,4 +1,4 @@
-package cybersociety.vehicleatm;
+package cybersociety.vehicleatm.fragments.viewvehicle;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,26 +10,26 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import android.support.v7.widget.LinearLayoutManager;
+import cybersociety.vehicleatm.R;
 
 
 /**
  * A custom adapter to use with the RecyclerView widget.
  */
-public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ViewVehicleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<AbstractModel2> modelList;
+    private ArrayList<ViewVehicleModel> modelList;
 
     private OnItemClickListener mItemClickListener;
 
 
-    public RecyclerViewAdapter2(Context context, ArrayList<AbstractModel2> modelList) {
+    public ViewVehicleAdapter(Context context, ArrayList<ViewVehicleModel> modelList) {
         this.mContext = context;
         this.modelList = modelList;
     }
 
-    public void updateList(ArrayList<AbstractModel2> modelList) {
+    public void updateList(ArrayList<ViewVehicleModel> modelList) {
         this.modelList = modelList;
         notifyDataSetChanged();
 
@@ -48,7 +48,7 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerView.View
 
         //Here you can fill your row view
         if (holder instanceof ViewHolder) {
-            final AbstractModel2 model = getItem(position);
+            final ViewVehicleModel model = getItem(position);
             ViewHolder genericViewHolder = (ViewHolder) holder;
 
             genericViewHolder.itemTxtTitle.setText(model.getTitle());
@@ -69,13 +69,13 @@ public class RecyclerViewAdapter2 extends RecyclerView.Adapter<RecyclerView.View
         this.mItemClickListener = mItemClickListener;
     }
 
-    private AbstractModel2 getItem(int position) {
+    private ViewVehicleModel getItem(int position) {
         return modelList.get(position);
     }
 
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int position, AbstractModel2 model);
+        void onItemClick(View view, int position, ViewVehicleModel model);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

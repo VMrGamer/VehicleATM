@@ -38,6 +38,7 @@ import com.google.firebase.firestore.Source;
 import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
 import cybersociety.vehicleatm.fragments.FragmentRegisterFeed;
+import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 
 public class FragmentFeed24hr extends Fragment {
     private static final String TAG = "FragmentFeed24hr";
@@ -117,7 +118,7 @@ public class FragmentFeed24hr extends Fragment {
 
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setAdapter();
         swipeRefreshRecyclerList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -148,7 +149,7 @@ public class FragmentFeed24hr extends Fragment {
                                             Map<String, Object> dataDoc = documentSnapshot.getData();
                                             modelList.add(new Feed24hrModel(documentSnapshot.getId(),
                                                     Objects.requireNonNull(Objects.requireNonNull(dataDoc).get("vehicle_no")).toString(),
-                                                    Objects.requireNonNull(dataDoc.get("rid")).toString(),
+                                                    ((Timestamp)Objects.requireNonNull(dataDoc.get("timestamp"))).toDate().toString(),
                                                     Objects.requireNonNull(dataDoc.get("snap_link")).toString()));
                                             mAdapter.updateList(modelList);
                                         }
@@ -158,7 +159,6 @@ public class FragmentFeed24hr extends Fragment {
                                 }
                             });
                         }
-
                         if (swipeRefreshRecyclerList.isRefreshing())
                             swipeRefreshRecyclerList.setRefreshing(false);
                     }
