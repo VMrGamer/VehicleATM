@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,9 +21,16 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import cybersociety.vehicleatm.fragments.FragmentRegisterVehicle;
 import cybersociety.vehicleatm.fragments.feed24hr.FragmentFeed24hr;
@@ -76,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         user_name = headerView.findViewById(R.id.nav_header_title);
         user_email = headerView.findViewById(R.id.nav_header_subtitle);
-/*
+
         DocumentReference docRef = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -101,7 +109,7 @@ public class ProfileActivity extends AppCompatActivity
                     Log.d("MSG", "get failed with ", task.getException());
                 }
             }
-        });*/
+        });
         user_name.setText(String.format("%s %s", AppHelper.getFirstName(), AppHelper.getLastName()));
         user_email.setText(AppHelper.getLastName());
     }
