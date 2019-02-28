@@ -111,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity
             }
         });
         user_name.setText(String.format("%s %s", AppHelper.getFirstName(), AppHelper.getLastName()));
-        user_email.setText(AppHelper.getLastName());
+        user_email.setText(AppHelper.getEmail());
     }
 
     @Override
