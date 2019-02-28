@@ -19,17 +19,17 @@ import cybersociety.vehicleatm.R;
 public class RecyclerView24HrFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<AbstractModel> modelList;
+    private ArrayList<Feed24hrModel> modelList;
 
     private OnItemClickListener mItemClickListener;
 
 
-    public RecyclerView24HrFeedAdapter(Context context, ArrayList<AbstractModel> modelList) {
+    public RecyclerView24HrFeedAdapter(Context context, ArrayList<Feed24hrModel> modelList) {
         this.mContext = context;
         this.modelList = modelList;
     }
 
-    public void updateList(ArrayList<AbstractModel> modelList) {
+    public void updateList(ArrayList<Feed24hrModel> modelList) {
         this.modelList = modelList;
         notifyDataSetChanged();
 
@@ -48,7 +48,7 @@ public class RecyclerView24HrFeedAdapter extends RecyclerView.Adapter<RecyclerVi
 
         //Here you can fill your row view
         if (holder instanceof ViewHolder) {
-            final AbstractModel model = getItem(position);
+            final Feed24hrModel model = getItem(position);
             ViewHolder genericViewHolder = (ViewHolder) holder;
 
             genericViewHolder.itemTxtTitle.setText(model.getTitle());
@@ -69,13 +69,13 @@ public class RecyclerView24HrFeedAdapter extends RecyclerView.Adapter<RecyclerVi
         this.mItemClickListener = mItemClickListener;
     }
 
-    private AbstractModel getItem(int position) {
+    private Feed24hrModel getItem(int position) {
         return modelList.get(position);
     }
 
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int position, AbstractModel model);
+        void onItemClick(View view, int position, Feed24hrModel model);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
