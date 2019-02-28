@@ -3,27 +3,20 @@ package cybersociety.vehicleatm.fragments.userprofile;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-
 import android.os.Bundle;
-
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import java.util.ArrayList;
-
-
 import android.widget.Toast;
-
-
 import android.view.ViewGroup;
-
 import cybersociety.vehicleatm.GuestReg;
 import cybersociety.vehicleatm.R;
+import cybersociety.vehicleatm.StrangeVehReg;
+import cybersociety.vehicleatm.ViewVehicles;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -140,12 +133,12 @@ public class FragmentUserProfile extends Fragment {
 
     private void setAdapter() {
 
-
         modelList.add(new UserProfileModel("GUEST REGISTRATION", "Register your expected guests"));
+        modelList.add(new UserProfileModel("STRANGER VEHICLE REG.", "Register any unexpected guests"));
+        modelList.add(new UserProfileModel("REGISTERED VEHICLES", "view vehicles registered under you"));
         modelList.add(new UserProfileModel("CONTACT SPOC", "Contact any SPOC"));
         modelList.add(new UserProfileModel("CONTACT GUARD", "Contact a guard"));
         modelList.add(new UserProfileModel("CONTACT RESIDENT", "Contact any fellow Resident"));
-
 
 
         mAdapter = new UserProfileAdapter(getActivity(), modelList);
@@ -168,6 +161,10 @@ public class FragmentUserProfile extends Fragment {
                 switch (position){
                     case 0 :
                         startActivity(new Intent(getActivity(), GuestReg.class));
+                        break;
+                    case  1 : startActivity(new Intent(getActivity(), StrangeVehReg.class));;
+                        break;
+                    case 2 : startActivity(new Intent(getActivity(), ViewVehicles.class));;
                         break;
                 }
                 Toast.makeText(getActivity(), " "+model.getTitle(), Toast.LENGTH_SHORT).show();

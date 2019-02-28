@@ -15,11 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".GuestReg"></activity>
+        <activity android:name=".ViewVehicles"></activity>
+        <activity android:name=".StrangeVehReg" />
+        <activity android:name=".GuestReg" />
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/title_activity_registration" />
