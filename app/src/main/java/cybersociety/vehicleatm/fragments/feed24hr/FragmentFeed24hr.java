@@ -37,6 +37,7 @@ import com.google.firebase.firestore.Source;
 
 import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
+import cybersociety.vehicleatm.fragments.FragmentRegisterFeed;
 
 public class FragmentFeed24hr extends Fragment {
     private static final String TAG = "FragmentFeed24hr";
@@ -201,25 +202,6 @@ public class FragmentFeed24hr extends Fragment {
     }
 
     private void setAdapter() {
-
-        /*
-        modelList.add(new Feed24hrModel("Android", "Hello " + " Android"));
-        modelList.add(new Feed24hrModel("Beta", "Hello " + " Beta"));
-        modelList.add(new Feed24hrModel("Cupcake", "Hello " + " Cupcake"));
-        modelList.add(new Feed24hrModel("Donut", "Hello " + " Donut"));
-        modelList.add(new Feed24hrModel("Eclair", "Hello " + " Eclair"));
-        modelList.add(new Feed24hrModel("Froyo", "Hello " + " Froyo"));
-        modelList.add(new Feed24hrModel("Gingerbread", "Hello " + " Gingerbread"));
-        modelList.add(new Feed24hrModel("Honeycomb", "Hello " + " Honeycomb"));
-        modelList.add(new Feed24hrModel("Ice Cream Sandwich", "Hello " + " Ice Cream Sandwich"));
-        modelList.add(new Feed24hrModel("Jelly Bean", "Hello " + " Jelly Bean"));
-        modelList.add(new Feed24hrModel("KitKat", "Hello " + " KitKat"));
-        modelList.add(new Feed24hrModel("Lollipop", "Hello " + " Lollipop"));
-        modelList.add(new Feed24hrModel("Marshmallow", "Hello " + " Marshmallow"));
-        modelList.add(new Feed24hrModel("Nougat", "Hello " + " Nougat"));
-        modelList.add(new Feed24hrModel("Android O", "Hello " + " Android O"));
-        */
-
         mAdapter = new Feed24hrAdapter(getActivity(), modelList);
         final Calendar c = new GregorianCalendar();
         c.set(Calendar.HOUR_OF_DAY, 0);
@@ -241,7 +223,7 @@ public class FragmentFeed24hr extends Fragment {
                                 Map<String, Object> dataDoc = documentSnapshot.getData();
                                 modelList.add(new Feed24hrModel(documentSnapshot.getId(),
                                         Objects.requireNonNull(Objects.requireNonNull(dataDoc).get("vehicle_no")).toString(),
-                                        Objects.requireNonNull(dataDoc.get("timestamp")).toString(),
+                                        ((Timestamp)Objects.requireNonNull(dataDoc.get("timestamp"))).toDate().toString(),
                                         Objects.requireNonNull(dataDoc.get("snap_link")).toString()));
                                 mAdapter.updateList(modelList);
                             }
@@ -259,28 +241,16 @@ public class FragmentFeed24hr extends Fragment {
         mAdapter.SetOnItemClickListener(new Feed24hrAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, Feed24hrModel model) {
-
-                //handle item click events here
                 Toast.makeText(getActivity(), "Hey " + model.getTitle(), Toast.LENGTH_SHORT).show();
-
-
+                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, FragmentRegisterFeed.newInstance(model.getTitle(), model.getDocID()))
+                        .commit();
             }
         });
 
 
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

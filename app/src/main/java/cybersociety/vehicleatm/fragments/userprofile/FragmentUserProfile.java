@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import android.os.Bundle;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 
 import android.support.v4.app.Fragment;
@@ -22,7 +23,6 @@ import android.widget.Toast;
 import android.view.ViewGroup;
 
 import cybersociety.vehicleatm.GuestReg;
-import cybersociety.vehicleatm.ProfileActivity;
 import cybersociety.vehicleatm.R;
 
 /**
@@ -62,14 +62,6 @@ public class FragmentUserProfile extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentUserProfile.
-     */
     // TODO: Rename and change types and number of parameters
     public static FragmentUserProfile newInstance(String param1, String param2) {
         FragmentUserProfile fragment = new FragmentUserProfile();
@@ -81,8 +73,7 @@ public class FragmentUserProfile extends Fragment {
     }
 
     public static FragmentUserProfile newInstance() {
-        FragmentUserProfile fragment = new FragmentUserProfile();
-        return fragment;
+        return new FragmentUserProfile();
     }
 
     @Override
@@ -98,7 +89,7 @@ public class FragmentUserProfile extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_fragment_user_profile, container, false);
@@ -111,7 +102,7 @@ public class FragmentUserProfile extends Fragment {
 
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setAdapter();
@@ -119,7 +110,7 @@ public class FragmentUserProfile extends Fragment {
 
 
     private void findViews(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView = view.findViewById(R.id.recycler_view);
     }
 
 

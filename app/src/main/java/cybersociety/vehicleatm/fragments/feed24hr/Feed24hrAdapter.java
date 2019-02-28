@@ -1,6 +1,8 @@
 package cybersociety.vehicleatm.fragments.feed24hr;
 
 import android.content.Context;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +33,9 @@ public class Feed24hrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_24hr_recycler_list, viewGroup, false);
 
@@ -40,17 +43,16 @@ public class Feed24hrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
         //Here you can fill your row view
         if (holder instanceof ViewHolder) {
             final Feed24hrModel model = getItem(position);
             ViewHolder genericViewHolder = (ViewHolder) holder;
 
+            genericViewHolder.imgUser.setImageURI(Uri.parse(model.getSnap_link()));
             genericViewHolder.itemTxtTitle.setText(model.getTitle());
             genericViewHolder.itemTxtMessage.setText(model.getMessage());
-
-
         }
     }
 
@@ -96,17 +98,15 @@ public class Feed24hrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             // ButterKnife.bind(this, itemView);
 
-            this.imgUser = (ImageView) itemView.findViewById(R.id.img_user);
-            this.itemTxtTitle = (TextView) itemView.findViewById(R.id.item_txt_title);
-            this.itemTxtMessage = (TextView) itemView.findViewById(R.id.item_txt_message);
+            this.imgUser = itemView.findViewById(R.id.img_user);
+            this.itemTxtTitle = itemView.findViewById(R.id.item_txt_title);
+            this.itemTxtMessage = itemView.findViewById(R.id.item_txt_message);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mItemClickListener.onItemClick(itemView, getAdapterPosition(), modelList.get(getAdapterPosition()));
-
-
                 }
             });
 
