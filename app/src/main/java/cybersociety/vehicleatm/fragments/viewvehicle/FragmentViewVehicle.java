@@ -114,8 +114,6 @@ public class FragmentViewVehicle extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setAdapter();
-
-
     }
 
 
