@@ -237,6 +237,7 @@ public class FragmentFeed24hr extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
+
         mAdapter.SetOnItemClickListener(new Feed24hrAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, Feed24hrModel model) {

@@ -119,8 +119,6 @@ public class FragmentViewVehicle extends Fragment {
                 Toast.makeText(getActivity(), model.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     /**
