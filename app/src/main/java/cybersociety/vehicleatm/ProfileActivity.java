@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import cybersociety.vehicleatm.fragments.FragmentRegisterFeed;
 import cybersociety.vehicleatm.fragments.FragmentRegisterVehicle;
@@ -48,6 +49,10 @@ public class ProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_profile);
 
         Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if(Objects.requireNonNull(intent.getExtras()).containsKey("data")){
+            Log.d(TAG, "onCreate: " + bundle.get("data").toString());
+        }
 
         //code starts
         AppHelper.init(getApplicationContext());
