@@ -36,7 +36,7 @@ public class AppHelper {
     private static String email;
     private static String userType;
     private static String flat_no;
-    private static List<String> mobile_no;
+    private static String mobile_no;
     private static List<String> vehicle_no;
 
     //Master Variable Map
@@ -174,7 +174,7 @@ public class AppHelper {
         email = Objects.requireNonNull(currUserAttributes.get("email")).toString();
         userType = Objects.requireNonNull(currUserAttributes.get("user_type")).toString();
         flat_no = Objects.requireNonNull(currUserAttributes.get("flat_no")).toString();
-        mobile_no = (List<String>)currUserAttributes.get("mobile_no");
+        mobile_no = Objects.requireNonNull(currUserAttributes.get("mobile_no")).toString();
         vehicle_no = (List<String>)currUserAttributes.get("vehicles");
     }//You can reference the assignments for use of the currUserAttributes Map, or any other Document Snapshot
 
@@ -272,11 +272,11 @@ public class AppHelper {
         AppHelper.flat_no = flat_no;
     }
 
-    public static List<String> getMobile_no() {
+    public static String getMobile_no() {
         return mobile_no;
     }
 
-    public static void setMobile_no(List<String> mobile_no) {
+    public static void setMobile_no(String mobile_no) {
         AppHelper.mobile_no = mobile_no;
     }
 
