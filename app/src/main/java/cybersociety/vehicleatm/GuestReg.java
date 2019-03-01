@@ -45,9 +45,13 @@ public class GuestReg extends AppCompatActivity {
                     Map<String, Object> doc_vehicle = new HashMap<>();
                     doc_vehicle.put("guest name", name.getText().toString());
                     doc_vehicle.put("contact no", contact_no.getText().toString());
-                   doc_vehicle.put("occasion", desc.getText().toString());
+                    doc_vehicle.put("occasion", desc.getText().toString());
+                    doc_vehicle.put("to", user.getUid());
+
                    Toast.makeText(getApplicationContext(), "DOC STORED...", Toast.LENGTH_LONG).show();
-                   FirebaseFirestore.getInstance().collection("users").document(user.getUid()).collection("guest").add(doc_vehicle).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                   FirebaseFirestore.getInstance().collection("guest").add(doc_vehicle).
+
+                           addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Log.d(TAG, "DocumentSnapshot successfully written!");

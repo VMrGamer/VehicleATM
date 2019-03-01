@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -171,6 +172,7 @@ public class ProfileActivity extends AppCompatActivity
                 fragment = new FragmentRegisterVehicle();
                 Toast.makeText(getApplicationContext(), "Registration Fragment", Toast.LENGTH_LONG).show();
                 break;
+
             case R.id.nav_24hrfeed:
                 ArrayList<String> collectionPaths = new ArrayList<>();
                 //collectionPaths.add("entry-exit-buffer");
@@ -228,6 +230,6 @@ public class ProfileActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
+        Log.d("MSG", "onFragmentInteraction() called");
     }
 }
