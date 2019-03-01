@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -49,42 +50,30 @@ public class FragmentRegisterVehicle extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-        Objects.requireNonNull(getActivity()).setTitle("VEHICLE REGISTRATION");
+        Objects.requireNonNull(getActivity()).setTitle("Vehicle Registration");
         final EditText veh_no;
         Button b1;
-        //initialize
         veh_no = view.findViewById(R.id.editText);
         b1 = view.findViewById(R.id.button2);
-        // Store values at the time of the registration attempt.
-
-        final Calendar calendar = new GregorianCalendar();
-        calendar.setTime(new Date());
-        calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
-
-        //registering the vehicle
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseUser user = AppHelper.getFirebaseCurrentUser();
                 if(user!=null){
-                    Toast.makeText(getContext(), "PROCEEDING REG...", Toast.LENGTH_LONG).show();
-                    Map<String, Object> doc_vehicle = new HashMap<>();
-                    doc_vehicle.put("vehicle_no", veh_no.getText().toString());
-                    doc_vehicle.put("timestamp", new Timestamp(calendar.getTime()));
-                    doc_vehicle.put("owner", user.getUid());
-                    doc_vehicle.put("rid", "null");
-                    //writing data
-                    AppHelper.getFirestore().collection("registration").add(doc_vehicle).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d(TAG, "DocumentSnapshot successfully written!");
-                            Toast.makeText(getContext(), "WRITE SUCCESSFUL..", Toast.LENGTH_LONG).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
+                    Toast.makeText(getContext(), "Registering...", Toast.LENGTH_LONG).show();
+                    AppHelper.getFirestore().collection("users").document(AppHelper.getFirebaseCurrentUser().getUid())
+                            .update("vehicles", FieldValue.arrayUnion(veh_no.getText().toString()))
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "DocumentSnapshot successfully written!");
+                                    Toast.makeText(getContext(), "Registered", Toast.LENGTH_LONG).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.w(TAG, "Error writing document", e);
-                            Toast.makeText(getContext(), "WRITE UNSUCCESSFUL..", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Error!!", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
