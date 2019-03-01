@@ -47,6 +47,8 @@ public class ProfileActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        Intent intent = getIntent();
+
         //code starts
         AppHelper.init(getApplicationContext());
         AppHelper.loginFieldGet();
@@ -128,6 +130,8 @@ public class ProfileActivity extends AppCompatActivity
                     .commit();
         }
     }
+
+
 
     @Override
     public void onBackPressed() {

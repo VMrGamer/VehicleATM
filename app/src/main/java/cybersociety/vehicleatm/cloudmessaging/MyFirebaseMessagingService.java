@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -27,6 +28,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        Log.d(TAG, "onMessageReceived: YOYO");
         sendNotification(remoteMessage);
     }
 
@@ -55,8 +57,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(RemoteMessage remoteMessage) {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("title", Objects.requireNonNull(remoteMessage.getNotification()).getTitle());
-        intent.putExtra("vehicle_no", remoteMessage.getNotification().getBody());
+        Bundle bundle = new Bundle();
+        intent.putExtra("title", remoteMessage.getData().get("title"));
+        intent.putExtra("vehicle_no", remoteMessage.getData().get("body"));
         intent.putExtra("did", remoteMessage.getData().get("did"));
         intent.putExtra("snap_link", remoteMessage.getData().get("snap_link"));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -68,8 +71,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.ic_stat_ic_notification)
-                        .setContentTitle(Objects.requireNonNull(remoteMessage.getNotification()).getTitle())
-                        .setContentText(remoteMessage.getNotification().getBody())
+                        .setContentTitle(remoteMessage.getData().get("title"))
+                        .setContentText("Vehicle No: " + remoteMessage.getData().get("body"))
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setColor(getResources().getColor(R.color.colorAccent, getTheme()))
