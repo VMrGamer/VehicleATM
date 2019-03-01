@@ -42,6 +42,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -247,13 +248,13 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                     doc_user.put("email", Objects.requireNonNull(user.getEmail()));
                                 }
                                 doc_user.put("flat_no", mFlatNoView.getText().toString());
-                                doc_user.put("mobile_no", Arrays.asList(mMobileView.getText().toString(),"null"));
+                                doc_user.put("mobile_no", mMobileView.getText().toString());
                                 doc_user.put("name", Arrays.asList(mFirstNameView.getText().toString(),mLastNameView.getText().toString()));
                                 if (user != null) {
                                     doc_user.put("uid", user.getUid());
                                 }
                                 doc_user.put("user_type", userTypeString);
-                                doc_user.put("vehicles", Arrays.asList(mVehiclesView.getText().toString(),"null"));
+                                doc_user.put("vehicles", Collections.singletonList(mVehiclesView.getText().toString()));
                                 AppHelper.getFirestore().collection("users")
                                         .document(Objects.requireNonNull(user).getUid())
                                         .set(doc_user)
