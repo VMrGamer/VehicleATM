@@ -263,7 +263,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                                 AppHelper.init(getApplicationContext());
                                                 AppHelper.loginFieldGet();
                                                 Log.d(TAG, "DocumentSnapshot successfully written!");
-                                                startActivity(new Intent(RegistrationActivity.this, ProfileActivity.class));
+                                                startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {

@@ -1,6 +1,7 @@
 package cybersociety.vehicleatm;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,7 +10,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,13 +23,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import cybersociety.vehicleatm.fragments.FragmentRegisterFeed;
 import cybersociety.vehicleatm.fragments.FragmentRegisterVehicle;
@@ -50,11 +54,15 @@ public class ProfileActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle != null)
-            if(bundle.containsKey("data")){
-                Log.d(TAG, "onCreate: " + bundle.get("data").toString());
+        if(bundle != null) {
+            Log.d(TAG, "onCreate: getExtras: " + bundle.toString());
+            if (bundle.containsKey("data")) {
+                Log.d(TAG, "onCreate: containsKey" + bundle.getBundle("data").getString("title"));
             }
-
+        }
+        else{
+            Log.d(TAG, "onCreate: bundle null");
+        }
         //code starts
         AppHelper.init(getApplicationContext());
         AppHelper.loginFieldGet();
@@ -145,10 +153,54 @@ public class ProfileActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            new AlertDialog.Builder(this)
+                    .setTitle("Close App?")
+                    .setMessage("Do you really want to close this beautiful app?")
+                    .setPositiveButton("EXIT APP",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+
+                                    finish();
+                                }
+                            })
+                    .setNegativeButton("ABORT",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                }
+                            }).show();
         }
     }
 
+    /*
+    *  new AlertDialog.Builder(this)
+                    .setTitle("Close App?")
+                    .setMessage("Do you really want to close this beautiful app?")
+                    .setPositiveButton("YES",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                        int which) {
+                                    finish();
+                                }
+                            })
+                    .setNegativeButton("NO",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                        int which) {
+                                }
+                            }).show();
+            // load your first Fragment
+            */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -211,33 +263,55 @@ public class ProfileActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), "Profile Fragment", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_logout:
-                Toast.makeText(getApplicationContext(), "Logging Out..", Toast.LENGTH_LONG).show();
-                FirebaseAuth.getInstance().signOut();
-                finish();
-                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+
+                 new AlertDialog.Builder(this)
+                    .setTitle("LOG OUT?")
+                    .setMessage("Do you really want to log out from your account?")
+                    .setPositiveButton("YES",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                        int which) {
+                                        Toast.makeText(getApplicationContext(), "Logging Out..", Toast.LENGTH_LONG).show();
+                                        FirebaseAuth.getInstance().signOut();
+                                        finish();
+                                        startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                                        //finish();
+                                }
+                            })
+                    .setNegativeButton("NO",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                        int which) {
+                                }
+                            }).show();
+
                 break;
             case R.id.nav_reg_veh:
                 fragment = FragmentViewVehicle.newInstance();
-                Toast.makeText(getApplicationContext(), "Registered Veh.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Registered Veh.", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_settings:
                 fragment = new FragmentUserProfile();
-                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_additional_info:
                 fragment = new FragmentUserProfile();
-                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_about_us:
                 fragment = new FragmentUserProfile();
-                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_about_app:
                 fragment = new FragmentUserProfile();
-                Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             default:
-                Toast.makeText(getApplicationContext(), "CHOOSE PROFILE", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "CHOOSE PROFILE", Toast.LENGTH_LONG).show();
         }
 
         //replacing the fragment

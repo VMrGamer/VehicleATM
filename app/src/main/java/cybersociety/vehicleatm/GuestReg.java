@@ -1,6 +1,8 @@
 package cybersociety.vehicleatm;
 
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +40,17 @@ public class GuestReg extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                new AlertDialog.Builder(GuestReg.this)
+                    .setTitle("ADD GUEST ?")
+                    .setMessage("Add guest with entered  details ?")
+                    .setPositiveButton("YES",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                        int which) {
+                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user!=null){
                     Log.d("TAG", "proceeding reg..");
                     Toast.makeText(getApplicationContext(), "PROCEEDING REG...", Toast.LENGTH_LONG).show();
@@ -48,7 +60,7 @@ public class GuestReg extends AppCompatActivity {
                     doc_vehicle.put("occasion", desc.getText().toString());
                     doc_vehicle.put("to", user.getUid());
 
-                   Toast.makeText(getApplicationContext(), "DOC STORED...", Toast.LENGTH_LONG).show();
+                   //Toast.makeText(getApplicationContext(), "DOC STORED...", Toast.LENGTH_LONG).show();
                    FirebaseFirestore.getInstance().collection("guest").add(doc_vehicle).
 
                            addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -69,6 +81,16 @@ public class GuestReg extends AppCompatActivity {
                 {
                     Toast.makeText(getApplicationContext(), "NULL USER", Toast.LENGTH_LONG).show();
                 }
+                                }
+                            })
+                    .setNegativeButton("NO",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                }
+                            }).show();
             }
         });
     }

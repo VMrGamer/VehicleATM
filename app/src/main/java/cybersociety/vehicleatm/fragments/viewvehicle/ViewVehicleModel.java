@@ -18,6 +18,11 @@ public class ViewVehicleModel {
 
     }
 
+    public ViewVehicleModel(Object vehicle_no, String message) {
+        this.title = title;
+        this.message = message;
+    }
+
     public String getTitle() {
         return title;
     }
