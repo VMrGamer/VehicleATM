@@ -50,9 +50,10 @@ public class ProfileActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(Objects.requireNonNull(intent.getExtras()).containsKey("data")){
-            Log.d(TAG, "onCreate: " + bundle.get("data").toString());
-        }
+        if(bundle != null)
+            if(bundle.containsKey("data")){
+                Log.d(TAG, "onCreate: " + bundle.get("data").toString());
+            }
 
         //code starts
         AppHelper.init(getApplicationContext());
