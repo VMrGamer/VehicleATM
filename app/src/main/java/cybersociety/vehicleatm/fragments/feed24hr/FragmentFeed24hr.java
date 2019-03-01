@@ -203,7 +203,6 @@ public class FragmentFeed24hr extends Fragment {
     }
 
     private void setAdapter() {
-        mAdapter = new Feed24hrAdapter(getActivity(), modelList);
         final Calendar c = new GregorianCalendar();
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
@@ -226,7 +225,6 @@ public class FragmentFeed24hr extends Fragment {
                                         Objects.requireNonNull(Objects.requireNonNull(dataDoc).get("vehicle_no")).toString(),
                                         ((Timestamp)Objects.requireNonNull(dataDoc.get("timestamp"))).toDate().toString(),
                                         Objects.requireNonNull(dataDoc.get("snap_link")).toString()));
-                                mAdapter.updateList(modelList);
                             }
                         }else{
                             Log.d(TAG, "onComplete: Cached get failed - ", task.getException());
@@ -234,7 +232,7 @@ public class FragmentFeed24hr extends Fragment {
                     }
                 });
         }
-
+        mAdapter = new Feed24hrAdapter(getActivity(), modelList);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);

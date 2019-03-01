@@ -162,8 +162,8 @@ public class FragmentNotification extends Fragment {
                                     Objects.requireNonNull(dataDoc.get("message")).toString()));
                             mAdapter.updateList(modelList);
                         }
-                        //if (swipeRefreshRecyclerList.isRefreshing())
-                            //swipeRefreshRecyclerList.setRefreshing(false);
+                        if (swipeRefreshRecyclerList.isRefreshing())
+                            swipeRefreshRecyclerList.setRefreshing(false);
                     }
                 }, 5000);
 
@@ -254,9 +254,7 @@ public class FragmentNotification extends Fragment {
             Map<String, Object> dataDoc = documentSnapshot.getData();
             modelList.add(new NotificationModel(Objects.requireNonNull(Objects.requireNonNull(dataDoc).get("title")).toString(),
                     Objects.requireNonNull(dataDoc.get("message")).toString()));
-            mAdapter.updateList(modelList);
         }
-
         mAdapter = new NotificationAdapter(getActivity(), modelList);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -265,11 +263,7 @@ public class FragmentNotification extends Fragment {
         mAdapter.SetOnItemClickListener(new NotificationAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, NotificationModel model) {
-
-                //handle item click events here
                 Toast.makeText(getActivity(), "Hey " + model.getTitle(), Toast.LENGTH_SHORT).show();
-
-
             }
         });
 

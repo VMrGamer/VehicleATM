@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import android.view.ViewGroup;
 
+import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
 
 /**
@@ -148,27 +150,18 @@ public class FragmentViewVehicle extends Fragment {
     }
 
     private void setAdapter() {
-
+        for(String veh_no: AppHelper.getVehicle_no()){
+            modelList.add(new ViewVehicleModel(veh_no, "Tap to get Logs"));
+        }
         mAdapter = new ViewVehicleAdapter(getActivity(), modelList);
-
         recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-
-
         recyclerView.setAdapter(mAdapter);
-
-
         mAdapter.SetOnItemClickListener(new ViewVehicleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, ViewVehicleModel model) {
-
-                //handle item click events here
-                Toast.makeText(getActivity(), "Hey " + model.getTitle(), Toast.LENGTH_SHORT).show();
-
-
+                Toast.makeText(getActivity(), model.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
 
