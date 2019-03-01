@@ -84,7 +84,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
-                    android:text="LOGIN"
+                    android:text="@string/login"
                     android:textColor="#9C27B0"
                     android:textSize="30sp"
                     android:textStyle="italic"

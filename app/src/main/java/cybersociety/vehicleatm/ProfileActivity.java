@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -38,7 +39,8 @@ public class ProfileActivity extends AppCompatActivity
         FragmentUserProfile.OnFragmentInteractionListener,
         FragmentNotification.OnFragmentInteractionListener,
         FragmentViewVehicle.OnFragmentInteractionListener{
-
+    int backpress = 0;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class ProfileActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
+                finish();
                 Snackbar.make(view, "LOGGED OUT...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 Toast.makeText(getApplicationContext(), "LOGGED OUT..", Toast.LENGTH_LONG).show();
@@ -121,7 +124,15 @@ public class ProfileActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            //int backpress = 0;
+
+            backpress=(backpress + 1);
+            Toast.makeText(getApplicationContext(), " Press Back again to Exit ", Toast.LENGTH_SHORT).show();
+
+            if (backpress>1) {
+                finish();
+            }
         }
     }
 
@@ -131,6 +142,7 @@ public class ProfileActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.profile, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

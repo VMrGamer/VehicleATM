@@ -82,4 +82,5 @@
     <string name="enter_contact_no">ENTER CONTACT NO.</string>
     <string name="enter_guest_name">ENTER GUEST NAME</string>
     <string name="title_activity_view_vehicles">ViewVehiclesActivity</string>
+    <string name="login">LOGIN</string>
 </resources>

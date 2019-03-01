@@ -203,6 +203,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                                 AppHelper.loginFieldGet();
                                 showProgress(false);
                                 Log.d(TAG, "signInWithEmail:success");
+
                                 startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
 
                             } else {
@@ -232,6 +233,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private void showProgress(final boolean show) {
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
         mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        //finish();
     }
 
     @Override
