@@ -151,24 +151,6 @@ public class FragmentViewVehicle extends Fragment {
 
     private void setAdapter() {
 
-
-        modelList.add(new ViewVehicleModel("Android", "Hello " + " Android"));
-        modelList.add(new ViewVehicleModel("Beta", "Hello " + " Beta"));
-        modelList.add(new ViewVehicleModel("Cupcake", "Hello " + " Cupcake"));
-        modelList.add(new ViewVehicleModel("Donut", "Hello " + " Donut"));
-        modelList.add(new ViewVehicleModel("Eclair", "Hello " + " Eclair"));
-        modelList.add(new ViewVehicleModel("Froyo", "Hello " + " Froyo"));
-        modelList.add(new ViewVehicleModel("Gingerbread", "Hello " + " Gingerbread"));
-        modelList.add(new ViewVehicleModel("Honeycomb", "Hello " + " Honeycomb"));
-        modelList.add(new ViewVehicleModel("Ice Cream Sandwich", "Hello " + " Ice Cream Sandwich"));
-        modelList.add(new ViewVehicleModel("Jelly Bean", "Hello " + " Jelly Bean"));
-        modelList.add(new ViewVehicleModel("KitKat", "Hello " + " KitKat"));
-        modelList.add(new ViewVehicleModel("Lollipop", "Hello " + " Lollipop"));
-        modelList.add(new ViewVehicleModel("Marshmallow", "Hello " + " Marshmallow"));
-        modelList.add(new ViewVehicleModel("Nougat", "Hello " + " Nougat"));
-        modelList.add(new ViewVehicleModel("Android O", "Hello " + " Android O"));
-
-
         mAdapter = new ViewVehicleAdapter(getActivity(), modelList);
 
         recyclerView.setHasFixedSize(true);

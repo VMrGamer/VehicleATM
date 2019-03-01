@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+import cybersociety.vehicleatm.fragments.FragmentRegisterFeed;
 import cybersociety.vehicleatm.fragments.FragmentRegisterVehicle;
 import cybersociety.vehicleatm.fragments.feed24hr.FragmentFeed24hr;
 import cybersociety.vehicleatm.fragments.notification.FragmentNotification;
@@ -39,8 +40,13 @@ public class ProfileActivity extends AppCompatActivity
         FragmentUserProfile.OnFragmentInteractionListener,
         FragmentNotification.OnFragmentInteractionListener,
         FragmentViewVehicle.OnFragmentInteractionListener{
+<<<<<<< Updated upstream
     int backpress = 0;
     private boolean doubleBackToExitPressedOnce = false;
+=======
+    private static final String TAG = "ProfileActivity";
+
+>>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +122,18 @@ public class ProfileActivity extends AppCompatActivity
         });
         th.start();
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d(TAG, "onNewIntent: Im Here");
+        Bundle bundle = intent.getExtras();
+        if(bundle != null){
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, FragmentRegisterFeed.newInstance(bundle.getString("vehicle_no"), bundle.getString("did")))
+                    .commit();
+        }
     }
 
     @Override

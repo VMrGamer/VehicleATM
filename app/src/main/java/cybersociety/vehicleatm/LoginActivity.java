@@ -41,7 +41,6 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
-
     private static final String TAG = "LoginActivity";
 
     /**
