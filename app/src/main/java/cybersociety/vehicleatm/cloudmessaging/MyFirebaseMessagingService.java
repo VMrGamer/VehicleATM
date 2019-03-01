@@ -59,7 +59,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.putExtra("vehicle_no", remoteMessage.getNotification().getBody());
         intent.putExtra("did", remoteMessage.getData().get("did"));
         intent.putExtra("snap_link", remoteMessage.getData().get("snap_link"));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         String channelId = getString(R.string.default_notification_channel_id);
@@ -72,8 +73,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setColor(getResources().getColor(R.color.colorAccent, getTheme()))
-                        .
-                        setContentIntent(pendingIntent);
+                        .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
