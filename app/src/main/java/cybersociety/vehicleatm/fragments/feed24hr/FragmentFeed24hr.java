@@ -32,6 +32,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 
@@ -138,7 +139,8 @@ public class FragmentFeed24hr extends Fragment {
                         modelList = new ArrayList<>();
 
                         for(final String collectionPath: collectionStrings){
-                            AppHelper.getFirestore().collection(collectionPath).whereGreaterThanOrEqualTo("timestamp", new Timestamp(c.getTime()))
+                            AppHelper.getFirestore().collection(collectionPath)//.whereGreaterThanOrEqualTo("timestamp", new Timestamp(c.getTime()))
+                                    .orderBy("timestamp", Query.Direction.DESCENDING)
                                     .get(source).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
