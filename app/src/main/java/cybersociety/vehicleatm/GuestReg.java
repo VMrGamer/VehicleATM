@@ -1,6 +1,7 @@
 package cybersociety.vehicleatm;
 
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,8 @@ public class GuestReg extends AppCompatActivity {
         contact_no = findViewById(R.id.editText4);
         desc = findViewById(R.id.editText3);
         Button b1 = findViewById(R.id.button2);
+        final MediaPlayer mp;
+        mp = MediaPlayer.create(this, R.raw.pika_pika_pika);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +71,7 @@ public class GuestReg extends AppCompatActivity {
                         public void onSuccess(DocumentReference documentReference) {
                             Log.d(TAG, "DocumentSnapshot successfully written!");
                             Toast.makeText(getApplicationContext(), "WRITE SUCCESSFUL..", Toast.LENGTH_LONG).show();
+                            mp.start();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -76,6 +80,7 @@ public class GuestReg extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "WRITE UNSUCCESSFUL..", Toast.LENGTH_LONG).show();
                         }
                     });
+
                 }
                 else
                 {
