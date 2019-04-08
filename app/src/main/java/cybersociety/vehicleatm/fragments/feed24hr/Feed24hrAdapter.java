@@ -51,7 +51,7 @@ public class Feed24hrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof ViewHolder) {
             final Feed24hrModel model = getItem(position);
             ViewHolder genericViewHolder = (ViewHolder) holder;
-            Picasso.with(this.mContext).load(model.getSnap_link()).into(genericViewHolder.imgUser);
+            Picasso.get().load(model.getSnap_link()).into(genericViewHolder.imgUser);
             genericViewHolder.itemTxtTitle.setText(model.getTitle());
             genericViewHolder.itemTxtMessage.setText(model.getMessage());
         }
