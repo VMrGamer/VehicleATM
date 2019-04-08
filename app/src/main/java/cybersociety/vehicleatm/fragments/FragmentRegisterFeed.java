@@ -4,15 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,18 +17,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.TimeZone;
 
 import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
 import cybersociety.vehicleatm.fragments.feed24hr.FragmentFeed24hr;
-import cybersociety.vehicleatm.fragments.notification.NotificationAdapter;
 import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 
 public class FragmentRegisterFeed extends Fragment {
@@ -88,9 +80,6 @@ public class FragmentRegisterFeed extends Fragment {
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "DocumentSnapshot successfully written!");
                             ArrayList<String> collectionPaths = new ArrayList<>();
-                            //collectionPaths.add("entry-exit-buffer");
-                            //collectionPaths.add("log-acknowledged");
-                            //collectionPaths.add("log-unacknowledged");
                             collectionPaths.add("log-vehicle");
                             Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.content_frame, FragmentFeed24hr.newInstance(collectionPaths,"null", "null"))

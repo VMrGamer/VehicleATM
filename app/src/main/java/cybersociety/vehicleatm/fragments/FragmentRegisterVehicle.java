@@ -14,18 +14,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.TimeZone;
 
 import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
@@ -50,7 +40,7 @@ public class FragmentRegisterVehicle extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-        Objects.requireNonNull(getActivity()).setTitle("Vehicle Registration");
+        getActivity().setTitle("Vehicle Registration");
         final EditText veh_no;
         Button b1;
         veh_no = view.findViewById(R.id.editText);
@@ -79,7 +69,7 @@ public class FragmentRegisterVehicle extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "NULL USER", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "No User Found", Toast.LENGTH_LONG).show();
                 }
             }
         });
