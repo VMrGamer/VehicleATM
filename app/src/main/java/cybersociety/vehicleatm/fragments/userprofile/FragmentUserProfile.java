@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import android.widget.Toast;
 import android.view.ViewGroup;
-import cybersociety.vehicleatm.GuestReg;
+import cybersociety.vehicleatm.GuestRegistration;
 import cybersociety.vehicleatm.R;
 
 /**
@@ -159,7 +159,7 @@ public class FragmentUserProfile extends Fragment {
                 //handle item click events here
                 switch (position){
                     case 0 :
-                        startActivity(new Intent(getActivity(), GuestReg.class));
+                        startActivity(new Intent(getActivity(), GuestRegistration.class));
                         break;
 
                     case 1 :/*

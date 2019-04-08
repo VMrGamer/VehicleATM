@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".GuestReg" />
+        <activity android:name=".GuestRegistration" />
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"

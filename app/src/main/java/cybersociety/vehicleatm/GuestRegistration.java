@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -22,9 +21,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.support.constraint.Constraints.TAG;
 
-public class GuestReg extends AppCompatActivity {
+public class GuestRegistration extends AppCompatActivity {
+    private static final String TAG = "GuestRegistration";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +40,9 @@ public class GuestReg extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                new AlertDialog.Builder(GuestReg.this)
-                    .setTitle("ADD GUEST ?")
-                    .setMessage("Add guest with entered  details ?")
+                new AlertDialog.Builder(GuestRegistration.this)
+                    .setTitle("Add Guest?")
+                    .setMessage("Add guest with entered  details?")
                     .setPositiveButton("YES",
                             new DialogInterface.OnClickListener() {
 
@@ -52,8 +51,8 @@ public class GuestReg extends AppCompatActivity {
                                         int which) {
                                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user!=null){
-                    Log.d("TAG", "proceeding reg..");
-                    Toast.makeText(getApplicationContext(), "PROCEEDING REG...", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "Registering..");
+                    Toast.makeText(getApplicationContext(), "Registering...", Toast.LENGTH_LONG).show();
                     Map<String, Object> doc_vehicle = new HashMap<>();
                     doc_vehicle.put("guest name", name.getText().toString());
                     doc_vehicle.put("contact no", contact_no.getText().toString());
@@ -62,24 +61,23 @@ public class GuestReg extends AppCompatActivity {
 
                    //Toast.makeText(getApplicationContext(), "DOC STORED...", Toast.LENGTH_LONG).show();
                    FirebaseFirestore.getInstance().collection("guest").add(doc_vehicle).
-
                            addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d(TAG, "DocumentSnapshot successfully written!");
-                            Toast.makeText(getApplicationContext(), "WRITE SUCCESSFUL..", Toast.LENGTH_LONG).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error writing document", e);
-                            Toast.makeText(getApplicationContext(), "WRITE UNSUCCESSFUL..", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                               @Override
+                               public void onSuccess(DocumentReference documentReference) {
+                                   Log.d(TAG, "DocumentSnapshot successfully written!");
+                                   Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
+                               }
+                           }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error writing document", e);
+                                    Toast.makeText(getApplicationContext(), "Failed!", Toast.LENGTH_LONG).show();
+                                }
+                           });
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "NULL USER", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "No User Found", Toast.LENGTH_LONG).show();
                 }
                                 }
                             })
