@@ -1,7 +1,6 @@
 package cybersociety.vehicleatm.fragments.feed24hr;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -83,17 +82,6 @@ public class Feed24hrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView itemTxtTitle;
         private TextView itemTxtMessage;
 
-
-        // @BindView(R.id.img_user)
-        // ImageView imgUser;
-        // @BindView(R.id.item_txt_title)
-        // TextView itemTxtTitle;
-        // @BindView(R.id.item_txt_message)
-        // TextView itemTxtMessage;
-        // @BindView(R.id.radio_list)
-        // RadioButton itemTxtMessage;
-        // @BindView(R.id.check_list)
-        // CheckBox itemCheckList;
         public ViewHolder(final View itemView) {
             super(itemView);
 

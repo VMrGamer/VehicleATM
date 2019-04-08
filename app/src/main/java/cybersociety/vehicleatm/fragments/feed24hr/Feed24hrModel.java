@@ -1,7 +1,5 @@
 package cybersociety.vehicleatm.fragments.feed24hr;
 
-import java.util.ArrayList;
-
 public class Feed24hrModel {
 
     private String docID;

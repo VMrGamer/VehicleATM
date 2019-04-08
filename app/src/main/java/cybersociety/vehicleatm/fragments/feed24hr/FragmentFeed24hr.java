@@ -38,7 +38,6 @@ import com.google.firebase.firestore.Source;
 import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
 import cybersociety.vehicleatm.fragments.FragmentRegisterFeed;
-import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 
 public class FragmentFeed24hr extends Fragment {
     private static final String TAG = "FragmentFeed24hr";

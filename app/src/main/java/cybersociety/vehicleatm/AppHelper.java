@@ -167,14 +167,14 @@ public class AppHelper {
 
     //Setting up more accessible fields to use in the App
     private static void setUserData() {
-        uid = Objects.requireNonNull(currUserAttributes.get("uid")).toString();
-        token = Objects.requireNonNull(currUserAttributes.get("token")).toString();
-        firstName = ((List<String>) Objects.requireNonNull(currUserAttributes.get("name"))).get(0);
-        lastName = ((List<String>) Objects.requireNonNull(currUserAttributes.get("name"))).get(1);
-        email = Objects.requireNonNull(currUserAttributes.get("email")).toString();
-        userType = Objects.requireNonNull(currUserAttributes.get("user_type")).toString();
-        flat_no = Objects.requireNonNull(currUserAttributes.get("flat_no")).toString();
-        mobile_no = Objects.requireNonNull(currUserAttributes.get("mobile_no")).toString();
+        uid = currUserAttributes.get("uid").toString();
+        token = currUserAttributes.get("token").toString();
+        firstName = ((List<String>) currUserAttributes.get("name")).get(0);
+        lastName = ((List<String>) currUserAttributes.get("name")).get(1);
+        email = currUserAttributes.get("email").toString();
+        userType = currUserAttributes.get("user_type").toString();
+        flat_no = currUserAttributes.get("flat_no").toString();
+        mobile_no = currUserAttributes.get("mobile_no").toString();
         vehicle_no = (List<String>)currUserAttributes.get("vehicles");
     }//You can reference the assignments for use of the currUserAttributes Map, or any other Document Snapshot
 
