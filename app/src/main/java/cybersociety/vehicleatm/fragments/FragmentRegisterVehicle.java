@@ -20,9 +20,10 @@ import com.google.firebase.firestore.FieldValue;
 import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
 
-import static android.support.constraint.Constraints.TAG;
 
 public class FragmentRegisterVehicle extends Fragment {
+    private static final String TAG = FragmentRegisterVehicle.class.getSimpleName();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

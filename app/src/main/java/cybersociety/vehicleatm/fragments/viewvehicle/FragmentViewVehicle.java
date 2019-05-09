@@ -26,6 +26,7 @@ import cybersociety.vehicleatm.R;
 
 
 public class FragmentViewVehicle extends Fragment {
+    private static final String TAG = FragmentViewVehicle.class.getSimpleName();
 
     private OnFragmentInteractionListener mListener;
 

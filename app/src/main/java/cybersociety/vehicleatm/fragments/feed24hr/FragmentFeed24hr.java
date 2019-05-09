@@ -41,7 +41,7 @@ import cybersociety.vehicleatm.R;
 import cybersociety.vehicleatm.fragments.FragmentRegisterFeed;
 
 public class FragmentFeed24hr extends Fragment {
-    private static final String TAG = "FragmentFeed24hr";
+    private static final String TAG = FragmentFeed24hr.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,9 +49,6 @@ public class FragmentFeed24hr extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "listArrayList1";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private ArrayList<String> collectionStrings;
 
     private OnFragmentInteractionListener mListener;
@@ -85,10 +82,6 @@ public class FragmentFeed24hr extends Fragment {
         return fragment;
     }
 
-    public static FragmentFeed24hr newInstance() {
-        return new FragmentFeed24hr();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,8 +89,9 @@ public class FragmentFeed24hr extends Fragment {
         Log.d(TAG, "onCreate: ");
         collectionStrings = new ArrayList<>();
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // TODO: Rename and change types of parameters
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
             collectionStrings = getArguments().getStringArrayList(ARG_PARAM3);
         }
     }

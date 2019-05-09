@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class AppHelper {
-    private static final String TAG = "AppHelper";
+    private static final String TAG = AppHelper.class.getSimpleName();
 
     //Data for more accessibility
     private static String uid;

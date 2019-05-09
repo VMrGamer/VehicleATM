@@ -1,6 +1,7 @@
 package cybersociety.vehicleatm.fragments.notification;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,24 +11,17 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import android.support.v7.widget.LinearLayoutManager;
-
 import cybersociety.vehicleatm.R;
 
-
-/**
- * A custom adapter to use with the RecyclerView widget.
- */
 public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = NotificationAdapter.class.getSimpleName();
 
-    private Context mContext;
     private ArrayList<NotificationModel> modelList;
 
     private OnItemClickListener mItemClickListener;
 
 
     public NotificationAdapter(Context context, ArrayList<NotificationModel> modelList) {
-        this.mContext = context;
         this.modelList = modelList;
     }
 
@@ -37,8 +31,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_notification_recycler_list, viewGroup, false);
 
@@ -46,7 +41,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
         //Here you can fill your row view
         if (holder instanceof ViewHolder) {
@@ -102,9 +97,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             // ButterKnife.bind(this, itemView);
 
-            this.imgUser = (ImageView) itemView.findViewById(R.id.img_user);
-            this.itemTxtTitle = (TextView) itemView.findViewById(R.id.item_txt_title);
-            this.itemTxtMessage = (TextView) itemView.findViewById(R.id.item_txt_message);
+            this.imgUser = itemView.findViewById(R.id.img_user);
+            this.itemTxtTitle = itemView.findViewById(R.id.item_txt_title);
+            this.itemTxtMessage = itemView.findViewById(R.id.item_txt_message);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

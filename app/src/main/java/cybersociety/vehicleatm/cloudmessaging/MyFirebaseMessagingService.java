@@ -24,7 +24,7 @@ import cybersociety.vehicleatm.ProfileActivity;
 import cybersociety.vehicleatm.R;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    private static final String TAG = "MyFirebaseMsgService";
+    private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {

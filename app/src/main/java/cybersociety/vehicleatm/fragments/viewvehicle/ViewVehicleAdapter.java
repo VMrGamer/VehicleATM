@@ -12,11 +12,8 @@ import java.util.ArrayList;
 
 import cybersociety.vehicleatm.R;
 
-
-/**
- * A custom adapter to use with the RecyclerView widget.
- */
 public class ViewVehicleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = ViewVehicleAdapter.class.getSimpleName();
 
     private Context mContext;
     private ArrayList<ViewVehicleModel> modelList;

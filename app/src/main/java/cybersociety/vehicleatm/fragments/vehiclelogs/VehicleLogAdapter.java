@@ -17,7 +17,7 @@ import cybersociety.vehicleatm.R;
  * A custom adapter to use with the RecyclerView widget.
  */
 public class VehicleLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    private static final String TAG = VehicleLogAdapter.class.getSimpleName();
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;

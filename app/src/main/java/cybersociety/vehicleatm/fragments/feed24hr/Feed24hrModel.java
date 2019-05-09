@@ -1,6 +1,7 @@
 package cybersociety.vehicleatm.fragments.feed24hr;
 
 public class Feed24hrModel {
+    private static final String TAG = Feed24hrModel.class.getSimpleName();
 
     private String docID;
 

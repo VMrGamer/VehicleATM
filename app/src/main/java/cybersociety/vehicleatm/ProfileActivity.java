@@ -41,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity
         FragmentUserProfile.OnFragmentInteractionListener,
         FragmentNotification.OnFragmentInteractionListener,
         FragmentViewVehicle.OnFragmentInteractionListener{
-    private static final String TAG = "ProfileActivity";
+    private static final String TAG = ProfileActivity.class.getSimpleName();
 
 
     @Override

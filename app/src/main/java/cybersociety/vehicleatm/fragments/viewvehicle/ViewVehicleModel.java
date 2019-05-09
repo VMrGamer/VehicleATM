@@ -1,8 +1,7 @@
 package cybersociety.vehicleatm.fragments.viewvehicle;
 
-import java.util.ArrayList;
-
 public class ViewVehicleModel {
+    private static final String TAG = ViewVehicleModel.class.getSimpleName();
 
     private String title;
 

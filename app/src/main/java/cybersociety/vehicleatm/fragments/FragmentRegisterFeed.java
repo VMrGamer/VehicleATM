@@ -26,16 +26,21 @@ import cybersociety.vehicleatm.AppHelper;
 import cybersociety.vehicleatm.R;
 import cybersociety.vehicleatm.fragments.feed24hr.FragmentFeed24hr;
 import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
+import gr.escsoft.michaelprimez.searchablespinner.interfaces.IStatusListener;
+import gr.escsoft.michaelprimez.searchablespinner.interfaces.OnItemSelectedListener;
 
 public class FragmentRegisterFeed extends Fragment {
     private static final String TAG = "FragmentRegisterFeed";
 
     private String vehicle_no;
     private String id;
+    private SimpleArrayListAdapter mSimpleArrayListAdapter;
+    private final ArrayList<String> mStrings = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mSimpleArrayListAdapter = new SimpleArrayListAdapter(getActivity(), mStrings);
         return inflater.inflate(R.layout.fragment_register_feed,null);
     }
 
@@ -64,6 +69,31 @@ public class FragmentRegisterFeed extends Fragment {
         ((TextView)view.findViewById(R.id.doc_id)).setText(id);
 
         SearchableSpinner searchableSpinner = view.findViewById(R.id.spinner_flat_no);
+        searchableSpinner.setAdapter(mSimpleArrayListAdapter);
+        searchableSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(View view, int position, long id) {
+                Toast.makeText(getActivity(), "Item on position " + position + " : " + mSimpleArrayListAdapter.getItem(position) + " Selected", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+                Toast.makeText(getActivity(), "Nothing Selected", Toast.LENGTH_SHORT).show();
+            }
+        });
+        searchableSpinner.setStatusListener(new IStatusListener() {
+            @Override
+            public void spinnerIsOpening() {
+
+            }
+
+            @Override
+            public void spinnerIsClosing() {
+
+            }
+        });
+
+
         view.findViewById(R.id.reg_feed_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,4 +138,59 @@ public class FragmentRegisterFeed extends Fragment {
     private boolean validate(){
         return true;
     }
+
+    private void initListValues() {
+        mStrings.add("Brigida Kurz");
+        mStrings.add("Tracy Mckim");
+        mStrings.add("Iesha Davids");
+        mStrings.add("Ozella Provenza");
+        mStrings.add("Florentina Carriere");
+        mStrings.add("Geri Eiler");
+        mStrings.add("Tammara Belgrave");
+        mStrings.add("Ashton Ridinger");
+        mStrings.add("Jodee Dawkins");
+        mStrings.add("Florine Cruzan");
+        mStrings.add("Latia Stead");
+        mStrings.add("Kai Urbain");
+        mStrings.add("Liza Chi");
+        mStrings.add("Clayton Laprade");
+        mStrings.add("Wilfredo Mooney");
+        mStrings.add("Roseline Cain");
+        mStrings.add("Chadwick Gauna");
+        mStrings.add("Carmela Bourn");
+        mStrings.add("Valeri Dedios");
+        mStrings.add("Calista Mcneese");
+        mStrings.add("Willard Cuccia");
+        mStrings.add("Ngan Blakey");
+        mStrings.add("Reina Medlen");
+        mStrings.add("Fabian Steenbergen");
+        mStrings.add("Edmond Pine");
+        mStrings.add("Teri Quesada");
+        mStrings.add("Vernetta Fulgham");
+        mStrings.add("Winnifred Kiefer");
+        mStrings.add("Chiquita Lichty");
+        mStrings.add("Elna Stiltner");
+        mStrings.add("Carly Landon");
+        mStrings.add("Hans Morford");
+        mStrings.add("Shawanna Kapoor");
+        mStrings.add("Thomasina Naron");
+        mStrings.add("Melba Massi");
+        mStrings.add("Sal Mangano");
+        mStrings.add("Mika Weitzel");
+        mStrings.add("Phylis France");
+        mStrings.add("Illa Winzer");
+        mStrings.add("Kristofer Boyden");
+        mStrings.add("Idalia Cryan");
+        mStrings.add("Jenni Sousa");
+        mStrings.add("Eda Forkey");
+        mStrings.add("Birgit Rispoli");
+        mStrings.add("Janiece Mcguffey");
+        mStrings.add("Barton Busick");
+        mStrings.add("Gerald Westerman");
+        mStrings.add("Shalanda Baran");
+        mStrings.add("Margherita Pazos");
+        mStrings.add("Yuk Fitts");
+    }
+
+
 }

@@ -1,9 +1,11 @@
 package cybersociety.vehicleatm.fragments.vehiclelogs;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
+    private static final String TAG = RecyclerViewScrollListener.class.getSimpleName();
 
     private int firstVisibleItem, visibleItemCount, totalItemCount;
     private volatile boolean mEnabled = true;
@@ -11,7 +13,7 @@ public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollLi
     private int mPreLoadCount = 0;
 
     @Override
-    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
         if (mEnabled) {
@@ -33,11 +35,6 @@ public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollLi
         }
     }
 
-    /**
-     * Called when end of scroll is reached.
-     *
-     * @param recyclerView - related recycler view.
-     */
     public abstract void onEndOfScrollReached(RecyclerView recyclerView);
 
     public void disableScrollListener() {

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import cybersociety.vehicleatm.R;
 
 public class Feed24hrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = Feed24hrAdapter.class.getSimpleName();
 
     private Context mContext;
     private ArrayList<Feed24hrModel> modelList;

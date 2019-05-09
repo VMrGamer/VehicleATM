@@ -1,8 +1,7 @@
 package cybersociety.vehicleatm.fragments.notification;
 
-import java.util.ArrayList;
-
 public class NotificationModel {
+    private static final String TAG = NotificationModel.class.getSimpleName();
 
     private String title;
 

@@ -12,20 +12,16 @@ import java.util.ArrayList;
 
 import cybersociety.vehicleatm.R;
 
-
-/**
- * A custom adapter to use with the RecyclerView widget.
- */
 public class UserProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = UserProfileAdapter.class.getSimpleName();
 
-    private Context mContext;
     private ArrayList<UserProfileModel> modelList;
 
     private OnItemClickListener mItemClickListener;
 
 
     public UserProfileAdapter(Context context, ArrayList<UserProfileModel> modelList) {
-        this.mContext = context;
+        Context mContext = context;
         this.modelList = modelList;
     }
 

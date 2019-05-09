@@ -1,8 +1,7 @@
 package cybersociety.vehicleatm.fragments.userprofile;
 
-import java.util.ArrayList;
-
 public class UserProfileModel {
+    private static final String TAG = UserProfileModel.class.getSimpleName();
 
     private String title;
 

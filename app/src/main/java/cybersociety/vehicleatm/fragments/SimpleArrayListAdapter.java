@@ -2,11 +2,11 @@ package cybersociety.vehicleatm.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -22,6 +22,7 @@ import gr.escsoft.michaelprimez.revealedittext.tools.UITools;
 import gr.escsoft.michaelprimez.searchablespinner.interfaces.ISpinnerSelectedView;
 
 public class SimpleArrayListAdapter extends ArrayAdapter<String> implements Filterable, ISpinnerSelectedView {
+    private static final String TAG = SimpleArrayListAdapter.class.getSimpleName();
 
     private Context mContext;
     private ArrayList<String> mBackupStrings;
@@ -56,8 +57,9 @@ public class SimpleArrayListAdapter extends ArrayAdapter<String> implements Filt
             return -1;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View view = null;
         if (position == 0) {
             view = getNoSelectionView();
@@ -88,8 +90,7 @@ public class SimpleArrayListAdapter extends ArrayAdapter<String> implements Filt
 
     @Override
     public View getNoSelectionView() {
-        View view = View.inflate(mContext, R.layout.view_list_no_selection_item, null);
-        return view;
+        return View.inflate(mContext, R.layout.view_list_no_selection_item, null);
     }
 
     private TextDrawable getTextDrawable(String displayName) {
@@ -117,6 +118,7 @@ public class SimpleArrayListAdapter extends ArrayAdapter<String> implements Filt
         return drawable;
     }
 
+    @NonNull
     @Override
     public Filter getFilter() {
         return mStringFilter;

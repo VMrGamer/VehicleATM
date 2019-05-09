@@ -42,18 +42,12 @@ import android.view.MenuInflater;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 public class FragmentNotification extends Fragment {
-    private static final String TAG = "FragmentFeed24hr";
+    private static final String TAG = FragmentNotification.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
 
     private RecyclerView recyclerView;
 
@@ -74,14 +68,6 @@ public class FragmentNotification extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentNotification.
-     */
     // TODO: Rename and change types and number of parameters
     public static FragmentNotification newInstance(String param1, String param2) {
         FragmentNotification fragment = new FragmentNotification();
@@ -103,8 +89,9 @@ public class FragmentNotification extends Fragment {
         setHasOptionsMenu(true);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // TODO: Rename and change types of parameters
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -126,7 +113,6 @@ public class FragmentNotification extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof FragmentFeed24hr.OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -136,7 +122,6 @@ public class FragmentNotification extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
 
@@ -176,8 +161,8 @@ public class FragmentNotification extends Fragment {
 
     private void findViews(View view) {
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        swipeRefreshRecyclerList = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_recycler_list);
+        recyclerView = view.findViewById(R.id.recycler_view);
+        swipeRefreshRecyclerList = view.findViewById(R.id.swipe_refresh_recycler_list);
     }
 
 
@@ -193,7 +178,7 @@ public class FragmentNotification extends Fragment {
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         //changing edittext color
-        EditText searchEdit = ((EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text));
+        EditText searchEdit = (searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text));
         searchEdit.setTextColor(Color.WHITE);
         searchEdit.setHintTextColor(Color.WHITE);
         searchEdit.setBackgroundColor(Color.TRANSPARENT);

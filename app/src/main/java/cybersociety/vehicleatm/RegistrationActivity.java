@@ -51,11 +51,8 @@ import java.util.Objects;
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class RegistrationActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
-    private static final String TAG = "RegistrationActivity";
+    private static final String TAG = RegistrationActivity.class.getSimpleName();
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
     private static final int REQUEST_READ_CONTACTS = 0;
 
     // UI references.
@@ -165,9 +162,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         return false;
     }
 
-    /**
-     * Callback received when a permissions request has been completed.
-     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -178,14 +172,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         }
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private void attemptRegistration() {
-        //TODO: Check already Signed in here
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);

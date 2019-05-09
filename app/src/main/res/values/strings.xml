@@ -83,4 +83,8 @@
     <string name="enter_guest_name">ENTER GUEST NAME</string>
     <string name="title_activity_view_vehicles">ViewVehiclesActivity</string>
     <string name="login">LOGIN</string>
+
+
+
+    <string name="no_selection">No Selected</string>
 </resources>

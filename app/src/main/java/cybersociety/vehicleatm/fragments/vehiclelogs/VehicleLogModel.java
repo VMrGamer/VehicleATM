@@ -1,8 +1,7 @@
 package cybersociety.vehicleatm.fragments.vehiclelogs;
 
-import java.util.ArrayList;
-
 public class VehicleLogModel {
+    private static final String TAG = VehicleLogModel.class.getSimpleName();
 
     private String title;
 

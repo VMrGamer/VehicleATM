@@ -6,8 +6,7 @@ import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
 public class MyJobService extends JobService {
-
-    private static final String TAG = "MyJobService";
+    private static final String TAG = MyJobService.class.getSimpleName();
 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
