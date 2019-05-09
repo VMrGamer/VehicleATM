@@ -49,10 +49,12 @@ public class ProfileActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
-            Log.d(TAG, "onCreate: getExtras: " + bundle.toString());
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+            }
             if (bundle.containsKey("data")) {
                 Log.d(TAG, "onCreate: containsKey" + bundle.getBundle("data").getString("title"));
             }
@@ -71,9 +73,9 @@ public class ProfileActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                Snackbar.make(view, "LOGGED OUT...", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Logged Out!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Toast.makeText(getApplicationContext(), "LOGGED OUT..", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Logged Out!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
             }
         });
@@ -152,9 +154,9 @@ public class ProfileActivity extends AppCompatActivity
         } else {
             //super.onBackPressed();
             new AlertDialog.Builder(this)
-                    .setTitle("Close App?")
-                    .setMessage("Do you really want to close this beautiful app?")
-                    .setPositiveButton("EXIT APP",
+                    .setTitle("Exiting")
+                    .setMessage("Do you really want to exit?")
+                    .setPositiveButton("Exit",
                             new DialogInterface.OnClickListener() {
 
                                 @Override
@@ -164,7 +166,7 @@ public class ProfileActivity extends AppCompatActivity
                                     finish();
                                 }
                             })
-                    .setNegativeButton("ABORT",
+                    .setNegativeButton("Go Back",
                             new DialogInterface.OnClickListener() {
 
                                 @Override
@@ -174,45 +176,15 @@ public class ProfileActivity extends AppCompatActivity
                             }).show();
         }
     }
-
-    /*
-    *  new AlertDialog.Builder(this)
-                    .setTitle("Close App?")
-                    .setMessage("Do you really want to close this beautiful app?")
-                    .setPositiveButton("YES",
-                            new DialogInterface.OnClickListener() {
-
-                                @Override
-                                public void onClick(DialogInterface dialog,
-                                        int which) {
-                                    finish();
-                                }
-                            })
-                    .setNegativeButton("NO",
-                            new DialogInterface.OnClickListener() {
-
-                                @Override
-                                public void onClick(DialogInterface dialog,
-                                        int which) {
-                                }
-                            }).show();
-            // load your first Fragment
-            */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.profile, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -221,17 +193,12 @@ public class ProfileActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-       
-        //calling the method display selected screen and passing the id of selected menu
         displaySelectedScreen(item.getItemId());
         return true;
     }
 
     public void displaySelectedScreen(int itemId) {
-        //creating fragment object
         Fragment fragment = null;
-
-        //initializing the fragment object which is selected
         switch (itemId) {
             case R.id.nav_home:
                 fragment = FragmentUserProfile.newInstance();
@@ -247,9 +214,6 @@ public class ProfileActivity extends AppCompatActivity
                 break;
             case R.id.nav_24hrfeed:
                 ArrayList<String> collectionPaths = new ArrayList<>();
-                //collectionPaths.add("entry-exit-buffer");
-                //collectionPaths.add("log-acknowledged");
-                //collectionPaths.add("log-unacknowledged");
                 collectionPaths.add("log-vehicle");
 
                 fragment = FragmentFeed24hr.newInstance(collectionPaths, "yo", "yo");
@@ -262,9 +226,9 @@ public class ProfileActivity extends AppCompatActivity
             case R.id.nav_logout:
 
                  new AlertDialog.Builder(this)
-                    .setTitle("LOG OUT?")
+                    .setTitle("Log Out")
                     .setMessage("Do you really want to log out from your account?")
-                    .setPositiveButton("YES",
+                    .setPositiveButton("Yes",
                             new DialogInterface.OnClickListener() {
 
                                 @Override
@@ -272,12 +236,11 @@ public class ProfileActivity extends AppCompatActivity
                                         int which) {
                                         Toast.makeText(getApplicationContext(), "Logging Out..", Toast.LENGTH_LONG).show();
                                         FirebaseAuth.getInstance().signOut();
-                                        finish();
                                         startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                                        //finish();
+                                        finish();
                                 }
                             })
-                    .setNegativeButton("NO",
+                    .setNegativeButton("No",
                             new DialogInterface.OnClickListener() {
 
                                 @Override
@@ -289,29 +252,20 @@ public class ProfileActivity extends AppCompatActivity
                 break;
             case R.id.nav_reg_veh:
                 fragment = FragmentViewVehicle.newInstance();
-                //Toast.makeText(getApplicationContext(), "Registered Veh.", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_settings:
                 fragment = new FragmentUserProfile();
-                //Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_additional_info:
                 fragment = new FragmentUserProfile();
-                //Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_about_us:
                 fragment = new FragmentUserProfile();
-                //Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_about_app:
                 fragment = new FragmentUserProfile();
-                //Toast.makeText(getApplicationContext(), "PROFILE FRAGMENT", Toast.LENGTH_LONG).show();
                 break;
-            default:
-                //Toast.makeText(getApplicationContext(), "CHOOSE PROFILE", Toast.LENGTH_LONG).show();
         }
-
-        //replacing the fragment
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, fragment);

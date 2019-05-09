@@ -18,6 +18,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     Handler handler;
 
+    Bundle extras = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 Object value = getIntent().getExtras().get(key);
                 Log.d(TAG, "Key: " + key + " Value: " + value);
             }
+            extras = getIntent().getExtras();
         }
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -43,6 +46,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                             AppHelper.init(getApplicationContext());
                             AppHelper.loginFieldGet();
                             Intent home = new Intent(SplashScreenActivity.this, ProfileActivity.class);
+                            home.putExtras(extras);
                             startActivity(home);
                             finish();
                         }
@@ -53,6 +57,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Intent login = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                            login.putExtras(extras);
                             startActivity(login);
                             finish();
                         }
