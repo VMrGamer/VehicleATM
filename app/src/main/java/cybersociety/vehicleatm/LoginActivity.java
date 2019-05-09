@@ -45,19 +45,27 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
     private boolean doubleBackToExitPressedOnce = false;
 
-    //Firebase Variables
     private FirebaseAuth mAuth;
+
+    Bundle extras = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+            }
+            extras = getIntent().getExtras();
+        }
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
         AppHelper.init(getApplicationContext());
@@ -119,18 +127,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            // TODO: alert the user with a Snackbar/AlertDialog giving them the permission rationale
-            // To use the Snackbar from the design support library, ensure that the activity extends
-            // AppCompatActivity and uses the Theme.AppCompat theme.
+
         } else {
             requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
         }
         return false;
     }
 
-    /**
-     * Callback received when a permissions request has been completed.
-     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -141,17 +144,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
 
-
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private void attemptLogin() {
-        //TODO: Check already logged in
         if (AppHelper.getFirebaseCurrentUser() != null) {
             //handle the already login user
-            startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+            startActivity((new Intent(LoginActivity.this, ProfileActivity.class)).putExtras(extras));
         }
 
         // Reset errors.
@@ -201,7 +197,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                                 Log.d(TAG, "signInWithEmail:success");
 
                                 startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
-
                             } else {
                                 showProgress(false);
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());

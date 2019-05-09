@@ -46,7 +46,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                             AppHelper.init(getApplicationContext());
                             AppHelper.loginFieldGet();
                             Intent home = new Intent(SplashScreenActivity.this, ProfileActivity.class);
-                            home.putExtras(extras);
+                            if(extras != null)home.putExtras(extras);
                             startActivity(home);
                             finish();
                         }
@@ -57,7 +57,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Intent login = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                            login.putExtras(extras);
+                            if(extras != null)login.putExtras(extras);
                             startActivity(login);
                             finish();
                         }
