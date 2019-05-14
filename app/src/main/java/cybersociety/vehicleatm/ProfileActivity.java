@@ -202,29 +202,28 @@ public class ProfileActivity extends AppCompatActivity
         switch (itemId) {
             case R.id.nav_home:
                 fragment = FragmentUserProfile.newInstance();
-                Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_notifications:
                 fragment = FragmentNotification.newInstance();
-                Toast.makeText(getApplicationContext(), "Notifications", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.nav_registration:
-                fragment = new FragmentRegisterVehicle();
-                Toast.makeText(getApplicationContext(), "Registration Fragment", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_24hrfeed:
                 ArrayList<String> collectionPaths = new ArrayList<>();
                 collectionPaths.add("log-vehicle");
-
-                fragment = FragmentFeed24hr.newInstance(collectionPaths, "yo", "yo");
-                Toast.makeText(getApplicationContext(), "24Hr Feed Fragment", Toast.LENGTH_LONG).show();
+                fragment = FragmentFeed24hr.newInstance(collectionPaths);
                 break;
             case R.id.nav_report_an_issue:
                 fragment = new FragmentUserProfile();
-                Toast.makeText(getApplicationContext(), "Profile Fragment", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.nav_reg_veh:
+                fragment = FragmentViewVehicle.newInstance();
+                break;
+            case R.id.nav_guest_registration:
+                fragment = new FragmentRegisterVehicle();
+                break;
+            case R.id.nav_vehicle_registration:
+                fragment = new FragmentRegisterVehicle();
                 break;
             case R.id.nav_logout:
-
                  new AlertDialog.Builder(this)
                     .setTitle("Log Out")
                     .setMessage("Do you really want to log out from your account?")
@@ -234,7 +233,6 @@ public class ProfileActivity extends AppCompatActivity
                                 @Override
                                 public void onClick(DialogInterface dialog,
                                         int which) {
-                                        Toast.makeText(getApplicationContext(), "Logging Out..", Toast.LENGTH_LONG).show();
                                         FirebaseAuth.getInstance().signOut();
                                         startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                                         finish();
@@ -248,10 +246,6 @@ public class ProfileActivity extends AppCompatActivity
                                         int which) {
                                 }
                             }).show();
-
-                break;
-            case R.id.nav_reg_veh:
-                fragment = FragmentViewVehicle.newInstance();
                 break;
             case R.id.nav_settings:
                 fragment = new FragmentUserProfile();

@@ -43,24 +43,13 @@ import cybersociety.vehicleatm.fragments.FragmentRegisterFeed;
 public class FragmentFeed24hr extends Fragment {
     private static final String TAG = FragmentFeed24hr.class.getSimpleName();
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_PARAM3 = "listArrayList1";
+    private static final String ARG_LIST1 = "listArrayList1";
 
     private ArrayList<String> collectionStrings;
 
     private OnFragmentInteractionListener mListener;
 
     private RecyclerView recyclerView;
-
-    // @BindView(R.id.recycler_view)
-    // RecyclerView recyclerView;
-
-
-    // @BindView(R.id.swipe_refresh_recycler_list)
-    // SwipeRefreshLayout swipeRefreshRecyclerList;
 
     private SwipeRefreshLayout swipeRefreshRecyclerList;
     private Feed24hrAdapter mAdapter;
@@ -72,12 +61,10 @@ public class FragmentFeed24hr extends Fragment {
         // Required empty public constructor
     }
 
-    public static FragmentFeed24hr newInstance(ArrayList<String> stringList, String param1, String param2) {
+    public static FragmentFeed24hr newInstance(ArrayList<String> stringList) {
         FragmentFeed24hr fragment = new FragmentFeed24hr();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        args.putStringArrayList(ARG_PARAM3, stringList);
+        args.putStringArrayList(ARG_LIST1, stringList);
         fragment.setArguments(args);
         return fragment;
     }
@@ -90,9 +77,7 @@ public class FragmentFeed24hr extends Fragment {
         collectionStrings = new ArrayList<>();
         if (getArguments() != null) {
             // TODO: Rename and change types of parameters
-            String mParam1 = getArguments().getString(ARG_PARAM1);
-            String mParam2 = getArguments().getString(ARG_PARAM2);
-            collectionStrings = getArguments().getStringArrayList(ARG_PARAM3);
+            collectionStrings = getArguments().getStringArrayList(ARG_LIST1);
         }
     }
 

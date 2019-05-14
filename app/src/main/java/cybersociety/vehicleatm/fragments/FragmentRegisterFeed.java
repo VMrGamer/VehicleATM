@@ -112,7 +112,7 @@ public class FragmentRegisterFeed extends Fragment {
                             ArrayList<String> collectionPaths = new ArrayList<>();
                             collectionPaths.add("log-vehicle");
                             Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.content_frame, FragmentFeed24hr.newInstance(collectionPaths,"null", "null"))
+                                    .replace(R.id.content_frame, FragmentFeed24hr.newInstance(collectionPaths))
                                     .commit();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
