@@ -98,7 +98,7 @@ public class FragmentUserProfile extends Fragment {
 
         modelList.add(new UserProfileModel("Guest Registration", "Register your expected guests"));
         modelList.add(new UserProfileModel("Registered Vehicles", "view vehicles registered under you"));
-        modelList.add(new UserProfileModel("Contact POC", "Contact any SPOC"));
+        modelList.add(new UserProfileModel("Contact POC", "Contact any POC"));
         modelList.add(new UserProfileModel("Contact Guard", "Contact a guard"));
         modelList.add(new UserProfileModel("Contact Resident", "Contact any fellow Resident"));
 
