@@ -1,7 +1,5 @@
 package cybersociety.vehicleatm.fragments.contact;
 
-import java.util.ArrayList;
-
 public class ContactModel {
 
     private String title;

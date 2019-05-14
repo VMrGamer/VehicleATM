@@ -1,6 +1,7 @@
 package cybersociety.vehicleatm.fragments.contact;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +13,8 @@ import java.util.ArrayList;
 
 import cybersociety.vehicleatm.R;
 
-
-/**
- * A custom adapter to use with the RecyclerView widget.
- */
 public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    private static final String TAG = ContactAdapter.class.getSimpleName();
     private Context mContext;
     private ArrayList<ContactModel> modelList;
 
@@ -35,8 +32,9 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_contact_list, viewGroup, false);
 
@@ -44,7 +42,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
         //Here you can fill your row view
         if (holder instanceof ViewHolder) {
@@ -79,30 +77,15 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         private ImageView imgUser;
         private TextView itemTxtTitle;
         private TextView itemTxtMessage;
 
-
-        // @BindView(R.id.img_user)
-        // ImageView imgUser;
-        // @BindView(R.id.item_txt_title)
-        // TextView itemTxtTitle;
-        // @BindView(R.id.item_txt_message)
-        // TextView itemTxtMessage;
-        // @BindView(R.id.radio_list)
-        // RadioButton itemTxtMessage;
-        // @BindView(R.id.check_list)
-        // CheckBox itemCheckList;
         public ViewHolder(final View itemView) {
             super(itemView);
-
-            // ButterKnife.bind(this, itemView);
-
-            this.imgUser = (ImageView) itemView.findViewById(R.id.img_user);
-            this.itemTxtTitle = (TextView) itemView.findViewById(R.id.item_txt_title);
-            this.itemTxtMessage = (TextView) itemView.findViewById(R.id.item_txt_message);
+            this.imgUser = itemView.findViewById(R.id.img_user);
+            this.itemTxtTitle = itemView.findViewById(R.id.item_txt_title);
+            this.itemTxtMessage = itemView.findViewById(R.id.item_txt_message);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

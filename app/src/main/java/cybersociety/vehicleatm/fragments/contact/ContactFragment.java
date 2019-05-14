@@ -3,6 +3,7 @@ package cybersociety.vehicleatm.fragments.contact;
 
 import android.os.Bundle;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 
 import android.support.v4.app.Fragment;
@@ -30,54 +31,19 @@ import android.view.MenuInflater;
 
 import cybersociety.vehicleatm.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ContactFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-
-
 public class ContactFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
+    private static final String TAG = ContactFragment.class.getSimpleName();
     private RecyclerView recyclerView;
-
-    // @BindView(R.id.recycler_view)
-    // RecyclerView recyclerView;
-
-
     private ContactAdapter mAdapter;
-
     private ArrayList<ContactModel> modelList = new ArrayList<>();
-
 
     public ContactFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ContactFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ContactFragment newInstance(String param1, String param2) {
+    public static ContactFragment newInstance(String type) {
         ContactFragment fragment = new ContactFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -93,14 +59,12 @@ public class ContactFragment extends Fragment {
         setHasOptionsMenu(true);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
@@ -114,7 +78,7 @@ public class ContactFragment extends Fragment {
 
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setAdapter();
@@ -125,7 +89,7 @@ public class ContactFragment extends Fragment {
 
     private void findViews(View view) {
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView = view.findViewById(R.id.recycler_view);
     }
 
 
@@ -134,14 +98,12 @@ public class ContactFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_search, menu);
 
-        // Retrieve the SearchView and plug it into SearchManager
         final SearchView searchView = (SearchView) MenuItemCompat
                 .getActionView(menu.findItem(R.id.action_search));
 
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        //changing edittext color
-        EditText searchEdit = ((EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text));
+        EditText searchEdit = (searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text));
         searchEdit.setTextColor(Color.WHITE);
         searchEdit.setHintTextColor(Color.WHITE);
         searchEdit.setBackgroundColor(Color.TRANSPARENT);
@@ -180,7 +142,7 @@ public class ContactFragment extends Fragment {
                 ArrayList<ContactModel> filterList = new ArrayList<ContactModel>();
                 if (s.length() > 0) {
                     for (int i = 0; i < modelList.size(); i++) {
-                        if (modelList.get(i).getTitle().toLowerCase().contains(s.toString().toLowerCase())) {
+                        if (modelList.get(i).getTitle().toLowerCase().contains(s.toLowerCase())) {
                             filterList.add(modelList.get(i));
                             mAdapter.updateList(filterList);
                         }
@@ -197,37 +159,14 @@ public class ContactFragment extends Fragment {
 
 
     private void setAdapter() {
-
-
         modelList.add(new ContactModel("Android", "Hello " + " Android"));
-        modelList.add(new ContactModel("Beta", "Hello " + " Beta"));
-        modelList.add(new ContactModel("Cupcake", "Hello " + " Cupcake"));
-        modelList.add(new ContactModel("Donut", "Hello " + " Donut"));
-        modelList.add(new ContactModel("Eclair", "Hello " + " Eclair"));
-        modelList.add(new ContactModel("Froyo", "Hello " + " Froyo"));
-        modelList.add(new ContactModel("Gingerbread", "Hello " + " Gingerbread"));
-        modelList.add(new ContactModel("Honeycomb", "Hello " + " Honeycomb"));
-        modelList.add(new ContactModel("Ice Cream Sandwich", "Hello " + " Ice Cream Sandwich"));
-        modelList.add(new ContactModel("Jelly Bean", "Hello " + " Jelly Bean"));
-        modelList.add(new ContactModel("KitKat", "Hello " + " KitKat"));
-        modelList.add(new ContactModel("Lollipop", "Hello " + " Lollipop"));
-        modelList.add(new ContactModel("Marshmallow", "Hello " + " Marshmallow"));
-        modelList.add(new ContactModel("Nougat", "Hello " + " Nougat"));
-        modelList.add(new ContactModel("Android O", "Hello " + " Android O"));
-
-
         mAdapter = new ContactAdapter(getActivity(), modelList);
-
         recyclerView.setHasFixedSize(true);
-
 
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.addItemDecoration(new GridMarginDecoration(getActivity(), 2, 2, 2, 2));
         recyclerView.setLayoutManager(layoutManager);
-
-
         recyclerView.setAdapter(mAdapter);
-
 
         mAdapter.SetOnItemClickListener(new ContactAdapter.OnItemClickListener() {
             @Override

@@ -2,6 +2,7 @@ package cybersociety.vehicleatm.fragments.contact;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -21,7 +22,7 @@ public class GridMarginDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(
-            Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            @NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         outRect.set(left, top, right, bottom);
     }
 }
